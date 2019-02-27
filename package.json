@@ -1,0 +1,29 @@
+{
+  "name": "cssd_evoting",
+  "version": "1.0.0",
+  "description": "cssd assignment 1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TonksM/CSSD_eVoting.git"
+  },
+  "keywords": [
+    "cssd",
+    "evoting",
+    "assignement",
+    "nodejs",
+    "express"
+  ],
+  "author": "Benjamin_Hadlow; Ben_Hasting; Tonks_Ions",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/TonksM/CSSD_eVoting/issues"
+  },
+  "homepage": "https://github.com/TonksM/CSSD_eVoting#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
