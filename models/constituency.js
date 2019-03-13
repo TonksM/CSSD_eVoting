@@ -13,4 +13,4 @@ var constituencySchema = new Schema({
     _totalVoters:       Number
 })
 
-module.exports = mongoose.model('Vote', constituencySchema);
+module.exports = mongoose.model('Constituency', constituencySchema);

@@ -9,4 +9,4 @@ var ballotSchema = new Schema({
     _constituencyId:    ObjectId
 })
 
-module.exports = mongoose.model('Vote', ballotSchema);
+module.exports = mongoose.model('Ballot', ballotSchema);

@@ -10,4 +10,4 @@ var candidateSchema = new Schema({
     _party:         {type: String, default: "None"}
 })
 
-module.exports = mongoose.model('Vote', candidateSchema);
+module.exports = mongoose.model('Candidate', candidateSchema);

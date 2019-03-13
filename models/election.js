@@ -14,4 +14,4 @@ var electionSchema = new Schema({
     
 })
 
-module.exports = mongoose.model('Vote', electionSchema);
+module.exports = mongoose.model('Election', electionSchema);
