@@ -6,7 +6,7 @@ var Schema = mongoose.Schema,
 var ballotSchema = new Schema({
     _id:                {type: ObjectId, default: mongoose.Types.ObjectId()},
     _candidates:        [{type: ObjectId, ref: 'Candidate'}],
-    _constituencyId:    ObjectId
+    _constituencyId:    {type: ObjectId, ref: 'Constituency'}
 })
 
 module.exports = mongoose.model('Ballot', ballotSchema);

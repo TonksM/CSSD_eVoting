@@ -12,7 +12,7 @@ var voterSchema = new Schema({
     _surname:       String,
     _hasVoted:      {type: Boolean, default: false},
     _lastLogin:     {type: Date},
-    _address:       [addressSchema],
+    _address:       {type: ObjectId, ref: 'Address' },
     _loginAttempts: Number
 });
 
