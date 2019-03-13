@@ -5,6 +5,9 @@
     <script src="../public/scripts/ballot.js"></script>
   </head>
   <body>
+    <form method = "get" action="./users/logout">
+      <button>Logout</button>
+    </form>
     <div class='ballot'>
       <div class='ballotHeader'>
 
@@ -12,7 +15,7 @@
       <div class='ballotContents'>
         
       
-        <form method = "post" action="/authenticateUser">
+        <form method = "get" action="/">
           <%
             candidates.forEach(function(candidate){
           %>

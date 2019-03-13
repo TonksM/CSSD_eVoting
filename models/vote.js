@@ -5,7 +5,7 @@ var Schema = mongoose.Schema,
 
 var voteSchema = new Schema({
     _id:            {type: ObjectId, default: mongoose.Types.ObjectId()},
-    _vote:          ObjectId
+    _vote:          {type: ObjectId, ref: 'Candidate' }
 })
 
 module.exports = mongoose.model('Vote', voteSchema);
