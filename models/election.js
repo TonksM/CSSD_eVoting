@@ -1,19 +1,17 @@
-electionconst mongoose = require('mongoose');
+var mongoose = require('mongoose');
 
-// file schema
-const electionSchema = mongoose.Schema({
-  title: {
-    type: String,
-    required: true
-  },
-  electiontype: {
-    type: String,
-    required: true
-  },
-  : {
-    electioninfo: String,
-    required: true
-  }
-});
+var Schema = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
 
-const Election = module.exports = mongoose.model('Election', electionSchema);
+var electionSchema = new Schema({
+    _id:                {type: ObjectId, default: mongoose.Types.ObjectId()},
+    _electionDate:      [{
+                            _electionStart: Date,
+                            _electionEnd: Date
+                        }],
+    _constituencies:    [{type:ObjectId}],
+    _allCandidates:     [{type:ObjectId}],
+
+})
+
+module.exports = mongoose.model('Vote', electionSchema);

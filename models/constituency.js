@@ -1,19 +1,16 @@
-const mongoose = require('mongoose');
+var mongoose = require('mongoose');
 
-// file schema
-const constituencySchema = mongoose.Schema({   // Json layout of a metaconstituency // metaconstituency scheme for for data base
-  title: {
-    type: String,
-    required: true
-  },
-  author: {
-    type: String,
-    required: true
-  },
-  body: {
-    type: String,
-    required: true
-  }
-});
+var Schema = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
 
-const Constituency = module.exports = mongoose.model('Constituency', constituencySchema);
+var constituencySchema = new Schema({
+    _id:                {type: ObjectId, default: mongoose.Types.ObjectId()},
+    _name:              String,
+    _candidates:        [{type: ObjectId}],
+    _validPostcodes:    [{type: String}],
+    _victor:            {type: ObjectId, default: null},
+    _totalVotes:        Number,
+    _totalVoters:       Number
+})
+
+module.exports = mongoose.model('Vote', constituencySchema);

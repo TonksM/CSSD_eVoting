@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <div class='loginDetails'>
+      <form method = "post" action="/authenticateUser">
+        <label for="username">Username</label>
+      <input type="text" name="username" id="username"/>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password"/>
+      <button>Login</button>
+      </div>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="../public/scripts/ballot.js"></script>
+  </head>
+  <body>
+    <div class='ballot'>
+      <div class='ballotHeader'>
+
+      </div>
+      <div class='ballotContents'>
+        
+      
+        <form method = "post" action="/authenticateUser">
+          <%
+            candidates.forEach(function(candidate){
+          %>
+            <input type="radio" name="candidate" value="<%=candidate._id%>"/>
+            <label for="<%=candidate._id%>"><%=candidate.name%> <%=candidate.party%></label>
+          <%
+            });
+          %>
+          <button>Vote</button>
+        </form>
+      </div>
+    </div>
+    
+    
+
+  </body>
+</html>
