@@ -2,7 +2,24 @@
 <html>
   <head>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src="../public/scripts/ballot.js"></script>
+    <script src="/javascripts/ballot.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" 
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" 
+            crossorigin="anonymous">
+    </script>
+    <style>
+      table, tr{
+        border: 4px solid black;
+        border-collapse: collapse;
+      }
+
+      .checkbox{
+        -webkit-appearance: checkbox;
+        -webkit-transform:;
+        margin: 20px;
+      }
+
+    </style>
   </head>
   <body>
     <div class='ballot'>
@@ -10,19 +27,30 @@
 
       </div>
       <div class='ballotContents'>
-        
-      
-        <form method = "post" action="/authenticateUser">
-          <%
-            candidates.forEach(function(candidate){
-          %>
-            <input type="radio" name="candidate" value="<%=candidate._id%>"/>
-            <label for="<%=candidate._id%>"><%=candidate.name%> <%=candidate.party%></label>
-          <%
-            });
-          %>
-          <button>Vote</button>
-        </form>
+        <table class="ballotTable">
+          <tbody>
+            <%candidates.forEach(function(candidate){%>
+              <tr>
+                <td>
+                  <label for="<%=candidate._id%>">
+                    <p class="candidateName"><%=candidate._surname%>, <%=candidate._firstName%></p>
+                    <p class="candidateAddress"><%=candidate._address%></p>
+                  </label>
+                </td>
+                <td>
+                  <label for="<%=candidate._id%>">
+                    <img src="/images/parties/<%=candidate._party%>.png" alt="<%=candidate._party%>">
+                  </label>
+                </td>
+                <td class="container">
+                  <input id="<%=candidate._id%>" class="checkbox" type="radio" name="candidate" value="<%=candidate._id%>">
+                  <span class="checkmark">
+                </td>
+              </tr>
+            <%});%>
+          </tbody>
+        </table>
+        <button id="btnVote" value="Submit">Submit</button>
       </div>
     </div>
     
