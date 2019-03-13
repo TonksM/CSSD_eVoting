@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
 const Voter = require('./models/voter');
+const Constituency = require('./models/constituency');
+const Election = require('./models/election');
 const createError = require('http-errors');
 const expressValidator = require('express-validator');
 const session = require('express-session');
@@ -35,8 +37,6 @@ var ballotRouter = require('./routes/ballot');
 
 var app = express();
 
-const Constituency = require ('.models/constituency');
-const Election = require ('.models/election')
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

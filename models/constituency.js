@@ -8,7 +8,7 @@ var constituencySchema = new Schema({
     _name:              String,
     _candidates:        [{type: ObjectId, ref: 'Candidate'}],
     _validPostcodes:    [{type: String}],
-    _victor:            {type: ObjectId, ref: 'Candidate' default:null},
+    _victor:            {type: ObjectId, ref: 'Candidate',default:null},
     _totalVotes:        Number,
     _totalVoters:       Number
 })
