@@ -1,36 +1,36 @@
 const express = require('express');
 const router = express.Router();
 
-// constituencys model
-const Constituency = require('../models/constituency');
+// elections model
+const Election = require('../models/election');
 
-// new constituency form
+// new election form
 router.get('/add', function(req, res){
-  res.render('add_constituency', {
-    title: 'Add constituency'
+  res.render('add_election', {
+    title: 'Add election'
   });
 });
 
-// submit new constituency
+// submit new election
 router.post('/add', function(req, res){
   // Express validator
   req.checkBody('title', 'Title is required').notEmpty();
-  req.checkBody('author', 'Author is required').notEmpty();
-  req.checkBody('body', 'Body is required').notEmpty();
+  req.checkBody('electiontype', 'The type of election is required').notEmpty();
+  req.checkBody('electioninfo', 'Election info is required').notEmpty();
 
   // Get errors
   let errors = req.validationErrors();
 
   if(errors){
-    res.render('add_constituency', {
-      title: 'Add Constituency',
+    res.render('add_election', {
+      title: 'Add Election',
       errors: errors
     });
   } else {
-    let constituency = new Constituency();
-    constituency.title = req.body.title;
-    constituency.author = req.body.author;
-    constituency.body = req.body.body;
+    let election = new Election();
+    election.title = req.body.title;
+    election.electiontype = req.body.electiontype;
+    election.electioninfo = req.body.electioninfo;
 
     constituency.save(function(err){
       if(err) {
