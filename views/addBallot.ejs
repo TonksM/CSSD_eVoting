@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Login</title>
+    <title>eVoting</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Login</h1>
+    <h1>Add ballot page</h1>
     <p></p>
     <div class='ballotDetails'>
-      <form method = "post" action="/users/login">
-        <label for="ballotName">Add Ballot Name</label>
-        <input type="text" name="ballotName" id="ballotName"/>
-        <label for="addCandidate">Add Candidate </label>
-        <input type="text" name="candidate" id="candidate"/>
-        <button>Login</button>
+      <form method = "post" action="/ballot/add">
+        <label for="_candidates">Add Candidates</label>
+        <input type="text" name="_candidates"/>
+        <button>update</button>
       </div>
     </form>
   </body>
