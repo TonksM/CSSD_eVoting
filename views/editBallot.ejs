@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Ballot</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Ballot</h1>
+    <p><%=title></p>
+    <div class='ballotDetails'>
+      <form method = "post" action="/routes/ballot">
+        <label for="ballotName">Edit Ballot</label>
+        <input type="text" name="ballotName" id="ballotName"/>
+        <label for="candidates">Candidates</label>
+        <input type="text" name="Candidates" id="Candidates"/>
+        <button>Update</button>
+      </div>
+    </form>
+  </body>
+</html>
