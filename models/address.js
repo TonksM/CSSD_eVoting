@@ -13,4 +13,4 @@ var addressSchema = new Schema({
     _postcode:      String
 })
 
-module.exports = mongoose.model('Address', addressSchema);
+mongoose.model('Address', addressSchema);

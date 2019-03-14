@@ -1,13 +1,37 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const passport = require('passport');
+const Voter = require('./models/voter');
+const createError = require('http-errors');
+const expressValidator = require('express-validator');
+const session = require('express-session');
 
+//passport config
+require('./config/passport')(passport);
+//Configure Mongoose
+mongoose.connect("mongodb://localhost/CSSD_eVoting", {useNewUrlParser:true});
+mongoose.set('debug', true);
+
+var connection = mongoose.connection;
+connection.on('connected',function(){
+	console.log('connected to db')
+});
+
+connection.on('disconnected',function(){
+	console.log('disconnected to db')
+});
+
+connection.on('error',function(error){
+	console.log('db connection error', error)
+});
+
+//routes
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var ballotRouter = require('./routes/ballot');
-
 
 var app = express();
 
@@ -20,11 +44,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(expressValidator());
+app.use(session({
+    secret:'test',
+    resave:true,
+    saveUnitialized:true}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
+
+require('./models/voter');
 
 app.use('/', loginRouter);
 app.use('/users', usersRouter);
 app.use('/ballot', ballotRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

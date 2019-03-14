@@ -9,9 +9,19 @@ var electionSchema = new Schema({
                             _electionStart: Date,
                             _electionEnd: Date
                         }],
-    _constituencies:    [{type:ObjectId}],
-    _allCandidates:     [{type:ObjectId}],
+    _constituencies:    [{type: ObjectId, ref: 'Constituency'}],
+    _allCandidates:     [{type: ObjectId, ref: 'Candidate'}],
+    _winningCandidate:  
     
 })
 
-module.exports = mongoose.model('Vote', electionSchema);
+electionSchema.methods.tallyElection = function(){
+	console.log(this._loginAttempts);
+	this._loginAttempts++;
+}
+electionSchema.methods.resetLoginAttempts = function(){
+	console.log(this._loginAttempts);
+	this._loginAttempts = 0;
+}
+
+module.exports = mongoose.model('Election', electionSchema);
