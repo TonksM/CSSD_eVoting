@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Candidate</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Candidate</h1>
+    <p><%=title></p>
+    <div class='candidateDetails'>
+      <form method = "post" action="/routes/candidate">
+        <label for="candidateName">Edit Candidate first name</label>
+        <input type="text" name="firstName" value= "<%=candidate._firstName%>"/>
+        <label for="candidates">Edit Candidates Surname</label>
+        <input type="text" name="surname" value="<%candidate._surname%"/>
+        <label for="candidates">Edit affliated Party</label>
+        <input type="text" name="partyName" value = "<%candidate._Partyname%"/>
+        <label for="candidates">Edit candidate address</label>
+        <input type="text" name="partyName" value = "<%candidate._address%"/>
+        <button>Update</button>
+      </div>
+    </form>
+  </body>
+</html>

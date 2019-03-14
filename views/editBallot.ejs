@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Candidate</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Candidate</h1>
+    <p><%=title></p>
+    <div class='candidateDetails'>
+      <form method = "post" action="/routes/ballot">
+        <label for="candidateName">Edit ballot candidate</label>
+        <input type="text" name="candidates" value= "<%=ballot._candidates%>"/>
+        <label for="candidates">Edit Candidates Surname</label>
+        <input type="text" name="surname" value="<%ballot._surname%"/>
+        <label for="candidates">Constituency ID</label>
+        <input type="hidden" name="constituencyId" value = "<%ballot._constituencyId%"/>
+        <button>Update</button>
+      </div>
+    </form>
+  </body>
+</html>
