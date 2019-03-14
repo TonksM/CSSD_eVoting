@@ -6,6 +6,9 @@
   </head>
   <body>
     <h1>Add Ballot</h1>
+    <p><%=title></p>
+
+
     <%
       console.log(err);
       if(err[0]){
@@ -14,7 +17,7 @@
         });
       }
     %>
-    
+
     <div class='ballotDetails'>
       <form method = "post" action="/ballot/add">
         <label for="_candidates">Add Candidates</label>
