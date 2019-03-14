@@ -8,7 +8,8 @@ var candidateSchema = new Schema({
     _firstName:     String,
     _surname:       String,
     _party:         {type: ObjectId, ref: 'Party'},
-    _address:       [addressSchema]
+    _address:       [addressSchema],
+    _constituency:  {type: ObjectId, ref: 'Constituency'}
 })
 
 module.exports = mongoose.model('Candidate', candidateSchema);
