@@ -3,3 +3,4 @@
 **/package-lock.json
 ApplicationStart.bat
 mongo.bat
+npm-start.bat
