@@ -14,9 +14,9 @@ router.get('/add', function(req, res){
 // submit new candidate
 router.post('/add', function(req, res){
   // Express validator
-  req.checkBody('_firstName', 'first name is required').notEmpty();
-  req.checkBody('_surname', 'surname is required').notEmpty();
-  req.checkBody('_party', 'Party is required').notEmpty();
+  req.checkBody('firstName', 'first name is required').notEmpty();
+  req.checkBody('surname', 'surname is required').notEmpty();
+  req.checkBody('party', 'Party is required').notEmpty();
 
 
   // Get errors
@@ -75,36 +75,6 @@ router.post('/edit/:id', function(req, res){
   })
 });
 
-// update submit new candidate
-router.post('/checkOut/:id', function(req, res){
-  let candidate = {};
-  candidate._firstName = req.body._firstName;
-  candidate._surname = req.body._surname;
-  candidate._party = req.body.__party;
-  console.log(candidate);
-
-  let query = {_id: req.params.id};
-
-  Candidate.update(query, candidate, function(err){
-    if(err) {
-      console.error(err);
-      return;
-    } else {
-      req.flash('success', 'candidate Updated');
-      res.redirect('/');
-    }
-  })
-});
-
 //NEED A DELETE POST
-
-// get single candidate
-router.get('/:id', function(req, res){
-  Candidate.findById(req.params.id, function(err, candidate){
-    res.render('candidate', {
-      candidate: candidate
-    });
-  });
-});
 
 module.exports = router;
