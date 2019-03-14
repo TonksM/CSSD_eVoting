@@ -5,13 +5,23 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Add ballot page</h1>
-    <p></p>
+    <h1>Add Ballot</h1>
+
+
+    <%
+      console.log(err);
+      if(err[0]){
+        err.forEach(function(error){
+          %><div class="error"><%=error.msg%></div><%
+        });
+      }
+    %>
+
     <div class='ballotDetails'>
       <form method = "post" action="/ballot/add">
         <label for="_candidates">Add Candidates</label>
-        <input type="text" name="_candidates"/>
-        <button>update</button>
+        <input type="text" name="_candidates" id="_candidates"/>
+        <button type='submit'>Add</button>
       </div>
     </form>
   </body>

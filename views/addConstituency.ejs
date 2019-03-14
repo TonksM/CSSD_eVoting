@@ -4,18 +4,27 @@
     <link rel='stylesheet' href='public/stylesheets/style.css' />
   </head>
   <body>
-    <h1>add Constituency <h1>
+    <h1>Add Constituency </h1>
 
+      <%
+        console.log(err);
+        if(err[0]){
+          err.forEach(function(error){
+            %><div class="error"><%=error.msg%></div><%
+          });
+        }
+      %>
+
+<div class='constituencyDetails'>
   <form method = "post" action="./constituency/add">
-    <label for="constituency">add Constituency</label>
-    <input type="text" name="constituency"/>
+    <label for="constituency">Add Constituency</label>
+    <input type="text" name="constituency" id="constituency"/>
     <label for="candidates">Edit Candidates Surname</label>
     <input type="text" name="candidates"/>
     <label for="constituencyId">Constituency ID</label>
-    <input type="hidden" name="constituencyId"/>
-
-    <button>update</button>
-    
+    <input type="hidden" name="constituencyId" id="constituencyId"/>
+    <button type='submit'>Add</button>
+  </div>
   </form>
 </div>
 </html>

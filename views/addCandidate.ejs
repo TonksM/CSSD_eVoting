@@ -4,20 +4,30 @@
     <link rel='stylesheet' href='public/stylesheets/style.css' />
   </head>
   <body>
-    <h1>add candidate <h1>
+    <h1>Add candidate <h1>
+  
 
-  <form method = "post" action="./candidate/add">
+      <%
+        console.log(err);
+        if(err[0]){
+          err.forEach(function(error){
+            %><div class="error"><%=error.msg%></div><%
+          });
+        }
+      %>
+      <div class='CandidateDetails'>
+  <form method = "post" action="/admin/candidate/add">
     <label for="_firstName">add Candidate first name</label>
-    <input type="text" name="_firstName"/>
-    <label for="_surname">Edit Candidates Surname</label>
-    <input type="text" name="_surname"/>
+    <input type="text" name="_firstName" id ="_firstname"/>
+    <label for="_surname">add Candidates Surname</label>
+    <input type="text" name="_surname" id= "_surname"/>
     <label for="_party">Party name</label>
-    <input type="text" name="_party"/>
+    <input type="text" name="_party" id= "_party"/>
     <label for="_address">address name</label>
-    <input type="text" name="_address"/>
+    <input type="text" name="_address" id="_address"/>
 
-    <button>update</button>
-    
+  <button type='submit'>Add</button>
   </form>
+  </div>
 </div>
 </html>
