@@ -30,7 +30,7 @@ module.exports = passport=>{
 			      		return done(null, voter);
 			      	}else{
 			      		console.log("Password invalid");
-			      		return done(null, false, { message: "Password is incorrect"});
+			      		return done(null, false, { message: "Invalid email and password combination"});
 			      	}
 			      });
 		      	voter.save();
