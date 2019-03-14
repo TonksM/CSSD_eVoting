@@ -24,7 +24,7 @@ router.get('/ballot/add', ensureAuthticated ,function(req, res, next) {
 });
 
 // submit new party
-router.post('/add', function(req, res){
+router.post('/ballot/add', function(req, res){
   // Express validator
   req.checkBody('partyName', 'Party name is required').notEmpty();
   req.checkBody(' partyColour', 'The Parties colour is required').notEmpty();
@@ -54,19 +54,19 @@ router.post('/add', function(req, res){
 });
 
 // update submit new party
-router.post('/edit/:id', function(req, res){
-  let party = {};
-  party._name = req.body.partyName;
-  party._partyColour = req.body.partyColour;
+router.post('/ballot/edit/:id', function(req, res){
+  let ballot = {};
+  ballot._name = req.body.partyName;
+  ballot._partyColour = req.body.partyColour;
 
   let query = {_id: req.params.id};
 
-  Party.update(query, party, function(err){
+  Ballot.update(query, party, function(err){
     if(err) {
       console.error(err);
       return;
     } else {
-      req.flash('success', 'Party Updated');
+      req.flash('success', 'Ballot Updated');
       res.redirect('/');
     }
   })
@@ -76,26 +76,29 @@ router.post('/edit/:id', function(req, res){
 /* START of PARTY ROUTES*/
 /* GET PARTY listing. */
 router.get('/party', ensureAuthticated ,function(req, res, next) {
-	res.render('editParty');
+  Party.find({}).then(parties =>{
+    console.log(parties);
+    res.render('editParty',{parties:parties});
+  });
 });
 
 /* GET PARTY add view. */
 router.get('/party/add', ensureAuthticated ,function(req, res, next) {
-	res.render('addParty');
+	res.render('addParty',{err:{}});
 });
 
 // submit new party
 router.post('/party/add', function(req, res){
   // Express validator
   req.checkBody('partyName', 'Party name is required').notEmpty();
-  req.checkBody(' partyColour', 'The Parties colour is required').notEmpty();
+  req.checkBody('partyColour', 'Party colour is required').notEmpty();
 
   // Get errors
   let errors = req.validationErrors();
 
   if(errors){
     res.render('addParty', {
-      errors: errors
+      err: errors
     });
   } else {
     let party = new Party();
@@ -107,28 +110,28 @@ router.post('/party/add', function(req, res){
         console.error(err);
         return;
       } else {
-        req.flash('success', 'Party Added');
-        res.redirect('/');
+        res.redirect('/admin');
       }
     });
   }
 });
 
 // update submit new party
-router.post('/party/edit/:id', function(req, res){
+router.post('/party/edit', function(req, res){
   let party = {};
+  party._id = req.body.partyId;
   party._name = req.body.partyName;
   party._partyColour = req.body.partyColour;
 
-  let query = {_id: req.params.id};
+  console.log('Party:' + party);
+  let query = {_id: party._id};
 
   Party.update(query, party, function(err){
     if(err) {
       console.error(err);
       return;
     } else {
-      req.flash('success', 'Party Updated');
-      res.redirect('/');
+      res.redirect('/admin');
     }
   })
 });
@@ -143,6 +146,63 @@ router.get('/address', ensureAuthticated ,function(req, res, next) {
 /* GET ADDRESS add view. */
 router.get('/address/add', ensureAuthticated ,function(req, res, next) {
 	res.render('addAddress');
+});
+
+// submit new candidate
+router.post('/address/add', function(req, res){
+  // Express validator
+  req.checkBody('firstName', 'first name is required').notEmpty();
+  req.checkBody('surname', 'surname is required').notEmpty();
+  req.checkBody('party', 'Party is required').notEmpty();
+
+  // Get errors
+  let errors = req.validationErrors();
+
+  if(errors){
+    res.render('add_candidate', {
+      title: 'Add Candidate',
+      errors: errors
+    });
+  } else {
+    let candidate = new Candidate();
+    candidate._firstName = req.body._firstName;
+    candidate._surname = req.body._surname;
+    candidate._party = req.body.__party;
+
+    candidate.save(function(err){
+      if(err) {
+        console.error(err);
+        return;
+      } else {
+        req.flash('success', 'candidate Added');
+        res.redirect('/');
+      }
+    });
+  }
+});
+
+// update submit new party
+router.post('/party/address', function(req, res){
+  let address = {};
+  address._id = req.body.partyId;
+  address._addressLine1 = req.body.addressLine1;
+  address._addressLine2 = req.body.addressLine2;
+  address._addressLine3 = req.body.addressLine3;
+  address._city = req.body.city;
+  address._county = req.body.county;
+  address._postcode = req.body.postcode;
+
+  console.log('Address:' + address);
+  let query = {_id: address._id};
+
+  Party.update(query, address, function(err){
+    if(err) {
+      console.error(err);
+      return;
+    } else {
+      res.redirect('/admin');
+    }
+  })
 });
 /* END of ADDRESS ROUTES*/
 
@@ -191,7 +251,7 @@ router.post('/candidate/add', function(req, res){
 });
 
 // update submit new candidate
-router.post('/edit/:id', function(req, res){
+router.post('/candidate/edit/', function(req, res){
   let candidate = {};
   candidate._firstName = req.body._firstName;
   candidate._surname = req.body._surname;

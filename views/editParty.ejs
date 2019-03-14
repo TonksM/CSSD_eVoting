@@ -6,15 +6,17 @@
   </head>
   <body>
     <h1>Parties</h1>
-    <p><%=title></p>
-    <div class='ballotDetails'>
-      <form method = "post" action="/users/login">
-        <label for="email">Email</label>
-        <input type="text" name="firstname" id="email"/>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password"/>
-        <button>Login</button>
-      </div>
-    </form>
+    <div class='partiesDetails'>
+      <%parties.forEach(function(party){%>
+        <h2><%=party._name%></h2>
+        <form method = "post" action="/admin/party/edit">
+          <input type="hidden"  readonly name="partyId" id="partyId" value='<%=party._id%>'/>
+          <label for="partyName">Party Name</label>
+          <input type="text" name="partyName" id="partyName" value='<%=party._name%>'/>
+          <label for="partyColour">Party Colour</label>
+          <input type="text" name="partyColour" id="partyColour" value='<%=party._partyColour%>'/>
+          <button type='submit'>Update</button>
+        </form>
+        <%});%>
   </body>
 </html>

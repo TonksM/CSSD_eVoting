@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Add Party</h1>
+    <%
+      console.log(err);
+      if(err[0]){
+        err.forEach(function(error){
+          %><div class="error"><%=error.msg%></div><%
+        });
+      }
+    %>
+    <div class='partyDetails'>
+        <form method = "post" action="/admin/party/add">
+          <label for="partyName">Name</label>
+          <input type="text" name="partyName" id="partyName"/>
+          <label for="partyColour">Party Colour</label>
+          <input type="text" name="partyColour" id="partyColour"/>
+          <button type='submit'>Add</button>
+        </form>
+  </body>
+</html>

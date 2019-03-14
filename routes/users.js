@@ -25,7 +25,7 @@ router.post('/login', function(req, res, next) {
   else{
   	console.log('Valid Inputs');
   	passport.authenticate('local', {
-  		successRedirect:'/ballot',
+  		successRedirect:'/admin',
   		failureRedirect:'/'
   	})(req,res,next);
   }
