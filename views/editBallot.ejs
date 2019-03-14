@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Edit Ballot</title>
+    <title>Edit Candidate</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Ballot</h1>
+    <h1>Candidate</h1>
     <p><%=title></p>
-    <div class='ballotDetails'>
+    <div class='candidateDetails'>
       <form method = "post" action="/routes/ballot">
-        <label for="ballotName">Edit Ballot</label>
-        <input type="text" name="ballotName" id="ballotName"/>
-        <label for="candidates">Candidates</label>
-        <input type="text" name="Candidates" id="Candidates"/>
+        <label for="candidateName">Edit ballot candidate</label>
+        <input type="text" name="candidates" value= "<%=ballot._candidates%>"/>
+        <label for="candidates">Edit Candidates Surname</label>
+        <input type="text" name="surname" value="<%ballot._surname%"/>
+        <label for="candidates">Constituency ID</label>
+        <input type="hidden" name="constituencyId" value = "<%ballot._constituencyId%"/>
         <button>Update</button>
       </div>
     </form>
