@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var addressSchema = require('./address');
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 
@@ -8,7 +7,7 @@ var candidateSchema = new Schema({
     _firstName:     String,
     _surname:       String,
     _party:         {type: ObjectId, ref: 'Party'},
-    _address:       [addressSchema]
+    _address:       {type: ObjectId, ref: 'Address',default:null},
 })
 
 module.exports = mongoose.model('Candidate', candidateSchema);

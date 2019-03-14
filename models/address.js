@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 
@@ -11,6 +10,6 @@ var addressSchema = new Schema({
     _city:          String,
     _county:        String,
     _postcode:      String
-})
+});
 
-mongoose.model('Address', addressSchema);
+module.exports = mongoose.model('Address', addressSchema);

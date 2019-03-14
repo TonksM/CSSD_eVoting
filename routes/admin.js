@@ -6,6 +6,7 @@ const Constituency = require('../models/constituency');
 const Candidate = require('../models/candidate');
 const Ballot = require('../models/ballot');
 const Party = require('../models/party');
+const Address = require('../models/address');
 
 /* GET admin view. */
 router.get('/', ensureAuthticated ,function(req, res, next) {
@@ -140,7 +141,10 @@ router.post('/party/edit', function(req, res){
 /* START of ADDRESS ROUTES*/
 /* GET ADDRESS listing. */
 router.get('/address', ensureAuthticated ,function(req, res, next) {
-	res.render('editAddress');
+	Address.find({}).then(addresses =>{
+    console.log(addresses);
+    res.render('editAddress',{addresses:addresses});
+  });
 });
 
 /* GET ADDRESS add view. */
@@ -151,38 +155,41 @@ router.get('/address/add', ensureAuthticated ,function(req, res, next) {
 // submit new candidate
 router.post('/address/add', function(req, res){
   // Express validator
-  req.checkBody('firstName', 'first name is required').notEmpty();
-  req.checkBody('surname', 'surname is required').notEmpty();
-  req.checkBody('party', 'Party is required').notEmpty();
+  req.checkBody('addressLine1', 'Address Line 1 is required').notEmpty();
+  req.checkBody('addressLine2', 'Address Line 2 is required').notEmpty();
+  req.checkBody('addressLine3', 'Address Line 3 is required').notEmpty();
+  req.checkBody('city', 'City Name is required').notEmpty();
+  req.checkBody('county', 'County is required').notEmpty();
 
   // Get errors
   let errors = req.validationErrors();
 
   if(errors){
-    res.render('add_candidate', {
-      title: 'Add Candidate',
-      errors: errors
+    res.render('addAddress', {
+      err: errors
     });
   } else {
-    let candidate = new Candidate();
-    candidate._firstName = req.body._firstName;
-    candidate._surname = req.body._surname;
-    candidate._party = req.body.__party;
+    let address = new Address();
+    address._addressLine1 = req.body.addressLine1;
+    address._addressLine2 = req.body.addressLine2;
+    address._addressLine3 = req.body.addressLine3;
+    address._city = req.body.city;
+    address._county = req.body.county;
+    address._postcode = req.body.postcode;
 
-    candidate.save(function(err){
+    address.save(function(err){
       if(err) {
         console.error(err);
         return;
       } else {
-        req.flash('success', 'candidate Added');
-        res.redirect('/');
+        res.redirect('/admin');
       }
     });
   }
 });
 
 // update submit new party
-router.post('/party/address', function(req, res){
+router.post('/address/edit', function(req, res){
   let address = {};
   address._id = req.body.partyId;
   address._addressLine1 = req.body.addressLine1;
