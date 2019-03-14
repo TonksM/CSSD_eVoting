@@ -12,4 +12,7 @@ router.get('/', function(req, res, next) {
   res.render('ballot', tempBallot);
 });
 
+router.post('/cast_vote', function(req, res, next){
+
+});
 module.exports = router;
