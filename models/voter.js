@@ -3,7 +3,7 @@ var addressSchema = require('./address');
 
 var Schema = mongoose.Schema, 
     ObjectId = Schema.ObjectId;
-
+ 
 var voterSchema = new Schema({
     _email:         String,
     _password:      String,
