@@ -9,11 +9,11 @@ var Constituency = require('../models/constituency');
 var Candidate = require('../models/candidate');
 var Voter = require('../models/voter');
 const session = require('express-session');
-//const {ensureAuthticated} = require("../config/auth");
+const {ensureAuthticated} = require("../config/auth");
 
 
 /* GET users listing. */
-router.get('/', /*ensureAuthticated ,*/function(req, res, next) {
+router.get('/', ensureAuthticated , function(req, res, next) {
   //code to access database and get ballot
   let voterId = req.user;
   Voter.findOne({_id: voterId}).populate('_address').exec( function (err, voter){
