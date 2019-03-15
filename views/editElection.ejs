@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit elections</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Elections</h1>
+    <div class='ElectionDetails'>
+      <%parties.forEach(function(party){%>
+        <h2><%=party._name%></h2>
+        <form method = "post" action="/admin/routes/ballot">
+          <label for="electionName">Edit election Name</label>
+          <input type="text" name="electionName" value= "<%=election._electionName%>"/>
+          <label for="electionDate">Edit Election Date</label>
+          <input type="text" name="electionDate" value="<%election._electionDate%"/>
+          <label for="constituencies">Edit constituencies</label>
+          <input type="text" name="constituencies" value="<%election._constituencies%"/>
+          <label for="allCandidates">Edit Election Date</label>
+          <input type="text" name="allCandidates" value="<%election._allCandidates%"/>
+          <input type="hidden" name="winningCandidate" value = "<%election._winningCandidate%"/>
+          <button>Update</button>
+        </div>
+      </form>
+    </body>
+  </html>
