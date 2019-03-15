@@ -5,8 +5,8 @@ var Schema = mongoose.Schema,
 
 var electionSchema = new Schema({
     _electionName:      String,
-    _electionStart:     Date,
-    _electionEnd:       Date,
+    _electionStart:     String,
+    _electionEnd:       String,
     _constituencies:    [{type: ObjectId, ref: 'Constituency'}],
     _allCandidates:     [{type: ObjectId, ref: 'Candidate'}],
     _winningCandidate:  {type: ObjectId, ref: 'Candidate'}

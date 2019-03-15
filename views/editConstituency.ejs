@@ -26,13 +26,13 @@
         <label><%=candidate._firstName + " " + candidate._surname%></label>
         <%
         console.log("Constituency" + constituency._candidates);
-        if(constituency._candidates.includes(candidate._id)){
+        if(constituency._candidates != null && constituency._candidates.toString().includes(candidate._id.toString())){
           console.log('Candidate' + candidate._id);
           console.log("Match Found");%>
-          <input type="checkbox" checked='true' name="candidates"value="<%=candidate._id%>">
+          <input type="checkbox" checked name="candidates"value="<%=candidate._id%>">
         <%}else{
           console.log('Match Not Found');%>
-          <input type="checkbox" checked='false' name="candidates"value="<%=candidate._id%>">
+          <input type="checkbox" name="candidates"value="<%=candidate._id%>">
     <%}});%>
 
     <label for="postcode">Postcode</label>

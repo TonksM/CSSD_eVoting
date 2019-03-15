@@ -394,9 +394,11 @@ router.post('/election/add', function(req, res){
   } else {
     let election = new Election();
     election._electionName = req.body.name;
-    election._startDate = req.body.startDate;
-    election._endDate = req.body.endDate;
+    election._electionStart = req.body.startDate;
+    election._electionEnd = req.body.endDate;
     election._constituencies = req.body.constituencies;
+
+    console.log("Election: "+election);
 
     election.save(function(err){
       if(err) {
