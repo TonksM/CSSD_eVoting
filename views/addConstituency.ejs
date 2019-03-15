@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel='stylesheet' href='public/stylesheets/style.css' />
+    <title>Add Constituency</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Add Constituency </h1>
-
+    <h1>Add Constituency</h1>
       <%
         console.log(err);
         if(err[0]){
@@ -16,13 +16,15 @@
       %>
 
 <div class='constituencyDetails'>
-  <form method = "post" action="./constituency/add">
-    <label for="constituency">Add Constituency</label>
-    <input type="text" name="constituency" id="constituency"/>
-    <label for="candidates">Edit Candidates Surname</label>
-    <input type="text" name="candidates"/>
-    <label for="constituencyId">Constituency ID</label>
-    <input type="hidden" name="constituencyId" id="constituencyId"/>
+  <form method = "post" action="/admin/constituency/add">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name"/>
+    <label for="candidates">Candidates</label>
+    <%candidates.forEach(function(candidate){%>
+        <label for="<%=candidate._id%>"><%=candidate._firstName + " " + candidate._surname%></label>
+        <input type="checkbox" name="<%=candidate._id%>">
+    <%});%>
+    
     <button type='submit'>Add</button>
   </div>
   </form>

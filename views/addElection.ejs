@@ -1,7 +1,8 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
-    <link rel='stylesheet' href='public/stylesheets/style.css' />
+    <title>Add Party</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
     <h1>add Election <h1>
@@ -16,15 +17,18 @@
       %>
 <div class='electionDetails'>
   <form method = "post" action="/admin/election/add">
-    <label for="_electionName">add Election Name</label>
-    <input type="text" name="_electionName" id="_electionName"/>
-    <label for="_electiondata">add election date</label>
-    <input type="text" name="_electiondata" id="_electiondata"/>
-    <label for="_constituencies">Add a Constituency</label>
-    <input type="text" name="_constituencies" id="_constituencies"/>
-
-      <button type='submit'>Add</button>
-</div>
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name"/>
+    <label for="startDate">Start Date</label>
+    <input type="text" name="startDate" id="startDate"/>
+    <label for="endDate">End Date</label>
+    <input type="text" name="endDate" id="endDate"/>
+    <label for="constituencies">Constituencies</label>
+    <%constituencies.forEach(function(constituency){%>
+      <label for="<%=constituency._id%>"><%=constituency._name%></label>
+      <input type="checkbox" name="<%=constituency._id%>">
+    <%});%>
+    <button type='submit'>Add</button>
   </form>
 </div>
 </html>

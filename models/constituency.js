@@ -4,7 +4,6 @@ var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 
 var constituencySchema = new Schema({
-    _id:                {type: ObjectId, default: mongoose.Types.ObjectId()},
     _name:              String,
     _candidates:        [{type: ObjectId, ref: 'Candidate'}],
     _validPostcodes:    [{type: String}],

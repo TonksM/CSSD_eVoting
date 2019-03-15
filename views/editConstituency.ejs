@@ -7,16 +7,23 @@
   <body>
     <h1>edit Constituency</h1>
     <p><%=title></p>
+    <%constituencies.forEach(function(constituency){%>
     <div class='ConstituencyDetails'>
       <form method = "post" action="/routes/Constituency">
         <label for="ConstituencyName">Edit Constituency</label>
         <input type="text" name="constituency" value= "<%=constituency._name%>"/>
         <label for="candidates">Edit Candidates Surname</label>
-        <input type="text" name="surname" value="<%ballot._surname%"/>
+        
+        <%candidates.forEach(function(candidate){
+        {%>
+        <input type="checkbox" checked="<%=if(candidate._party.equals(party._id))%>" value="<%=party._id%>"/>
+      <%});%>
+
         <label for="candidates">Constituency ID</label>
         <input type="hidden" name="constituencyId" value = "<%ballot._constituencyId%"/>
         <button>Update</button>
       </div>
     </form>
+    <%)};%>
   </body>
 </html>

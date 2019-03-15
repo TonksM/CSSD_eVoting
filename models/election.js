@@ -5,7 +5,6 @@ var Schema = mongoose.Schema,
 
 var electionSchema = new Schema({
     _electionName:       String,
-    _id:                {type: ObjectId, default: mongoose.Types.ObjectId()},
     _electionDate:      [{
                             _electionStart: Date,
                             _electionEnd: Date

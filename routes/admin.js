@@ -149,7 +149,7 @@ router.get('/address', ensureAuthticated ,function(req, res, next) {
 
 /* GET ADDRESS add view. */
 router.get('/address/add', ensureAuthticated ,function(req, res, next) {
-	res.render('addAddress');
+	res.render('addAddress',{err:{}});
 });
 
 // submit new candidate
@@ -216,12 +216,23 @@ router.post('/address/edit', function(req, res){
 /* START of CANDIDATE ROUTES*/
 /* GET CANDIDATE listing. */
 router.get('/candidate', ensureAuthticated ,function(req, res, next) {
-	res.render('editAddress');
+	Candidate.find({}).then(candidates =>{
+    console.log(candidates);
+    Party.find({}).then(parties=>{
+      Address.find({}).then(addresses=>{
+        res.render('editCandidate',{candidates:candidates,parties:parties,addresses:addresses,err:{}});
+      });  
+    });
+  });
 });
 
 /* GET CANDIDATE add view. */
 router.get('/candidate/add', ensureAuthticated ,function(req, res, next) {
-	res.render('addCandidate');
+	Party.find({}).then(parties=>{
+    Address.find({}).then(addresses=>{
+      res.render('addCandidate',{parties:parties,addresses:addresses,err:{}});
+    });
+  });
 });
 
 // submit new candidate
@@ -230,28 +241,28 @@ router.post('/candidate/add', function(req, res){
   req.checkBody('firstName', 'first name is required').notEmpty();
   req.checkBody('surname', 'surname is required').notEmpty();
   req.checkBody('party', 'Party is required').notEmpty();
+  req.checkBody('address', 'Address is required').notEmpty();
 
   // Get errors
   let errors = req.validationErrors();
 
   if(errors){
-    res.render('add_candidate', {
-      title: 'Add Candidate',
-      errors: errors
-    });
+    res.redirect('/admin/candidate/add');
   } else {
     let candidate = new Candidate();
-    candidate._firstName = req.body._firstName;
-    candidate._surname = req.body._surname;
-    candidate._party = req.body.__party;
+    candidate._firstName = req.body.firstName;
+    candidate._surname = req.body.surname;
+    candidate._party = req.body.party;
+    candidate._address = req.body.address;
 
-    candidate.save(function(err){
+    console.log("candidate: " + candidate);
+
+    Candidate.create(candidate,function(err){
       if(err) {
         console.error(err);
         return;
       } else {
-        req.flash('success', 'candidate Added');
-        res.redirect('/');
+        res.redirect('/admin');
       }
     });
   }
@@ -259,20 +270,20 @@ router.post('/candidate/add', function(req, res){
 
 // update submit new candidate
 router.post('/candidate/edit/', function(req, res){
-  let candidate = {};
-  candidate._firstName = req.body._firstName;
-  candidate._surname = req.body._surname;
-  candidate._party = req.body.__party;
+  let candidate = new Candidate();
+  candidate._id = req.body.id;
+  candidate._firstName = req.body.firstName;
+  candidate._surname = req.body.surname;
+  candidate._party = req.body.party;
 
-  let query = {_id: req.params.id};
+  let query = {_id: candidate._id};
 
   Candidate.update(query, candidate, function(err){
     if(err) {
       console.error(err);
       return;
     } else {
-      req.flash('success', 'Candidate Updated');
-      res.redirect('/');
+      res.redirect('/admin');
     }
   })
 });
@@ -281,12 +292,14 @@ router.post('/candidate/edit/', function(req, res){
 /* START of CONSTITUENCEY ROUTES*/
 /* GET CONSTITUENCEY listing. */
 router.get('/constituency', ensureAuthticated ,function(req, res, next) {
-	res.render('editConstituency');
+	res.render('editConstituency',{err:{}});
 });
 
 /* GET CONSTITUENCEY add view. */
 router.get('/constituency/add', ensureAuthticated ,function(req, res, next) {
-	res.render('addConstituency');
+  Candidate.find({}).then(candidates =>{
+	 res.render('addConstituency',{err:{}, candidates:candidates});
+  });
 });
 
 // submit new constituency
@@ -348,28 +361,31 @@ router.post('/constituency/edit/:id', function(req, res){
 /* START of ELECTION ROUTES*/
 /* GET ELECTION listing. */
 router.get('/election', ensureAuthticated ,function(req, res, next) {
-	res.render('editElection');
+  Constituency.find({}).then(constituencies=>{
+    res.render('editElection',{err:{}, constituencies:constituencies});
+  });
 });
 
 /* GET ELECTION add view. */
 router.get('/election/add', ensureAuthticated ,function(req, res, next) {
-	res.render('addElection');
+	Constituency.find({}).then(constituencies=>{
+    res.render('addElection',{err:{}, constituencies:constituencies});
+  });
 });
 
 /* POST ELECTION */
 router.post('/election/add', function(req, res){
   // Express validator
-  req.checkBody('_electionName', 'election name is required').notEmpty();
-  req.checkBody(' _electionDate', 'The type of election is required').notEmpty();
-  req.checkBody('_constituencies', 'constituencies  is required').notEmpty();
+  req.checkBody('name', 'Election name is required').notEmpty();
+  req.checkBody('startDate', 'The start date of the election is required').notEmpty();
+  req.checkBody('endDate', 'The end date of the election is required').notEmpty();
 
   // Get errors
   let errors = req.validationErrors();
 
   if(errors){
-    res.render('add_election', {
-      title: 'Add Election',
-      errors: errors
+    res.render('addElection', {
+      err: errors
     });
   } else {
     let election = new Election();

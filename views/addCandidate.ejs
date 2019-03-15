@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel='stylesheet' href='public/stylesheets/style.css' />
+    <title>Add Candidate</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Add candidate <h1>
-  
-
+    <h1>Add Candidate</h1>
       <%
         console.log(err);
         if(err[0]){
@@ -15,18 +14,28 @@
           });
         }
       %>
-      <div class='CandidateDetails'>
-  <form method = "post" action="/admin/candidate/add">
-    <label for="_firstName">add Candidate first name</label>
-    <input type="text" name="_firstName" id ="_firstname"/>
-    <label for="_surname">add Candidates Surname</label>
-    <input type="text" name="_surname" id= "_surname"/>
-    <label for="_party">Party name</label>
-    <input type="text" name="_party" id= "_party"/>
-    <label for="_address">address name</label>
-    <input type="text" name="_address" id="_address"/>
+    <div class='CandidateDetails'>
+    <form method = "post" action="/admin/candidate/add">
+      <label for="firstName">First Name</label>
+      <input type="text" name="firstName" id ="firstname"/>
+      <label for="surname">Surname</label>
+      <input type="text" name="surname" id= "surname"/>
 
-  <button type='submit'>Add</button>
+      <label for="party">Party</label>
+      <select type="text" name="party" id= "party">
+        <%parties.forEach(function(party){%>
+          <option value="<%=party._id%>"><%=party._name%></option>
+        <%});%>
+      </select>
+
+      <label for="address">Address</label>
+      <select name="address" id="address">
+        <%addresses.forEach(function(address){%> 
+          <option value="<%=address._id%>"><%=address._addressLine1 + " " + address._postcode%></option>
+          <%
+        });%>
+      </select>
+    <button type='submit'>Add</button>
   </form>
   </div>
 </div>
