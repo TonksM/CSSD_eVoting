@@ -7,20 +7,27 @@
   <body>
     <h1>Elections</h1>
     <div class='ElectionDetails'>
-      <%parties.forEach(function(party){%>
-        <h2><%=party._name%></h2>
-        <form method = "post" action="/admin/routes/ballot">
-          <label for="electionName">Edit election Name</label>
-          <input type="text" name="electionName" value= "<%=election._electionName%>"/>
-          <label for="electionDate">Edit Election Date</label>
-          <input type="text" name="electionDate" value="<%election._electionDate%"/>
-          <label for="constituencies">Edit constituencies</label>
-          <input type="text" name="constituencies" value="<%election._constituencies%"/>
-          <label for="allCandidates">Edit Election Date</label>
-          <input type="text" name="allCandidates" value="<%election._allCandidates%"/>
-          <input type="hidden" name="winningCandidate" value = "<%election._winningCandidate%"/>
+      <%elections.forEach(function(election){
+      console.log(election);%>
+        <h2><%=election._electionName%></h2>
+        <form method = "post" action="/admin/election/edit">
+          <label for="name">Edit election Name</label>
+          <input type="text" name="name" value= "<%=election._electionName%>"/>
+          <label for="startDate">Start Date</label>
+          <input type="date" name="startDate" value="<%=election._electionStart%>"/>
+          <label for="endDate">End Date</label>
+          <input type="date" name="endDate" value="<%=election._electionEnd%>"/>
+          <label>Constituencies</label>
+          <%constituencies.forEach(function(constituency){%>
+            <label><%=constituency._name%></label>
+            <%if(elections._constituencies != null && elections._constituencies.includes(constituency._id)){%>
+            <input type="checkbox" checked name='constituencies'value="<%=constituency._id%>">
+            <%}else{%>
+            <input type="checkbox"  name='constituencies'value="<%=constituency._id%>">
+          <%}});%>
           <button>Update</button>
         </div>
       </form>
+      <%});%>
     </body>
   </html>

@@ -362,8 +362,10 @@ router.post('/constituency/edit', function(req, res){
 /* START of ELECTION ROUTES*/
 /* GET ELECTION listing. */
 router.get('/election', ensureAuthticated ,function(req, res, next) {
-  Constituency.find({}).then(constituencies=>{
-    res.render('editElection',{err:{}, constituencies:constituencies});
+  Election.find({}).then(elections =>{
+    Constituency.find({}).then(constituencies=>{
+      res.render('editElection',{err:{}, constituencies:constituencies,elections:elections});
+    });
   });
 });
 
@@ -380,7 +382,8 @@ router.post('/election/add', function(req, res){
   req.checkBody('name', 'Election name is required').notEmpty();
   req.checkBody('startDate', 'The start date of the election is required').notEmpty();
   req.checkBody('endDate', 'The end date of the election is required').notEmpty();
-
+  req.checkBody('constituencies', 'Constituencies are required').notEmpty();
+  
   // Get errors
   let errors = req.validationErrors();
 
@@ -390,17 +393,17 @@ router.post('/election/add', function(req, res){
     });
   } else {
     let election = new Election();
-    election._electionName = req.body._electionName;
-    election._electionDate = req.body._electionDate;
-    election._constituencies = req.body._constituencies;
+    election._electionName = req.body.name;
+    election._startDate = req.body.startDate;
+    election._endDate = req.body.endDate;
+    election._constituencies = req.body.constituencies;
 
     election.save(function(err){
       if(err) {
         console.error(err);
         return;
       } else {
-        req.flash('success', 'Election Added');
-        res.redirect('/');
+        res.redirect('/admin');
       }
     });
   }

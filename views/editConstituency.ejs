@@ -27,9 +27,11 @@
         <%
         console.log("Constituency" + constituency._candidates);
         if(constituency._candidates.includes(candidate._id)){
-          console.log('Candidate' + candidate._id);%>
+          console.log('Candidate' + candidate._id);
+          console.log("Match Found");%>
           <input type="checkbox" checked='true' name="candidates"value="<%=candidate._id%>">
-        <%}else{%>
+        <%}else{
+          console.log('Match Not Found');%>
           <input type="checkbox" checked='false' name="candidates"value="<%=candidate._id%>">
     <%}});%>
 
