@@ -11,12 +11,55 @@
       table, tr{
         border: 4px solid black;
         border-collapse: collapse;
+        width: 100%
       }
 
       .checkbox{
         -webkit-appearance: checkbox;
         -webkit-transform:;
         margin: 20px;
+      }
+
+      .candidateName{
+        font-weight: bold;
+      }
+
+      .candidateDetails{
+        list-style-type: none;
+        overflow: hidden;
+        margin: 0;
+        padding: 5% 5%;
+        height: 100%
+      }
+
+      .candidateDetails li:first-child {
+        float: left;
+        text-decoration: none;
+        width: 75%
+      }
+      
+      .candidateDetails li p{
+        padding: 2px 0;
+        margin: 0;
+      }
+
+      .candidateDetails li p.txtBold{
+        font-weight: bold;
+      }
+
+      .candidateDetails li p.txtBold .txtUpper{
+        text-transform: uppercase;
+      }
+
+      .candidateDetails li p.txtRegular{
+        font-weight: normal;
+      }
+
+      .candidateDetails li:last-child {
+        float: right;
+        text-decoration: none;
+        text-align: center;
+        width: 25%;
       }
 
     </style>
@@ -34,18 +77,20 @@
           <tbody>
             <%candidates.forEach(function(candidate){%>
               <tr>
-                <td>
+                <td class="candidateLabel">
                   <label for="<%=candidate._id%>">
-                    <p class="candidateName"><%=candidate._surname%>, <%=candidate._firstName%></p>
-                    <p class="candidateAddress"><%=candidate._address._addressLine1%>, 
+                    <ul class="candidateDetails">
+                      <li>
+                        <p class="txtBold"><span class="txtUpper"><%=candidate._surname%></span>, <%=candidate._firstName%></p>
+                        <p class="txtRegular"><%=candidate._address._addressLine1%>, 
                                                 <%=candidate._address._addressLine2%>,
-                                                <%=candidate._address._postcode%>
-                    </p>
-                  </label>
-                </td>
-                <td>
-                  <label for="<%=candidate._id%>">
-                    <img src="/images/parties/<%=candidate._party._name%>.png" alt="<%=candidate._party._name%>">
+                                                <%=candidate._address._postcode%></p>
+                        <p class="txtBold"><%=candidate._party._name%>
+                      </li>
+                      <li>
+                        <img src="/images/parties/<%=candidate._party._name%>.png" alt="">
+                      </li>
+                    </ul>
                   </label>
                 </td>
                 <td class="container">
