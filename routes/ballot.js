@@ -18,13 +18,16 @@ router.get('/', ensureAuthticated , function(req, res, next) {
   let voterId = req.user;
   Voter.findOne({_id: voterId}).populate('_address').exec( function (err, voter){
     let vpc = voter._address._postcode;
-    Constituency.findOne({_validPostcodes: vpc}).populate('_candidates').exec(function(err, constituency){
-      Candidate.find({_constituency:constituency._id}, function(err,standees){
+    console.log("Postcode:"+vpc);
+
+    Constituency.findOne({_validPostcodes: vpc}).populate({
+      path: '_candidates', populate:{path : '_address _party'}
+    }).exec(function(err, constituency){
+      console.log(constituency._candidates);
         var data = {
-          candidates : standees
+          candidates : constituency._candidates
         }
         res.render('ballot', data)
-      });
       
     });
   });

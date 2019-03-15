@@ -37,12 +37,15 @@
                 <td>
                   <label for="<%=candidate._id%>">
                     <p class="candidateName"><%=candidate._surname%>, <%=candidate._firstName%></p>
-                    <p class="candidateAddress"><%=candidate._address%></p>
+                    <p class="candidateAddress"><%=candidate._address._addressLine1%>, 
+                                                <%=candidate._address._addressLine2%>,
+                                                <%=candidate._address._postcode%>
+                    </p>
                   </label>
                 </td>
                 <td>
                   <label for="<%=candidate._id%>">
-                    <img src="/images/parties/<%=candidate._party%>.png" alt="<%=candidate._party%>">
+                    <img src="/images/parties/<%=candidate._party._name%>.png" alt="<%=candidate._party._name%>">
                   </label>
                 </td>
                 <td class="container">

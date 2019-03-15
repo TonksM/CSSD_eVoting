@@ -8,7 +8,7 @@ var candidateSchema = new Schema({
     _firstName:     String,
     _surname:       String,
     _party:         {type: ObjectId, ref: 'Party'},
-    _address:       [addressSchema],
+    _address:       {type: ObjectId, ref: 'Address' },
     _constituency:  {type: ObjectId, ref: 'Constituency'}
 })
 
