@@ -3,27 +3,50 @@
   <head>
     <title>Edit Constituency</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="/javascript/addConstituency.js"></script>
   </head>
   <body>
-    <h1>edit Constituency</h1>
-    <p><%=title></p>
-    <%constituencies.forEach(function(constituency){%>
-    <div class='ConstituencyDetails'>
-      <form method = "post" action="/routes/Constituency">
-        <label for="ConstituencyName">Edit Constituency</label>
-        <input type="text" name="constituency" value= "<%=constituency._name%>"/>
-        <label for="candidates">Edit Candidates Surname</label>
-        
-        <%candidates.forEach(function(candidate){
-        {%>
-        <input type="checkbox" checked="<%=if(candidate._party.equals(party._id))%>" value="<%=party._id%>"/>
-      <%});%>
+    <h1>Edit Constituency</h1>
+      <%
+        console.log(err);
+        if(err[0]){
+          err.forEach(function(error){
+            %><div class="error"><%=error.msg%></div><%
+          });
+        }
+      %>
 
-        <label for="candidates">Constituency ID</label>
-        <input type="hidden" name="constituencyId" value = "<%ballot._constituencyId%"/>
-        <button>Update</button>
+<div class='constituenciesDetails'>
+  <%constituencies.forEach(function(constituency){%>
+  <form method = "post" action="/admin/constituency/add">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" value="<%=constituency._name%>"/>
+    <label for="candidates">Candidates</label>
+    <%candidates.forEach(function(candidate){%>
+        <label><%=candidate._firstName + " " + candidate._surname%></label>
+        <%
+        console.log("Constituency" + constituency._candidates);
+        if(constituency._candidates.includes(candidate._id)){
+          console.log('Candidate' + candidate._id);%>
+          <input type="checkbox" checked='true' name="candidates"value="<%=candidate._id%>">
+        <%}else{%>
+          <input type="checkbox" checked='false' name="candidates"value="<%=candidate._id%>">
+    <%}});%>
+
+    <label for="postcode">Postcode</label>
+
+    <input type="text" name="postcode" id="postcode"/>
+    <button type='button' onclick="addPostcode()">Add Postcode</button>
+      <div id="postcodeGroup">
+        <%constituency._validPostcodes.forEach(function(postcode){%>
+          <div id ='<%=postcode%>'>
+            <label><%=postcode%></label>
+            <input type="checkbox" checked='true' name="postcodes"value="<%=postcode%>">
+        <%});%>
       </div>
-    </form>
-    <%)};%>
-  </body>
+    <button type='submit'>Add</button>
+  </div>
+  </form>
+  <%});%>
+</div>
 </html>
