@@ -292,7 +292,11 @@ router.post('/candidate/edit/', function(req, res){
 /* START of CONSTITUENCEY ROUTES*/
 /* GET CONSTITUENCEY listing. */
 router.get('/constituency', ensureAuthticated ,function(req, res, next) {
-	res.render('editConstituency',{err:{}});
+	Constituency.find({}).then(constituencies =>{
+    Candidate.find({}).then(candidates =>{
+      res.render('editConstituency',{err:{},candidates:candidates,constituencies:constituencies});
+    });
+  });
 });
 
 /* GET CONSTITUENCEY add view. */
@@ -305,31 +309,28 @@ router.get('/constituency/add', ensureAuthticated ,function(req, res, next) {
 // submit new constituency
 router.post('/constituency/add', function(req, res){
   // Express validator
-  req.checkBody('name', 'name is required').notEmpty();
-  req.checkBody('candidates', 'candidates is required').notEmpty();
-  req.checkBody('validPostcodes', 'postcode is required').notEmpty();
-
+  req.checkBody('name', 'Name is required').notEmpty();
+  req.checkBody('candidates', 'Candidates are required').notEmpty();
+  req.checkBody('postcodes', 'Postcode is required').notEmpty();
 
   // Get errors
   let errors = req.validationErrors();
 
   if(errors){
-    res.render('add_constituency', {
-      title: 'Add Constituency',
-      errors: errors
+    res.render('addConstituency', {
+      err: errors
     });
   } else {
     let constituency = new Constituency();
-    constituency._name = req.body._name;
-    constituency._candidates = req.body._candidates;
-    constituency._validPostcodes = req.body._validPostcodes;
+    constituency._name = req.body.name;
+    constituency._candidates = req.body.candidates;
+    constituency._validPostcodes = req.body.postcodes;
 
     constituency.save(function(err){
       if(err) {
         console.error(err);
         return;
       } else {
-        req.flash('success', 'Constituency Added');
         res.redirect('/');
       }
     });
@@ -337,7 +338,7 @@ router.post('/constituency/add', function(req, res){
 });
 
 // update submit new constituency
-router.post('/constituency/edit/:id', function(req, res){
+router.post('/constituency/edit', function(req, res){
   let constituency = {};
   constituency._name = req.body._name;
   constituency._candidates = req.body._candidates;

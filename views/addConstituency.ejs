@@ -3,6 +3,7 @@
   <head>
     <title>Add Constituency</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="/javascript/addConstituency.js"></script>
   </head>
   <body>
     <h1>Add Constituency</h1>
@@ -21,10 +22,14 @@
     <input type="text" name="name" id="name"/>
     <label for="candidates">Candidates</label>
     <%candidates.forEach(function(candidate){%>
-        <label for="<%=candidate._id%>"><%=candidate._firstName + " " + candidate._surname%></label>
-        <input type="checkbox" name="<%=candidate._id%>">
+        <label><%=candidate._firstName + " " + candidate._surname%></label>
+        <input type="checkbox" name="candidates"value="<%=candidate._id%>">
     <%});%>
-    
+    <input type="text" name="postcode" id="postcode"/>
+    <button type='button' onclick="addPostcode()">Add Postcode</button>
+      <div id="postcodeGroup">
+
+      </div>
     <button type='submit'>Add</button>
   </div>
   </form>
