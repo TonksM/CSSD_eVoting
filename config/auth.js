@@ -1,10 +1,10 @@
 module.exports = {
 	ensureAuthticated: (req,res,next)=>{
-		if(req.isAuthenticated()){
+		//if(req.isAuthenticated()){
 			return(next());
-		}
-		else{
-			res.redirect("/");
-		}
+		//}
+		//else{
+		//	res.redirect("/");
+		//}
 	}
 }
