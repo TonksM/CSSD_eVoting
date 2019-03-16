@@ -9,7 +9,8 @@ var constituencySchema = new Schema({
     _validPostcodes:    [{type: String}],
     _victor:            {type: ObjectId, ref: 'Candidate',default:null},
     _totalVotes:        Number,
-    _totalVoters:       Number
+    _totalVoters:       Number,
+    _deleted:      	Boolean
 })
 
 module.exports = mongoose.model('Constituency', constituencySchema);

@@ -9,7 +9,8 @@ var electionSchema = new Schema({
     _electionEnd:       String,
     _constituencies:    [{type: ObjectId, ref: 'Constituency'}],
     _allCandidates:     [{type: ObjectId, ref: 'Candidate'}],
-    _winningCandidate:  {type: ObjectId, ref: 'Candidate'}
+    _winningCandidate:  {type: ObjectId, ref: 'Candidate'},
+    _deleted:      	Boolean
 });
 
 electionSchema.methods.tallyElection = function(){

@@ -77,7 +77,7 @@ router.post('/ballot/edit/:id', function(req, res){
 /* START of PARTY ROUTES*/
 /* GET PARTY listing. */
 router.get('/party', ensureAuthticated ,function(req, res, next) {
-  Party.find({}).then(parties =>{
+  Party.find({_deleted:false}).then(parties =>{
     console.log(parties);
     res.render('editParty',{parties:parties});
   });
@@ -105,6 +105,7 @@ router.post('/party/add', function(req, res){
     let party = new Party();
     party._name = req.body.partyName;
     party._partyColour = req.body.partyColour;
+    party._deleted = false;
 
     party.save(function(err){
       if(err) {
@@ -123,6 +124,28 @@ router.post('/party/edit', function(req, res){
   party._id = req.body.partyId;
   party._name = req.body.partyName;
   party._partyColour = req.body.partyColour;
+  party._deleted = false;
+
+  console.log('Party:' + party);
+  let query = {_id: party._id};
+
+  Party.update(query, party, function(err){
+    if(err) {
+      console.error(err);
+      return;
+    } else {
+      res.redirect('/admin');
+    }
+  })
+});
+
+// remove party
+router.post('/party/remove', function(req, res){
+  let party = {};
+  party._id = req.body.partyId;
+  party._name = req.body.partyName;
+  party._partyColour = req.body.partyColour;
+  party._deleted = true;
 
   console.log('Party:' + party);
   let query = {_id: party._id};
@@ -141,7 +164,7 @@ router.post('/party/edit', function(req, res){
 /* START of ADDRESS ROUTES*/
 /* GET ADDRESS listing. */
 router.get('/address', ensureAuthticated ,function(req, res, next) {
-	Address.find({}).then(addresses =>{
+	Address.find({_deleted:false}).then(addresses =>{
     console.log(addresses);
     res.render('editAddress',{addresses:addresses});
   });
@@ -156,8 +179,6 @@ router.get('/address/add', ensureAuthticated ,function(req, res, next) {
 router.post('/address/add', function(req, res){
   // Express validator
   req.checkBody('addressLine1', 'Address Line 1 is required').notEmpty();
-  req.checkBody('addressLine2', 'Address Line 2 is required').notEmpty();
-  req.checkBody('addressLine3', 'Address Line 3 is required').notEmpty();
   req.checkBody('city', 'City Name is required').notEmpty();
   req.checkBody('county', 'County is required').notEmpty();
 
@@ -176,6 +197,7 @@ router.post('/address/add', function(req, res){
     address._city = req.body.city;
     address._county = req.body.county;
     address._postcode = req.body.postcode;
+    address._deleted = false;
 
     address.save(function(err){
       if(err) {
@@ -191,18 +213,44 @@ router.post('/address/add', function(req, res){
 // update submit new party
 router.post('/address/edit', function(req, res){
   let address = {};
-  address._id = req.body.partyId;
+  address._id = req.body.addressId;
   address._addressLine1 = req.body.addressLine1;
   address._addressLine2 = req.body.addressLine2;
   address._addressLine3 = req.body.addressLine3;
   address._city = req.body.city;
   address._county = req.body.county;
   address._postcode = req.body.postcode;
+  address._deleted = false;
 
   console.log('Address:' + address);
   let query = {_id: address._id};
 
-  Party.update(query, address, function(err){
+  Address.update(query, address, function(err){
+    if(err) {
+      console.error(err);
+      return;
+    } else {
+      res.redirect('/admin');
+    }
+  })
+});
+
+// remove party
+router.post('/address/remove', function(req, res){
+  let address = {};
+  address._id = req.body.addressId;
+  address._addressLine1 = req.body.addressLine1;
+  address._addressLine2 = req.body.addressLine2;
+  address._addressLine3 = req.body.addressLine3;
+  address._city = req.body.city;
+  address._county = req.body.county;
+  address._postcode = req.body.postcode;
+  address._deleted = true;
+
+  console.log('Address:' + address);
+  let query = {_id: address._id};
+
+  Address.update(query, address, function(err){
     if(err) {
       console.error(err);
       return;
@@ -216,10 +264,10 @@ router.post('/address/edit', function(req, res){
 /* START of CANDIDATE ROUTES*/
 /* GET CANDIDATE listing. */
 router.get('/candidate', ensureAuthticated ,function(req, res, next) {
-	Candidate.find({}).then(candidates =>{
+	Candidate.find({_deleted:false}).then(candidates =>{
     console.log(candidates);
-    Party.find({}).then(parties=>{
-      Address.find({}).then(addresses=>{
+    Party.find({_deleted:false}).then(parties=>{
+      Address.find({_deleted:false}).then(addresses=>{
         res.render('editCandidate',{candidates:candidates,parties:parties,addresses:addresses,err:{}});
       });  
     });
@@ -228,8 +276,8 @@ router.get('/candidate', ensureAuthticated ,function(req, res, next) {
 
 /* GET CANDIDATE add view. */
 router.get('/candidate/add', ensureAuthticated ,function(req, res, next) {
-	Party.find({}).then(parties=>{
-    Address.find({}).then(addresses=>{
+	Party.find({_deleted:false}).then(parties=>{
+    Address.find({_deleted:false}).then(addresses=>{
       res.render('addCandidate',{parties:parties,addresses:addresses,err:{}});
     });
   });
@@ -254,6 +302,7 @@ router.post('/candidate/add', function(req, res){
     candidate._surname = req.body.surname;
     candidate._party = req.body.party;
     candidate._address = req.body.address;
+    candidate._deleted = false;
 
     console.log("candidate: " + candidate);
 
@@ -269,12 +318,35 @@ router.post('/candidate/add', function(req, res){
 });
 
 // update submit new candidate
-router.post('/candidate/edit/', function(req, res){
+router.post('/candidate/edit', function(req, res){
   let candidate = new Candidate();
-  candidate._id = req.body.id;
+  candidate._id = req.body.candidateId;
   candidate._firstName = req.body.firstName;
   candidate._surname = req.body.surname;
   candidate._party = req.body.party;
+  candidate._address = req.body.address;
+  candidate._deleted = false;
+
+  let query = {_id: candidate._id};
+
+  Candidate.update(query, candidate, function(err){
+    if(err) {
+      console.error(err);
+      return;
+    } else {
+      res.redirect('/admin');
+    }
+  })
+});
+
+//remove candidate
+router.post('/candidate/remove/', function(req, res){
+  let candidate = new Candidate();
+  candidate._id = req.body.candidateId;
+  candidate._firstName = req.body.firstName;
+  candidate._surname = req.body.surname;
+  candidate._party = req.body.party;
+  candidate._deleted = true;
 
   let query = {_id: candidate._id};
 
@@ -292,8 +364,8 @@ router.post('/candidate/edit/', function(req, res){
 /* START of CONSTITUENCEY ROUTES*/
 /* GET CONSTITUENCEY listing. */
 router.get('/constituency', ensureAuthticated ,function(req, res, next) {
-	Constituency.find({}).then(constituencies =>{
-    Candidate.find({}).then(candidates =>{
+	Constituency.find({_deleted:false}).then(constituencies =>{
+    Candidate.find({_deleted:false}).then(candidates =>{
       res.render('editConstituency',{err:{},candidates:candidates,constituencies:constituencies});
     });
   });
@@ -301,7 +373,7 @@ router.get('/constituency', ensureAuthticated ,function(req, res, next) {
 
 /* GET CONSTITUENCEY add view. */
 router.get('/constituency/add', ensureAuthticated ,function(req, res, next) {
-  Candidate.find({}).then(candidates =>{
+  Candidate.find({_deleted:false}).then(candidates =>{
 	 res.render('addConstituency',{err:{}, candidates:candidates});
   });
 });
@@ -325,13 +397,14 @@ router.post('/constituency/add', function(req, res){
     constituency._name = req.body.name;
     constituency._candidates = req.body.candidates;
     constituency._validPostcodes = req.body.postcodes;
+    constituency._deleted = false;
 
     constituency.save(function(err){
       if(err) {
         console.error(err);
         return;
       } else {
-        res.redirect('/');
+        res.redirect('/admin');
       }
     });
   }
@@ -340,30 +413,51 @@ router.post('/constituency/add', function(req, res){
 // update submit new constituency
 router.post('/constituency/edit', function(req, res){
   let constituency = {};
-  constituency._name = req.body._name;
-  constituency._candidates = req.body._candidates;
-  constituency._validPostcodes = req.body._validPostcodes;
+  constituency._id = req.body.constituencyId;
+  constituency._name = req.body.name;
+  constituency._candidates = req.body.candidates;
+  constituency._validPostcodes = req.body.postcodes;
+  constituency._deleted = false;
 
-  let query = {_id: req.params.id};
+  let query = {_id: constituency._id};
 
   Constituency.update(query, constituency, function(err){
     if(err) {
       console.error(err);
       return;
     } else {
-      req.flash('success', 'Constituency Updated');
-      res.redirect('/');
+      res.redirect('/admin');
     }
   })
 });
 
+//remove constituency
+router.post('/constituency/remove', function(req, res){
+  let constituency = {};
+  constituency._id = req.body.constituencyId;
+  constituency._name = req.body._name;
+  constituency._candidates = req.body._candidates;
+  constituency._validPostcodes = req.body._validPostcodes;
+  constituency._deleted = true;
+
+  let query = {_id:constituency._id};
+
+  Constituency.update(query, constituency, function(err){
+    if(err) {
+      console.error(err);
+      return;
+    } else {
+      res.redirect('/admin');
+    }
+  })
+});
 /* END of CONSTITUENCEY ROUTES*/
 
 /* START of ELECTION ROUTES*/
 /* GET ELECTION listing. */
 router.get('/election', ensureAuthticated ,function(req, res, next) {
-  Election.find({}).then(elections =>{
-    Constituency.find({}).then(constituencies=>{
+  Election.find({_deleted:false}).then(elections =>{
+    Constituency.find({_deleted:false}).then(constituencies=>{
       res.render('editElection',{err:{}, constituencies:constituencies,elections:elections});
     });
   });
@@ -371,7 +465,7 @@ router.get('/election', ensureAuthticated ,function(req, res, next) {
 
 /* GET ELECTION add view. */
 router.get('/election/add', ensureAuthticated ,function(req, res, next) {
-	Constituency.find({}).then(constituencies=>{
+	Constituency.find({_deleted:false}).then(constituencies=>{
     res.render('addElection',{err:{}, constituencies:constituencies});
   });
 });
@@ -397,6 +491,7 @@ router.post('/election/add', function(req, res){
     election._electionStart = req.body.startDate;
     election._electionEnd = req.body.endDate;
     election._constituencies = req.body.constituencies;
+    election._deleted = false;
 
     console.log("Election: "+election);
 
@@ -412,21 +507,45 @@ router.post('/election/add', function(req, res){
 });
 
 // update submit new election
-router.post('/election/edit/:id', function(req, res){
+router.post('/election/edit', function(req, res){
   let election = {};
-  election._electionName = req.body._electionName;
-  election._electionDate = req.body._electionDate;
-  election._constituencies = req.body._constituencies;
+  election._id = req.body.electionId;
+  election._electionName = req.body.name;
+  election._electionStart = req.body.startDate;
+  election._electionEnd = req.body.endDate;
+  election._constituencies = req.body.constituencies;
+  election._deleted = false;
 
-  let query = {_id: req.params.id};
+  let query = {_id: election._id};
 
   Election.update(query, election, function(err){
     if(err) {
       console.error(err);
       return;
     } else {
-      req.flash('success', 'Election Updated');
-      res.redirect('/');
+      res.redirect('/admin/election');
+    }
+  })
+});
+
+//remove election
+router.post('/election/remove', function(req, res){
+  let election = {};
+  election._id = req.body.electionId;
+  election._electionName = req.body.name;
+  election._electionStart = req.body.startDate;
+  election._electionEnd = req.body.endDate;
+  election._constituencies = req.body.constituencies;
+  election._deleted = true;
+
+  let query = {_id: election._id};
+
+  Election.update(query, election, function(err){
+    if(err) {
+      console.error(err);
+      return;
+    } else {
+      res.redirect('/admin/election');
     }
   })
 });

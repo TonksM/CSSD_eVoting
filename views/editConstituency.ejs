@@ -3,7 +3,7 @@
   <head>
     <title>Edit Constituency</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script type="text/javascript" src="/javascript/addConstituency.js"></script>
+    <script type="text/javascript" src="/javascript/editConstituency.js"></script>
   </head>
   <body>
     <h1>Edit Constituency</h1>
@@ -18,7 +18,8 @@
 
 <div class='constituenciesDetails'>
   <%constituencies.forEach(function(constituency){%>
-  <form method = "post" action="/admin/constituency/add">
+  <form method = "post" action="/admin/constituency/edit">
+    <input type="hidden" name="constituencyId" value='<%=constituency._id%>'/>
     <label for="name">Name</label>
     <input type="text" name="name" id="name" value="<%=constituency._name%>"/>
     <label for="candidates">Candidates</label>
@@ -36,18 +37,18 @@
     <%}});%>
 
     <label for="postcode">Postcode</label>
-
-    <input type="text" name="postcode" id="postcode"/>
-    <button type='button' onclick="addPostcode()">Add Postcode</button>
-      <div id="postcodeGroup">
+    <input type="text" name="postcode" id="postcode<%=constituency._id%>"/>
+    <button type='button' onclick="addPostcode('<%=constituency._id%>')">Add Postcode</button>
+      <div id="postcodeGroup<%=constituency._id%>">
         <%constituency._validPostcodes.forEach(function(postcode){%>
           <div id ='<%=postcode%>'>
             <label><%=postcode%></label>
-            <input type="checkbox" checked='true' name="postcodes"value="<%=postcode%>">
+            <input type="checkbox" checked name="postcodes"value="<%=postcode%>">
+          </div>
         <%});%>
       </div>
-    <button type='submit'>Add</button>
-  </div>
+    <button type='submit'>Update</button>
+    <button type='submit' formaction="/admin/constituency/remove">Remove</button>
   </form>
   <%});%>
 </div>

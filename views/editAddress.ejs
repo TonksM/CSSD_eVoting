@@ -10,6 +10,7 @@
       <%addresses.forEach(function(address){%>
         <h2><%=address._addressLine1 + ' ' + address._postcode%></h2>
         <form method = "post" action="/admin/address/edit">
+          <input type="hidden" name="addressId" value='<%=address._id%>'/>
           <label for="addressLine1">Address line 1</label>
           <input type="text" name="addressLine1" value='<%=address._addressLine1%>'/>
 
@@ -27,7 +28,9 @@
 
           <label for="postcode">Postcode</label>
           <input type="text" name="postcode" value='<%=address._postcode%>'/>
+          
           <button type='submit'>Update</button>
+          <button type='submit' formaction="/admin/address/remove">Remove</button>
         </form>
       <%});%>
   </body>

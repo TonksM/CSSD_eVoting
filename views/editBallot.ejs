@@ -8,14 +8,16 @@
     <h1>Candidate</h1>
     <p><%=title></p>
     <div class='candidateDetails'>
-      <form method = "post" action="/admin/routes/ballot">
+      <form method = "post" action="/admin/ballot/edit">
+        <input type="hidden" name="ballotId" value='<%=ballot._id%>'/>
         <label for="candidateName">Edit ballot candidate</label>
         <input type="text" name="candidates" value= "<%=ballot._candidates%>"/>
         <label for="candidates">Edit Candidates Surname</label>
         <input type="text" name="surname" value="<%ballot._surname%"/>
         <label for="candidates">Constituency ID</label>
         <input type="hidden" name="constituencyId" value = "<%ballot._constituencyId%"/>
-        <button>Update</button>
+        <button type="submit">Update</button>
+        <button type="submit" formaction="/admin/ballot/remove">Remove</button>
       </div>
     </form>
   </body>

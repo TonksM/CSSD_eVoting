@@ -8,7 +8,8 @@ var addressSchema = new Schema({
     _addressLine3:  String,
     _city:          String,
     _county:        String,
-    _postcode:      String
+    _postcode:      String,
+    _deleted:      	Boolean
 });
 
 module.exports = mongoose.model('Address', addressSchema);

@@ -9,13 +9,14 @@
     <%candidates.forEach(function(candidate){console.log(candidate);%>
     <h2><%=candidate._firstName + " " + candidate._surname%></h2>
     <div class='candidateDetails'>
-      <form method = "post" action="admin/candidate/edit">
+      <form method = "post" action="/admin/candidate/edit">
+        <input type="hidden" name="candidateId" value='<%=candidate._id%>'/>
         <label for="firstName">First Name</label>
         <input type="text" name="firstName" value="<%=candidate._firstName%>"/>
         <label for="surname">Surname</label>
         <input type="text" name="surname" value="<%=candidate._surname%>"/>
         <label for="party">Affliated Party</label>
-        <select>
+        <select name="party" id="party">
         <%parties.forEach(function(party){
             console.log(party);
             if(candidate._party.equals(party._id))
@@ -26,8 +27,8 @@
           <%}
           });%>
         </select>
-        <label for="candidates">Address</label>
-        <select>
+        <label for="address">Address</label>
+        <select name="address" id="address">
         <%addresses.forEach(function(address){
             if(candidate._address.equals(address._id))
             {%>
@@ -37,9 +38,10 @@
           <%}
           });%>
         </select>
-        <button>Update</button>
+        <button type='submit'>Update</button>
+        <button type='submit' formaction="/admin/candidate/remove">Remove</button>
       </div>
+      </form>
     <%});%>
-    </form>
   </body>
 </html>

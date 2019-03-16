@@ -5,6 +5,7 @@ var Schema = mongoose.Schema,
 var partySchema = new Schema({
     _name: 				String,
     _partyColour: 		String,
+    _deleted:      	Boolean
 })
 
 module.exports = mongoose.model('Party', partySchema);
