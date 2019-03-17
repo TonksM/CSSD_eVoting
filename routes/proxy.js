@@ -7,32 +7,10 @@ var Voter = require('../models/voter');
 var Vote = require('../models/vote');
 const session = require('express-session');
 const {ensureAuthticated} = require("../config/auth");
-const {ensureNotVoted} = require("../config/voted")
-const {isNotProxy} = require("../config/proxy");
+const {ensureNotAllVoted} = require("../config/voted")
 
 
-/* GET users listing. */
-router.get('/', ensureAuthticated, isNotProxy, ensureNotVoted, function(req, res, next) {
-  //code to access database and get ballot
-  let voterId = req.user;
-  Voter.findOne({_id: voterId}).populate('_address').exec( function (err, voter){
-    let vpc = voter._address._postcode;
-    console.log("Postcode:"+vpc);
-
-    Constituency.findOne({_validPostcodes: vpc}).populate({
-      path: '_candidates', populate:{path : '_address _party'}
-    }).exec(function(err, constituency){
-      console.log(constituency._candidates);
-        var data = {
-          candidates : constituency._candidates
-        }
-        res.render('ballot', data)
-      
-    });
-  });
-});
-
-router.get('/proxy', function(req, res, next){
+router.get('/proxy', ensureNotAllVoted, function(req, res, next){
   let voterId = req.user;
   Voter.findOne({_id: voterId}).populate('_proxyFor').exec(function (err, voter){
     var data = {
@@ -43,11 +21,11 @@ router.get('/proxy', function(req, res, next){
   });
 });
 
-router.get('/proxy/vote', function(req, res, next){
+router.post('/proxy/ballot', function(req, res, next){
 
 });
 
-router.post('/cast_vote', ensureAuthticated, function(req, res, next){
+router.post('proxy/ballot/cast_vote', ensureAuthticated, function(req, res, next){
   let voterId = req.user;
   let noo = new Vote({
       _vote: req.body.vote

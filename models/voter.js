@@ -13,7 +13,8 @@ var voterSchema = new Schema({
     _hasVoted:      {type: Boolean, default: false},
     _lastLogin:     {type: Date},
     _address:       {type: ObjectId, ref: 'Address' },
-    _loginAttempts: Number
+    _loginAttempts: Number,
+    _proxyFor:      [{type: ObjectId, ref: 'Voter', default: null}]
 });
 
 voterSchema.methods.incrementLoginAttempts = function(){
