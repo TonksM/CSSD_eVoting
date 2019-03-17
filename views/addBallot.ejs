@@ -5,9 +5,8 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+    <a href="/admin">Back</a>
     <h1>Add Ballot</h1>
-
-
     <%
       console.log(err);
       if(err[0]){
@@ -16,7 +15,6 @@
         });
       }
     %>
-
     <div class='ballotDetails'>
       <form method = "post" action="/ballot/add">
         <label for="_candidates">Add Candidates</label>

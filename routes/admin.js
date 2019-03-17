@@ -55,7 +55,7 @@ router.post('/ballot/add', function(req, res){
 });
 
 // update submit new party
-router.post('/ballot/edit/:id', function(req, res){
+router.post('/ballot/edit', function(req, res){
   let ballot = {};
   ballot._name = req.body.partyName;
   ballot._partyColour = req.body.partyColour;
@@ -134,7 +134,7 @@ router.post('/party/edit', function(req, res){
       console.error(err);
       return;
     } else {
-      res.redirect('/admin');
+      res.redirect('/admin/party');
     }
   })
 });
@@ -155,7 +155,7 @@ router.post('/party/remove', function(req, res){
       console.error(err);
       return;
     } else {
-      res.redirect('/admin');
+      res.redirect('/admin/party');
     }
   })
 });
@@ -230,7 +230,7 @@ router.post('/address/edit', function(req, res){
       console.error(err);
       return;
     } else {
-      res.redirect('/admin');
+      res.redirect('/admin/address');
     }
   })
 });
@@ -255,7 +255,7 @@ router.post('/address/remove', function(req, res){
       console.error(err);
       return;
     } else {
-      res.redirect('/admin');
+      res.redirect('/admin/address');
     }
   })
 });
@@ -334,7 +334,7 @@ router.post('/candidate/edit', function(req, res){
       console.error(err);
       return;
     } else {
-      res.redirect('/admin');
+      res.redirect('/admin/candidate');
     }
   })
 });
@@ -355,7 +355,7 @@ router.post('/candidate/remove/', function(req, res){
       console.error(err);
       return;
     } else {
-      res.redirect('/admin');
+      res.redirect('/admin/candidate');
     }
   })
 });
@@ -426,7 +426,7 @@ router.post('/constituency/edit', function(req, res){
       console.error(err);
       return;
     } else {
-      res.redirect('/admin');
+      res.redirect('/admin/constituency');
     }
   })
 });
@@ -447,7 +447,7 @@ router.post('/constituency/remove', function(req, res){
       console.error(err);
       return;
     } else {
-      res.redirect('/admin');
+      res.redirect('/admin/constituency');
     }
   })
 });
