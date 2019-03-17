@@ -31,7 +31,7 @@ module.exports = passport=>{
 			      	}else{
 								voter.incrementLoginAttempts();
 			      		console.log("Password invalid");
-								return done(null, false, { message: "Password is incorrect"});
+			      		return done(null, false, { message: "Invalid email and password combination"});
 			      	}
 			      });
 		      	
