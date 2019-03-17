@@ -551,4 +551,14 @@ router.post('/election/remove', ensureAuthticated, function(req, res){
 });
 /* END of ELECTION ROUTES*/
 
+/* START of RESULTS ROUTES*/
+/* GET RESULTS listing. */
+router.get('/results', ensureAuthticated ,function(req, res, next) {
+  Election.find({_deleted:false}).then(elections =>{
+    Constituency.find({_deleted:false}).then(constituencies=>{
+      res.render('results',{err:{}, constituencies:constituencies,elections:elections});
+    });
+  });
+});
+
 module.exports = router;
