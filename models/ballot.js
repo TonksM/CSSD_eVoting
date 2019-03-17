@@ -4,7 +4,6 @@ var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 
 var ballotSchema = new Schema({
-    _id:                {type: ObjectId, default: mongoose.Types.ObjectId()},
     _candidates:        [{type: ObjectId, ref: 'Candidate'}],
     _constituencyId:    {type: ObjectId, ref: 'Constituency'}
 })

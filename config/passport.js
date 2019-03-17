@@ -14,32 +14,33 @@ module.exports = passport=>{
 	        return done(null, false, { message:"That email is not registered!"});
 	      }
 
-	      if(!voter._hasVoted){
+	      //if(!voter._hasVoted){ moved hasVoted its own config file to streamline the validation of the user
 		      if(voter._loginAttempts > 3){
 		      	console.log("Too many failed login attempts have been made");
 		      	return done(null, false, { message: "Too many failed login attempts have been made"});
 		      }
 		      else{
-		      	voter.incrementLoginAttempts();
 			      bcrypt.compare(password, voter._password,(err,isMatch)=>{
 			      	if(isMatch){
 			      		console.log("Valid");
 			      		console.log("Voter:" + voter);
 			      		console.log("Done:" + done);
-			      		voter.resetLoginAttempts();
+								voter.resetLoginAttempts();
+								voter.save();
 			      		return done(null, voter);
 			      	}else{
+								voter.incrementLoginAttempts();
 			      		console.log("Password invalid");
-			      		return done(null, false, { message: "Password is incorrect"});
+								return done(null, false, { message: "Password is incorrect"});
 			      	}
 			      });
-		      	voter.save();
+		      	
 			  }
-			}
+			/*}
 			else{
 			  	console.log("Voter has already voted");
 	      		return done(null, false, { message: "Vote already passed"});
-		  	}
+		  	}*/
 	      }).catch(err => console.log(err));
 
 	})

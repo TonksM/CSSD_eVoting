@@ -1,16 +1,21 @@
 $("#btn_vote").click(function(e){
     e.preventDefault();
-    var candidate = $("input[name='candidate']:checked").val();
+    console.log("You have voted for: ");
+    var candidate_id = $("input[name='candidate']:checked").val();
 
     $.ajax({
         method: "POST",
-        data: candidate,
-        url: '/',
+        data: {
+            vote: candidate_id
+        },
+        url: 'ballot/cast_vote',
         success: function(data){
-            alert(data.message);
+            location.reload(true);
+            location.replace("./ballot/vote_msg?msg=confirmed");
         },
         error: function(data){
-            alert(data.message);
+            location.reload(true);
+            location.replace("./ballot/vote_msg?msg=error");
         }
     });
 });
