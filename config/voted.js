@@ -17,7 +17,7 @@ module.exports = {
         let voterId = req.user;
 
         Voter.findOne({_id: voterId}).populate('_proxyFor').exec( (err, voter) =>{
-            var allVoted = {};
+            var allVoted = [];
             voter._proxyFor.forEach(function(p) {
                 allVoted.push(p._hasVoted);
             });

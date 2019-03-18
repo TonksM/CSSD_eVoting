@@ -10,9 +10,9 @@ const {ensureAuthticated} = require("../config/auth");
 const {ensureNotAllVoted} = require("../config/voted")
 
 
-router.get('/proxy', ensureNotAllVoted, function(req, res, next){
+router.get('/', ensureNotAllVoted, function(req, res, next){
   let voterId = req.user;
-  Voter.findOne({_id: voterId}).populate('_proxyFor').exec(function (err, voter){
+  Voter.findOne({_id: voterId}).populate({path: '_address _proxyFor', populate:{ path: '_address'}}).exec(function (err, voter){
     var data = {
       voter: voter,
       proxees: voter._proxyFor
@@ -21,11 +21,26 @@ router.get('/proxy', ensureNotAllVoted, function(req, res, next){
   });
 });
 
-router.post('/proxy/ballot', function(req, res, next){
+router.post('/ballot', function(req, res, next){
+  let voterId = req.body.voterId;
+  Voter.findOne({_id: voterId}).populate('_address').exec( function (err, voter){
+    let vpc = voter._address._postcode;
+    console.log("Postcode:"+vpc);
 
+    Constituency.findOne({_validPostcodes: vpc}).populate({
+      path: '_candidates', populate:{path : '_address _party'}
+    }).exec(function(err, constituency){
+      console.log(constituency._candidates);
+        var data = {
+          candidates : constituency._candidates
+        }
+        res.render('ballot', data)
+      
+    });
+  });
 });
 
-router.post('proxy/ballot/cast_vote', ensureAuthticated, function(req, res, next){
+router.post('/ballot/cast_vote', ensureAuthticated, function(req, res, next){
   let voterId = req.user;
   let noo = new Vote({
       _vote: req.body.vote

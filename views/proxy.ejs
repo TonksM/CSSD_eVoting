@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://code.jquery.com/jquery-3.3.1.js" 
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" 
+            crossorigin="anonymous">   </script>
+    <style>
+        .displayProx{
+            list-style-type: none;
+            overflow: hidden;
+            border: 5px #000000 solid;
+            padding: 0 5%;
+        }
+        .displayProx li{
+            border-bottom: 2px #aaaaaa solid;
+            color: #000000;
+            padding: 2px 5px;
+        }
+        .displayProx li.hasVotedtrue{
+            color: #888888;
+            padding: 2px 5px;
+            background-color: #dddddd
+        }
+        .displayProx li.hasVotedtrue:hover{
+            cursor: default;
+        }
+        .displayProx li p{
+            padding: 1px 0;
+            margin: 0;
+        }
+        .displayProx li p:first-child{
+            font-weight: Bold;
+        }
+
+        .displayProx li p:first-child .upper{
+            text-transform: uppercase;
+        }
+
+        .displayProx li:hover{
+            /*background-color:cornflowerblue;
+            color: #ffffff;*/
+            cursor:pointer;
+        }
+
+        .displayProx .selected{
+            background-color:cornflowerblue;
+            color: #ffffff
+        }
+        .displayProx li:last-child{
+            border-bottom: none;
+        }
+    </style>
+  </head>
+  <body>
+    <form method = "get" action="./users/logout">
+      <button>Logout</button>
+    </form>
+    <div class='proxyContainer'>
+        <div class='proxyAll'>
+            <ul class='displayProx'>
+                <li id='<%voter._id%>' class='voterDetails hasVoted<%=voter._hasVoted%>'>
+                    <p><span class='upper'><%=voter._surname%></span>, <%=voter._firstName%></p>
+                    <p><%=voter._address._addressLine1%>, <%=voter._address._postcode%></p>
+                    <P>Has Voted: <%=voter._hasVoted%></p>
+                </li>
+                <%proxees.forEach(function(p){%>
+                    <li id='<%=p._id%>' class='voterDetails hasVoted<%=p._hasVoted%>'>
+                        <p><span class='upper'><%=p._surname%></span>, <%=p._firstName%></p>
+                        <p><%=p._address._addressLine1%>, <%=p._address._postcode%></p>
+                        <p>Has Voted: <%=p._hasVoted%></p>
+                        <input id='<%=p._id%>input' type="hidden" value="<%=p._firstName%> <%=p._surname%> "></input>
+                    </li>
+                <%});%>
+            </ul>
+        </div>
+        <button id="continue" disabled="disabled">Continue to ballot</button>
+    </div>
+    
+    
+    <script>
+        $('.voterDetails').click(function(){
+            if($(this).hasClass('hasVotedtrue')){
+
+            }else{
+                if($(this).hasClass('selected')){
+                    $(this).removeClass('selected');
+                    $('#continue').attr("disabled", "disabled");
+                }else{
+                    $('.voterDetails').removeClass('selected');
+                    $(this).addClass('selected');
+                    $('#continue').removeAttr("disabled");
+                }
+            }
+        });
+
+        $('#continue').click(function(){
+            var vid = $('.voterDetails.selected').attr('id');
+            var vname = $('#'+vid+'input').val();
+            if(vid == undefined){
+            }else{
+                alert("Voting as " + vname);
+                $.ajax({
+                    method: "POST",
+                    data: {
+                        voterId: vid
+                    },
+                    url: 'proxy/ballot',
+                    success: function(data){
+                        location.reload(true);
+                        location.replace("./proxy/ballot");
+                    },
+                    error: function(data){
+                        alert(data.error);
+                    }
+                });
+            }
+
+        });
+
+    </script>
+  </body>
+</html>
