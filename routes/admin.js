@@ -554,16 +554,29 @@ router.post('/election/remove', ensureAuthticated, function(req, res){
 /* START of RESULTS ROUTES*/
 /* GET RESULTS listing. */
 router.get('/results', ensureAuthticated ,function(req, res, next) {
+  var electionsChartData = [];
+  function displayResults(electionsChartData){
+    res.render('results',{err:{}, electionsChartData:electionsChartData});
+  } 
+  var itemsProcessed = 0;
   Election.find({_deleted:false}).populate({path:'_constituencies', populate:{path:'_candidates', populate:{path:'_party'}}}).exec((err,elections) =>{
-    elections.forEach(election=>{
-      var chartData = election.setAllCandidates(function(){
-        return(election.tallyElection());
+    if(elections){
+      elections.forEach(election=>{
+        console.log("Election: ");
+        console.log(election);
+        election.tallyElection(function(chartData){
+          chartData.electionName = election._electionName;
+          chartData.id = election._id;
+          itemsProcessed++;
+          electionsChartData.push(chartData);
+          if(itemsProcessed === elections.length) {
+            displayResults(electionsChartData);
+          }
+        });
+
       });
-      console.log("Chart Data: "+chartData);
-      election.chartData = chartData;
-      console.log(election);
-    });
-    res.render('results',{err:{}, elections:elections});
+    }
+    
   });
 });
 

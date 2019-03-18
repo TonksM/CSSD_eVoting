@@ -10,17 +10,18 @@
     <a href="/admin">Back</a>
     <h1>Results</h1>
     <div class='ResultsDetails'>
-      <%elections.forEach(function(election){
-      console.log(election);%>
-        <h2><%=election._electionName%></h2>
-        <canvas id="<%=election._id%>" width="400" height="400"></canvas>
+      <%electionsChartData.forEach(function(chartData){
+      console.log(chartData);%>
+        <h2><%=chartData.electionName%></h2>
+        <h3>Current Lead: <%=chartData.currentLead%></h3>
+        <canvas id="<%=chartData.id%>" style="display: block;"></canvas>
       <%});%>
     </body>
     <script type="text/javascript">
-     <%elections.forEach(function(election){%>
-       var electionJSON = <%-JSON.stringify(election)%>;
+     <%electionsChartData.forEach(function(chartData){
+      console.log("Chart Data: " + chartData);%>
+       var electionJSON = <%-JSON.stringify(chartData)%>;
        configureChart(electionJSON);
-      
     <%});%>
     </script>
   </html>
