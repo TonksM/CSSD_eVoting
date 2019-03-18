@@ -8,6 +8,14 @@
   <body>
     <a href="/admin">Back</a>
     <h1>Parties</h1>
+    <%
+      console.log(err);
+      if(err[0]){
+        err.forEach(function(error){
+          %><div class="error"><%=error.msg%></div><%
+        });
+      }
+    %>
     <div class='partiesDetails'>
       <%parties.forEach(function(party){%>
         <h2><%=party._name%></h2>

@@ -10,6 +10,7 @@ const Election = require('./models/election');
 const createError = require('http-errors');
 const expressValidator = require('express-validator');
 const session = require('express-session');
+const flash = require('connect-flash');
 
 //passport config
 require('./config/passport')(passport);
@@ -44,13 +45,14 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('abcd'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressValidator());
 app.use(session({
     secret:'test',
     resave:true,
     saveUnitialized:true}));
+app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
