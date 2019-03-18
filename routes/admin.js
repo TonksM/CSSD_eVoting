@@ -554,10 +554,16 @@ router.post('/election/remove', ensureAuthticated, function(req, res){
 /* START of RESULTS ROUTES*/
 /* GET RESULTS listing. */
 router.get('/results', ensureAuthticated ,function(req, res, next) {
-  Election.find({_deleted:false}).then(elections =>{
-    Constituency.find({_deleted:false}).then(constituencies=>{
-      res.render('results',{err:{}, constituencies:constituencies,elections:elections});
+  Election.find({_deleted:false}).populate({path:'_constituencies', populate:{path:'_candidates', populate:{path:'_party'}}}).exec((err,elections) =>{
+    elections.forEach(election=>{
+      var chartData = election.setAllCandidates(function(){
+        return(election.tallyElection());
+      });
+      console.log("Chart Data: "+chartData);
+      election.chartData = chartData;
+      console.log(election);
     });
+    res.render('results',{err:{}, elections:elections});
   });
 });
 
