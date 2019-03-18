@@ -1,13 +1,75 @@
 var express = require('express');
 var router = express.Router();
-let tempBallot = {_id:'tempID', candidates:[{_id:'idTonks',name:'Tonks',party:'Party3'},{_id:'idJon',name:'Jon',party:'Party2'},{_id:'idBen',name:'Ben',party:'Party1'}]};
+var passport = require('passport')
+var Constituency = require('../models/constituency');
+var Candidate = require('../models/candidate');
+var Voter = require('../models/voter');
+var Vote = require('../models/vote');
+const session = require('express-session');
 const {ensureAuthticated} = require("../config/auth");
+const {ensureNotVoted} = require("../config/voted")
+
 
 /* GET users listing. */
-router.get('/', ensureAuthticated ,function(req, res, next) {
-	//code to access database and get ballot
+router.get('/', ensureAuthticated, ensureNotVoted, function(req, res, next) {
+  //code to access database and get ballot
+  let voterId = req.user;
+  Voter.findOne({_id: voterId}).populate('_address').exec( function (err, voter){
+    let vpc = voter._address._postcode;
+    console.log("Postcode:"+vpc);
 
-  res.render('ballot', tempBallot);
+    Constituency.findOne({_validPostcodes: vpc}).populate({
+      path: '_candidates', populate:{path : '_address _party'}
+    }).exec(function(err, constituency){
+      console.log(constituency._candidates);
+        var data = {
+          candidates : constituency._candidates
+        }
+        res.render('ballot', data)
+      
+    });
+  });
+  //res.render('ballot', tempBallot);
+});
+
+router.post('/cast_vote', ensureAuthticated, function(req, res, next){
+  let voterId = req.user;
+  let noo = new Vote({
+      _vote: req.body.vote
+  });
+  noo.save(function(err, nu){
+    if(err) return console.error(err);
+    Voter.findOneAndUpdate({_id: voterId}, { _hasVoted: true}, function(err){
+      if(err) return console.error(err);
+    });
+  }); 
+});
+
+
+router.get('/vote_confirmed', function(req, res, next){
+  res.render('vote_cast');
+});
+
+router.get("/vote_msg", function(req, res, next){
+  var data = {
+    msg: ""
+  } 
+  
+  switch(req.query.msg){
+        case 'confirm':
+          data.msg = "Thank you for votingx! :3";
+          break;
+        case 'error':
+          data.msg = "There was an error! :O";
+          break;
+        case 'voted':
+          data.msg = "You have already voted, please logout."
+        break;
+  }
+
+  res.render('vote_msg', data);
 });
 
 module.exports = router;
+
+

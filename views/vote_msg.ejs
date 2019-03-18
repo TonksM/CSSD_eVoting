@@ -1,0 +1,29 @@
+<html>
+    <head>
+            <script src="https://code.jquery.com/jquery-3.3.1.js" 
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" 
+            crossorigin="anonymous">   </script>
+    </head>
+    <body>
+        <p>
+            <%=msg%>
+        </p>
+            <button id="logout">Logout</button>
+        <script>
+            $("#logout").click(function(){
+                $.ajax({
+                    method: "get",
+                    url: 'user/logout',
+                    success: function(data){
+                        location.reload(true);
+                        location.replace("/");
+                    },
+                    error: function(data){
+                        location.reload(true);
+                        location.replace("/");
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
