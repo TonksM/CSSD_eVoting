@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var addressSchema = require('./address');
 
 var Schema = mongoose.Schema, 
     ObjectId = Schema.ObjectId;

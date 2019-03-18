@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const {ensureAuthticated} = require("../config/auth");
+const {isAdmin} = require("../config/isAdmin");
 const Election = require('../models/election');
 const Constituency = require('../models/constituency');
 const Candidate = require('../models/candidate');
@@ -9,18 +10,18 @@ const Party = require('../models/party');
 const Address = require('../models/address');
 
 /* GET admin view. */
-router.get('/', ensureAuthticated ,function(req, res, next) {
+router.get('/', ensureAuthticated, isAdmin, function(req, res, next) {
 	res.render('admin');
 });
 
 /* START of BALLOT ROUTES*/
 /* GET ballot listing. */
-router.get('/ballot', ensureAuthticated ,function(req, res, next) {
+router.get('/ballot', ensureAuthticated, isAdmin, function(req, res, next) {
 	res.render('editBallot');
 });
 
 /* GET ballot add view. */
-router.get('/ballot/add', ensureAuthticated ,function(req, res, next) {
+router.get('/ballot/add', ensureAuthticated, isAdmin, function(req, res, next) {
 	res.render('addBallot');
 });
 
@@ -55,7 +56,7 @@ router.post('/ballot/add', ensureAuthticated, function(req, res){
 });
 
 // update submit new party
-router.post('/ballot/edit', ensureAuthticated, function(req, res){
+router.post('/ballot/edit', ensureAuthticated, isAdmin,  function(req, res){
   let ballot = {};
   ballot._name = req.body.partyName;
   ballot._partyColour = req.body.partyColour;
@@ -76,7 +77,7 @@ router.post('/ballot/edit', ensureAuthticated, function(req, res){
 
 /* START of PARTY ROUTES*/
 /* GET PARTY listing. */
-router.get('/party', ensureAuthticated ,function(req, res, next) {
+router.get('/party', ensureAuthticated, isAdmin, function(req, res, next) {
   Party.find({_deleted:false}).then(parties =>{
     console.log(parties);
     res.render('editParty',{parties:parties});
@@ -84,12 +85,12 @@ router.get('/party', ensureAuthticated ,function(req, res, next) {
 });
 
 /* GET PARTY add view. */
-router.get('/party/add', ensureAuthticated ,function(req, res, next) {
+router.get('/party/add', ensureAuthticated, isAdmin, function(req, res, next) {
 	res.render('addParty',{err:{}});
 });
 
 // submit new party
-router.post('/party/add', ensureAuthticated, function(req, res){
+router.post('/party/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('partyName', 'Party name is required').notEmpty();
   req.checkBody('partyColour', 'Party colour is required').notEmpty();
@@ -119,7 +120,7 @@ router.post('/party/add', ensureAuthticated, function(req, res){
 });
 
 // update submit new party
-router.post('/party/edit', ensureAuthticated, function(req, res){
+router.post('/party/edit', ensureAuthticated, isAdmin, function(req, res){
   let party = {};
   party._id = req.body.partyId;
   party._name = req.body.partyName;
@@ -140,7 +141,7 @@ router.post('/party/edit', ensureAuthticated, function(req, res){
 });
 
 // remove party
-router.post('/party/remove', ensureAuthticated, function(req, res){
+router.post('/party/remove', ensureAuthticated, isAdmin, function(req, res){
   let party = {};
   party._id = req.body.partyId;
   party._name = req.body.partyName;
@@ -163,7 +164,7 @@ router.post('/party/remove', ensureAuthticated, function(req, res){
 
 /* START of ADDRESS ROUTES*/
 /* GET ADDRESS listing. */
-router.get('/address', ensureAuthticated ,function(req, res, next) {
+router.get('/address', ensureAuthticated, isAdmin, function(req, res, next) {
 	Address.find({_deleted:false}).then(addresses =>{
     console.log(addresses);
     res.render('editAddress',{addresses:addresses});
@@ -171,12 +172,12 @@ router.get('/address', ensureAuthticated ,function(req, res, next) {
 });
 
 /* GET ADDRESS add view. */
-router.get('/address/add', ensureAuthticated ,function(req, res, next) {
+router.get('/address/add', ensureAuthticated, isAdmin, function(req, res, next) {
 	res.render('addAddress',{err:{}});
 });
 
 // submit new candidate
-router.post('/address/add', ensureAuthticated, function(req, res){
+router.post('/address/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('addressLine1', 'Address Line 1 is required').notEmpty();
   req.checkBody('city', 'City Name is required').notEmpty();
@@ -211,7 +212,7 @@ router.post('/address/add', ensureAuthticated, function(req, res){
 });
 
 // update submit new party
-router.post('/address/edit', ensureAuthticated, function(req, res){
+router.post('/address/edit', ensureAuthticated, isAdmin, function(req, res){
   let address = {};
   address._id = req.body.addressId;
   address._addressLine1 = req.body.addressLine1;
@@ -236,7 +237,7 @@ router.post('/address/edit', ensureAuthticated, function(req, res){
 });
 
 // remove party
-router.post('/address/remove', ensureAuthticated, function(req, res){
+router.post('/address/remove', ensureAuthticated, isAdmin, function(req, res){
   let address = {};
   address._id = req.body.addressId;
   address._addressLine1 = req.body.addressLine1;
@@ -263,7 +264,7 @@ router.post('/address/remove', ensureAuthticated, function(req, res){
 
 /* START of CANDIDATE ROUTES*/
 /* GET CANDIDATE listing. */
-router.get('/candidate', ensureAuthticated ,function(req, res, next) {
+router.get('/candidate', ensureAuthticated, isAdmin, function(req, res, next) {
 	Candidate.find({_deleted:false}).then(candidates =>{
     console.log(candidates);
     Party.find({_deleted:false}).then(parties=>{
@@ -275,7 +276,7 @@ router.get('/candidate', ensureAuthticated ,function(req, res, next) {
 });
 
 /* GET CANDIDATE add view. */
-router.get('/candidate/add', ensureAuthticated ,function(req, res, next) {
+router.get('/candidate/add', ensureAuthticated, isAdmin, function(req, res, next) {
 	Party.find({_deleted:false}).then(parties=>{
     Address.find({_deleted:false}).then(addresses=>{
       res.render('addCandidate',{parties:parties,addresses:addresses,err:{}});
@@ -284,7 +285,7 @@ router.get('/candidate/add', ensureAuthticated ,function(req, res, next) {
 });
 
 // submit new candidate
-router.post('/candidate/add', ensureAuthticated, function(req, res){
+router.post('/candidate/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('firstName', 'first name is required').notEmpty();
   req.checkBody('surname', 'surname is required').notEmpty();
@@ -318,7 +319,7 @@ router.post('/candidate/add', ensureAuthticated, function(req, res){
 });
 
 // update submit new candidate
-router.post('/candidate/edit', ensureAuthticated, function(req, res){
+router.post('/candidate/edit', ensureAuthticated, isAdmin, function(req, res){
   let candidate = new Candidate();
   candidate._id = req.body.candidateId;
   candidate._firstName = req.body.firstName;
@@ -340,7 +341,7 @@ router.post('/candidate/edit', ensureAuthticated, function(req, res){
 });
 
 //remove candidate
-router.post('/candidate/remove/', ensureAuthticated, function(req, res){
+router.post('/candidate/remove/', ensureAuthticated, isAdmin, function(req, res){
   let candidate = new Candidate();
   candidate._id = req.body.candidateId;
   candidate._firstName = req.body.firstName;
@@ -363,7 +364,7 @@ router.post('/candidate/remove/', ensureAuthticated, function(req, res){
 
 /* START of CONSTITUENCEY ROUTES*/
 /* GET CONSTITUENCEY listing. */
-router.get('/constituency', ensureAuthticated ,function(req, res, next) {
+router.get('/constituency', ensureAuthticated, isAdmin, function(req, res, next) {
 	Constituency.find({_deleted:false}).then(constituencies =>{
     Candidate.find({_deleted:false}).then(candidates =>{
       res.render('editConstituency',{err:{},candidates:candidates,constituencies:constituencies});
@@ -372,14 +373,14 @@ router.get('/constituency', ensureAuthticated ,function(req, res, next) {
 });
 
 /* GET CONSTITUENCEY add view. */
-router.get('/constituency/add', ensureAuthticated ,function(req, res, next) {
+router.get('/constituency/add', ensureAuthticated, isAdmin, function(req, res, next) {
   Candidate.find({_deleted:false}).then(candidates =>{
 	 res.render('addConstituency',{err:{}, candidates:candidates});
   });
 });
 
 // submit new constituency
-router.post('/constituency/add', ensureAuthticated, function(req, res){
+router.post('/constituency/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('name', 'Name is required').notEmpty();
   req.checkBody('candidates', 'Candidates are required').notEmpty();
@@ -411,7 +412,7 @@ router.post('/constituency/add', ensureAuthticated, function(req, res){
 });
 
 // update submit new constituency
-router.post('/constituency/edit', ensureAuthticated, function(req, res){
+router.post('/constituency/edit', ensureAuthticated, isAdmin, function(req, res){
   let constituency = {};
   constituency._id = req.body.constituencyId;
   constituency._name = req.body.name;
@@ -432,7 +433,7 @@ router.post('/constituency/edit', ensureAuthticated, function(req, res){
 });
 
 //remove constituency
-router.post('/constituency/remove', ensureAuthticated, function(req, res){
+router.post('/constituency/remove', ensureAuthticated, isAdmin, function(req, res){
   let constituency = {};
   constituency._id = req.body.constituencyId;
   constituency._name = req.body._name;
@@ -455,7 +456,7 @@ router.post('/constituency/remove', ensureAuthticated, function(req, res){
 
 /* START of ELECTION ROUTES*/
 /* GET ELECTION listing. */
-router.get('/election', ensureAuthticated ,function(req, res, next) {
+router.get('/election', ensureAuthticated, isAdmin, function(req, res, next) {
   Election.find({_deleted:false}).then(elections =>{
     Constituency.find({_deleted:false}).then(constituencies=>{
       res.render('editElection',{err:{}, constituencies:constituencies,elections:elections});
@@ -464,14 +465,14 @@ router.get('/election', ensureAuthticated ,function(req, res, next) {
 });
 
 /* GET ELECTION add view. */
-router.get('/election/add', ensureAuthticated ,function(req, res, next) {
+router.get('/election/add', ensureAuthticated, isAdmin, function(req, res, next) {
 	Constituency.find({_deleted:false}).then(constituencies=>{
     res.render('addElection',{err:{}, constituencies:constituencies});
   });
 });
 
 /* POST ELECTION */
-router.post('/election/add', ensureAuthticated, function(req, res){
+router.post('/election/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('name', 'Election name is required').notEmpty();
   req.checkBody('startDate', 'The start date of the election is required').notEmpty();
@@ -507,7 +508,7 @@ router.post('/election/add', ensureAuthticated, function(req, res){
 });
 
 // update submit new election
-router.post('/election/edit', ensureAuthticated, function(req, res){
+router.post('/election/edit', ensureAuthticated, isAdmin, function(req, res){
   let election = {};
   election._id = req.body.electionId;
   election._electionName = req.body.name;
@@ -529,7 +530,7 @@ router.post('/election/edit', ensureAuthticated, function(req, res){
 });
 
 //remove election
-router.post('/election/remove', ensureAuthticated, function(req, res){
+router.post('/election/remove', ensureAuthticated, isAdmin, function(req, res){
   let election = {};
   election._id = req.body.electionId;
   election._electionName = req.body.name;
@@ -553,7 +554,7 @@ router.post('/election/remove', ensureAuthticated, function(req, res){
 
 /* START of RESULTS ROUTES*/
 /* GET RESULTS listing. */
-router.get('/results', ensureAuthticated ,function(req, res, next) {
+router.get('/results', ensureAuthticated, isAdmin, function(req, res, next) {
   var electionsChartData = [];
   function displayResults(electionsChartData){
     res.render('results',{err:{}, electionsChartData:electionsChartData});
