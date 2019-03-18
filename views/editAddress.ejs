@@ -8,6 +8,14 @@
   <body>
     <a href="/admin">Back</a>
     <h1>Addresses</h1>
+    <%
+      console.log(err);
+      if(err[0]){
+        err.forEach(function(error){
+          %><div class="error"><%=error.msg%></div><%
+        });
+      }
+    %>
     <div class='addressDeitals'>
       <%addresses.forEach(function(address){%>
         <h2><%=address._addressLine1 + ' ' + address._postcode%></h2>

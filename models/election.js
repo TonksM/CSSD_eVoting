@@ -12,14 +12,14 @@ var electionSchema = new Schema({
     _constituencies:    [{type: ObjectId, ref: 'Constituency'}],
     _allCandidates:     [{type: ObjectId, ref: 'Candidate'}],
     _winningCandidate:  {type: ObjectId, ref: 'Candidate'},
-    _deleted:      	Boolean
+    _deleted:      		Boolean
 });
 
 electionSchema.methods.tallyElection = function(callback){
 	console.log("Enter tallyElection");
-	const ids = this._constituencies.map(constituency => constituency._id);
 	this.setAllCandidates(function(candidates){
 		console.log(candidates);
+		const ids = candidates.map(candidate => candidate._id);
 		Vote.find({_vote:candidates}).populate({path:'_vote', populate:{path:'_party'}}).exec((err,votes) =>{
 			console.log("Votes");
 			console.log(votes);
@@ -53,7 +53,20 @@ electionSchema.methods.tallyElection = function(callback){
 				}
 				i++;
 			});
-
+			console.log("Candidates: ");
+			console.log(candidates);
+			const parties = candidates.map(candidate => candidate._party);
+			console.log("Parties: ");
+			console.log(parties);
+			parties.forEach(party=>{
+				if(!chartData.partyId.toString().includes(party._id.toString()))
+				{
+					chartData.partyId.push(party._id);
+					chartData.partyNames.push(party._name);
+					chartData.partyColours.push(party._partyColour);
+					chartData.partyVotes.push(0);
+				}
+			});
 			chartData.currentLead = chartData.partyNames[currentLead];
 			console.log("chartData: ");
 			console.log(chartData);
@@ -69,7 +82,7 @@ electionSchema.methods.setAllCandidates = function(callback){
 		console.log(constituency);
 		constituency._candidates.forEach(candidate=>{
 			console.log(candidate);
-			this._allCandidates.push(candidate._id);
+			this._allCandidates.push(candidate);
 		});
 	})
 
