@@ -54,14 +54,6 @@ app.use(session({
     saveUnitialized:true}));
 app.use(flash());
 
-var sessionFlash = function(req, res, next) {
-    res.locals.currentUser = req.user;
-    res.locals.error = req.flash('error');
-    res.locals.success = req.flash('success');
-    next();
-}
-app.use(sessionFlash)
-
 app.use(passport.initialize());
 app.use(passport.session());
 
