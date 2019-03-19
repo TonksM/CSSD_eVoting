@@ -26,7 +26,8 @@ router.post('/login', function(req, res, next) {
   	console.log('Valid Inputs');
   	passport.authenticate('local', {
   		successRedirect:'/admin',
-  		failureRedirect:'/'
+  		failureRedirect:'/',
+      failureFlash:true
   	})(req,res,next);
   }
 });

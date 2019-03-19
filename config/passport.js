@@ -12,13 +12,13 @@ module.exports = passport=>{
 	    .then(voter => {
 	      if(!voter) {
 	      	console.log("Email ivalid");
-	        return done(null, false, { message:"That email is not registered!"});
+	        return done(null, false, { message:"Email and password combination is incorrect"});
 	      }
 
 	      //if(!voter._hasVoted){ moved hasVoted its own config file to streamline the validation of the user
 		      if(voter._loginAttempts > 3){
 		      	console.log("Too many failed login attempts have been made");
-		      	return done(null, false, { message: "Too many failed login attempts have been made"});
+		      	return done(null, false, { message: "Too many failed login attempts have been made and this account is locked"});
 		      }
 		      else{
 			      bcrypt.compare(password, voter._password,(err,isMatch)=>{
@@ -30,16 +30,17 @@ module.exports = passport=>{
 								voter.save();
 			      		return done(null, voter);
 			      	}else{
-								voter.incrementLoginAttempts();
+						voter.incrementLoginAttempts();
+						voter.save();
 			      		console.log("Password invalid");
-			      		return done(null, false, { message: "Invalid email and password combination"});
+			      		return done(null, false, { message: "Email and password combination is incorrect"});
 			      	}
 			      });
 			      if(voter._loginAttempts > 3){
 			    	//cssdevoting@gmail.com
 			    	//cssdevoting12345
 			    }
-		      	voter.save();
+		      	
 			  }
 			/*}
 			else{
