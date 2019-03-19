@@ -35,6 +35,7 @@ connection.on('error',function(error){
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var ballotRouter = require('./routes/ballot');
+var proxyRouter = require('./routes/proxy');
 var adminRouter = require('./routes/admin');
 
 var app = express();
@@ -65,6 +66,7 @@ require('./models/voter');
 app.use('/', loginRouter);
 app.use('/users', usersRouter);
 app.use('/ballot', ballotRouter);
+app.use('/proxy', proxyRouter);
 app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
