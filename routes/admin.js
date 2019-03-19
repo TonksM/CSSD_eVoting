@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const flash = require('connect-flash');
+const bcrypt = require('bcryptjs');
 const {ensureAuthticated} = require("../config/auth");
 const {isAdmin} = require("../config/isAdmin");
 const Election = require('../models/election');
@@ -9,6 +10,7 @@ const Candidate = require('../models/candidate');
 const Ballot = require('../models/ballot');
 const Party = require('../models/party');
 const Address = require('../models/address');
+const Voter = require('../models/voter');
 
 /* GET admin view. */
 router.get('/', ensureAuthticated, isAdmin, function(req, res, next) {
@@ -604,5 +606,123 @@ router.get('/results', ensureAuthticated, isAdmin, function(req, res, next) {
     
   });
 });
+
+/* START of VOTER ROUTES*/
+/* GET VOTER listing. */
+router.get('/voter', ensureAuthticated, isAdmin, function(req, res, next) {
+  Voter.find().then(voters =>{
+    console.log(voters);
+     Address.find({_deleted:false}).then(addresses=>{
+      res.render('editVoter',{err: req.flash('errors'), addresses:addresses,voters:voters});
+    });
+  });
+});
+
+/* GET VOTER add view. */
+router.get('/voter/add', ensureAuthticated, isAdmin, function(req, res, next) {
+  Voter.find().then(voters =>{
+     Address.find({_deleted:false}).then(addresses=>{
+      res.render('addVoter',{err: req.flash('errors'), addresses:addresses,voters:voters});
+    });
+  });
+});
+
+/* POST VOTER */
+router.post('/voter/add', ensureAuthticated, isAdmin, function(req, res){
+  // Express validator
+  req.checkBody('firstName', 'First name is required').notEmpty();
+  req.checkBody('surname', 'Surname is required').notEmpty();
+  req.checkBody('address', 'Address is required').notEmpty();
+  
+  // Get errors
+  let errors = req.validationErrors();
+
+ if(errors){
+    req.flash('errors',errors);
+    req.session.save(function () {
+      res.redirect('/admin/voter/add');
+    });
+  } else {
+    let voter = new Voter();
+    voter._id = req.body.candidateId;
+    voter._firstName = req.body.firstName;
+    voter._surname = req.body.surname;
+    voter._address = req.body.address;
+    voter._proxyFor = req.body.proxyFor;
+
+
+    console.log("Voter: "+voter);
+
+    voter.save(function(err){
+      if(err) {
+        console.error(err);
+        return;
+      } else {
+        res.redirect('/admin');
+      }
+    });
+  }
+});
+
+// update submit new voter
+router.post('/voter/edit', ensureAuthticated, isAdmin, function(req, res){
+  // Express validator
+  req.checkBody('firstName', 'First name is required').notEmpty();
+  req.checkBody('surname', 'Surname is required').notEmpty();
+  req.checkBody('address', 'Address is required').notEmpty();
+  req.checkBody('proxyFor', 'Address is required').notEmpty();
+
+  
+  // Get errors
+  let errors = req.validationErrors();
+
+ if(errors){
+    req.flash('errors',errors);
+    req.session.save(function () {
+      res.redirect('/admin/voter');
+    });
+  } else {
+    let voter = {};
+    voter._id = req.body.voterId;
+    voter._firstName = req.body.firstName;
+    voter._surname = req.body.surname;
+    voter._address = req.body.address;
+    voter._proxyFor = req.body.proxyFor;
+
+    let query = {_id: voter._id};
+
+    Voter.update(query, voter, function(err){
+      if(err) {
+        console.error(err);
+        return;
+      } else {
+        res.redirect('/admin/voter');
+      }
+    });
+  }
+});
+
+//remove voter
+router.post('/voter/remove', ensureAuthticated, isAdmin, function(req, res){
+  let voter = {};
+  voter._id = req.body.voterId;
+  voter._voterName = req.body.name;
+  voter._voterStart = req.body.startDate;
+  voter._voterEnd = req.body.endDate;
+  voter._constituencies = req.body.constituencies;
+  voter._deleted = true;
+
+  let query = {_id: voter._id};
+
+  Voter.update(query, voter, function(err){
+    if(err) {
+      console.error(err);
+      return;
+    } else {
+      res.redirect('/admin/voter');
+    }
+  })
+});
+/* END of VOTER ROUTES*/
 
 module.exports = router;
