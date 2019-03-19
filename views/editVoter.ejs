@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Voter</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+  </head>
+  <body>
+    <a href="/admin">Back</a>
+    <h1>Voters</h1>
+    <%
+      console.log(err);
+      if(err[0]){
+        err.forEach(function(error){
+          %><div class="error"><%=error.msg%></div><%
+        });
+      }
+    %>
+    <%voters.forEach(function(voter){console.log(voter);%>
+    <h2><%=voter._firstName + " " + voter._surname%></h2>
+    <div class='voterDetails'>
+      <form method = "post" action="/admin/voter/edit">
+        <input type="hidden" name="voterId" value='<%=voter._id%>'/>
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstName" value="<%=voter._firstName%>"/>
+        <label for="surname">Surname</label>
+        <input type="text" name="surname" value="<%=voter._surname%>"/>
+        <label for="password">Password</label>
+        <input type="text" name="password" value="<%=voter._password%>"/>
+        <label for="address">Address</label>
+        <select name="address" id="address">
+        <%addresses.forEach(function(address){
+            if(voter._address.equals(address._id))
+            {%>
+              <option selected value="<%=address._id%>"><%=address._addressLine1 + " " + address._postcode%></option>
+          <%}else{%>
+              <option value="<%=address._id%>"><%=address._addressLine1 + " " + address._postcode%></option>
+          <%}
+          });%>
+        </select>
+
+        <label for="proxies">Proxys</label>
+        <%voters.forEach(function(pVoter){
+          if(!pVoter._id.equals(voter._id)){
+            if(voter._proxyFor != null && voter.voter.toString().includes(pVoter._id.toString())){
+          %>
+              <label><%=pVoter._firstName + " " + pVoter._surname%></label>
+              <input type="checkbox" checked name="proxiesFor"value="<%=pVoter._id%>">
+          <%}else{
+            %>
+              <label><%=pVoter._firstName + " " + pVoter._surname%></label>
+              <input type="checkbox" name="proxiesFor"value="<%=pVoter._id%>">
+            <%
+            }
+          }
+        });%>
+        <button type='submit'>Update</button>
+        <button type='submit' formaction="/admin/voter/remove">Remove</button>
+      </div>
+      </form>
+    <%});%>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Voter</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+  </head>
+  <body>
+    <a href="/admin">Back</a>
+    <h1>Add Voter</h1>
+      <%
+        console.log(err);
+        if(err[0]){
+          err.forEach(function(error){
+            %><div class="error"><%=error.msg%></div><%
+          });
+        }
+      %>
+    <div class='voterDetails'>
+    <form method = "post" action="/admin/Voter/add">
+      <label for="firstName">First Name</label>
+      <input type="text" name="firstName" id ="firstname"/>
+      <label for="surname">Surname</label>
+      <input type="text" name="surname" id= "surname"/>
+      <label for="password">Password</label>
+      <input type="text" name="password" id= "password"/>
+
+      <label for="address">Address</label>
+      <select name="address" id="address">
+        <%addresses.forEach(function(address){%> 
+          <option value="<%=address._id%>"><%=address._addressLine1 + " " + address._postcode%></option>
+          <%
+        });%>
+      </select>
+
+      <label for="proxies">Proxys</label>
+      <%voters.forEach(function(pVoter){
+      %>
+          <label><%=pVoter._firstName + " " + pVoter._surname%></label>
+          <input type="checkbox" name="proxiesFor"value="<%=pVoter._id%>">
+        <%
+      });%>
+    <button type='submit'>Add</button>
+  </form>
+  </div>
+</div>
+</html>
