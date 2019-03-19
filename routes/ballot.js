@@ -61,12 +61,7 @@ router.post('/cast_vote', ensureAuthticated, function(req, res, next){
   }); 
 });
 
-
-router.get('/vote_confirmed', function(req, res, next){
-  res.render('vote_cast');
-});
-
-router.get("/vote_msg", function(req, res, next){
+router.get("/vote_msg", ensureAuthticated, function(req, res, next){
   var data = {
     msg: ""
   } 
