@@ -43,7 +43,7 @@
     <button type='button' onclick="addPostcode('<%=constituency._id%>')">Add Postcode</button>
       <div id="postcodeGroup<%=constituency._id%>">
         <%constituency._validPostcodes.forEach(function(postcode){%>
-          <div id ='<%=postcode%>'>
+          <div id ='<%=postcode%>'class="postcodeGroup">
             <label><%=postcode%></label>
             <input type="checkbox" checked name="postcodes"value="<%=postcode%>">
           </div>

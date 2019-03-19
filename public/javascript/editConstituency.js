@@ -10,7 +10,7 @@ function addPostcode(id){
 		newPostcodeLabel.innerText = newPostcodeValue;
 		var divContainer = document.createElement("div");
 		divContainer.id = newPostcodeValue;
-
+		divContainer.class = "postcodeGroup";
 		divContainer.append(newPostcodeLabel);
 		divContainer.innerHTML += newPostcode;
 

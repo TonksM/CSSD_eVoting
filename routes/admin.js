@@ -15,67 +15,6 @@ router.get('/', ensureAuthticated, isAdmin, function(req, res, next) {
 	res.render('admin');
 });
 
-/* START of BALLOT ROUTES*/
-/* GET ballot listing. */
-router.get('/ballot', ensureAuthticated, isAdmin, function(req, res, next) {
-	res.render('editBallot');
-});
-
-/* GET ballot add view. */
-router.get('/ballot/add', ensureAuthticated, isAdmin, function(req, res, next) {
-	res.render('addBallot');
-});
-
-// submit new party
-router.post('/ballot/add', ensureAuthticated, function(req, res){
-  // Express validator
-  req.checkBody('partyName', 'Party name is required').notEmpty();
-  req.checkBody(' partyColour', 'The Parties colour is required').notEmpty();
-
-  // Get errors
-  let errors = req.validationErrors();
-
-  if(errors){
-    res.render('addParty', {
-      errors: errors
-    });
-  } else {
-    let party = new Party();
-    party._name = req.body.partyName;
-    party._partyColour = req.body.partyColour;
-
-    party.save(function(err){
-      if(err) {
-        console.error(err);
-        return;
-      } else {
-        req.flash('success', 'Party Added');
-        res.redirect('/');
-      }
-    });
-  }
-});
-
-// update submit new party
-router.post('/ballot/edit', ensureAuthticated, isAdmin,  function(req, res){
-  let ballot = {};
-  ballot._name = req.body.partyName;
-  ballot._partyColour = req.body.partyColour;
-
-  let query = {_id: req.params.id};
-
-  Ballot.update(query, party, function(err){
-    if(err) {
-      console.error(err);
-      return;
-    } else {
-      req.flash('success', 'Ballot Updated');
-      res.redirect('/');
-    }
-  })
-});
-/* END of BALLOT ROUTES*/
-
 /* START of PARTY ROUTES*/
 /* GET PARTY listing. */
 router.get('/party', ensureAuthticated, isAdmin, function(req, res, next) {
@@ -105,7 +44,6 @@ router.post('/party/add', ensureAuthticated, isAdmin, function(req, res){
     req.session.save(function () {
       res.redirect('/admin/party/add');
     });
-   
   } else {
     let party = new Party();
     party._name = req.body.partyName;

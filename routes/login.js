@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('login',{err:{}});
+  res.render('login',{err:{},loginError:req.flash("error")});
 });
 
 module.exports = router;

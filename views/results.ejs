@@ -3,6 +3,7 @@
   <head>
     <title>Election Results</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script type="text/javascript" src="/javascript/results.js"></script>
   </head>
@@ -14,8 +15,16 @@
       console.log(chartData);%>
         <h2><%=chartData.electionName%></h2>
         <h3>Current Lead: <%=chartData.currentLead%></h3>
-        <canvas id="<%=chartData.id%>" style="display: block;"></canvas>
-      <%});%>
+        <canvas id="<%=chartData.id%>" style="display: block;"></canvas><%
+        for(var i = 0;i<chartData.partyId.length;i++)
+        {
+          %>
+            <p><%=chartData.partyNames[i] + ": " + chartData.partyVotes[i]%></p>
+          <%
+        }
+
+      });%>
+
     </body>
     <script type="text/javascript">
      <%electionsChartData.forEach(function(chartData){

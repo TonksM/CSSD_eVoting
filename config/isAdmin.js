@@ -4,11 +4,11 @@ module.exports = {
 
         let voterId = req.user;
         Admin.findOne({_adminId: voterId}, function(err, voter){
-           if(voter){
+            if(voter){
                 return(next());
-           }else{
+            }else{
                 res.redirect("/ballot");
-           }
+            }
         });
 	}
 }
