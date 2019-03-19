@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 const passport = require('passport');
-const Voters = mongoose.model('Voter');
+const Voter = mongoose.model('Voter');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Index' });
@@ -35,6 +35,20 @@ router.post('/login', function(req, res, next) {
 router.get('/logout', function(req, res, next) {
   req.logout();
   res.redirect("/");
+});
+router.get('/unlockAccount', function(req, res, next) {
+  console.log(req.param('id'));
+  Voter.findOne({_id:req.param('id')}).then(voter => {
+    voter._loginAttempts = 0;
+    voter.save(function(err){
+      if(err) {
+        console.error(err);
+        return;
+      } else {
+        res.redirect('/');
+      }
+    });
+  });
 });
 
 module.exports = router;
