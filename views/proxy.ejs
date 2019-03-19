@@ -76,7 +76,7 @@
             </ul>
         </div>
         <form method="post" action="proxy/ballot">
-                <input type="hide" id="selectedUser" name="selectedUser" value=""></input>
+                <input type="hidden" id="selectedUser" name="selectedUser" value=""></input>
                 <button type="submit" id="continue" disabled="disabled">Continue to ballot</button>
         </form>
     </div>
@@ -85,9 +85,9 @@
     <script>
         $('.voterDetails').click(function(){
             if($(this).hasClass('hasVotedtrue')){
-                alert("this voter has voted");
+                //alert("this voter has voted");
             }else{
-                alert("this voter has not voted")
+                //alert("this voter has not voted")
                 if($(this).hasClass('selected')){
                     $(this).removeClass('selected');
                     $('#selectedUser').val("");

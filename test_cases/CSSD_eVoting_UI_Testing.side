@@ -1,0 +1,100 @@
+{
+  "id": "55c1fdfe-8596-4490-b114-4aee308eaf9a",
+  "version": "2.0",
+  "name": "CSSD_eVoting_UI_Testing",
+  "url": "http://localhost:3000",
+  "tests": [{
+    "id": "4b77ac6c-6ded-46ac-bbc9-43d189e3f874",
+    "name": "Proxy-AllUsersVoted",
+    "commands": [{
+      "id": "dabaf7a2-d7dc-4851-95e9-d8c796fd8fcd",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ff7781da-53d1-48c3-bb36-811cfa9ec331",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "550x692",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ca50e909-4fb8-49fc-a871-b32fc9f667bc",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "614c6e07-4d03-4ff4-9816-47a8ecfbaa48",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "tonks@llynx.uk"
+    }, {
+      "id": "c40de360-4ac7-4481-9bac-a468d4303e6b",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "qwerty"
+    }, {
+      "id": "b1e01d74-8fb0-44e2-9f2f-797cd104388d",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4d0db684-96f3-4996-8164-0e1d2cd8ec6e",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(1)",
+      "targets": [
+        ["css=button:nth-child(1)", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "ee194ad7-4fbd-41a4-a670-d43f20787f7a",
+    "name": "Proxy-VoteAsSelf",
+    "commands": []
+  }],
+  "suites": [{
+    "id": "9af60741-a80b-4734-98e4-5ababadb16de",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:3000/"],
+  "plugins": []
+}
