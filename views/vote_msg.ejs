@@ -11,15 +11,15 @@
             <form method = "get" action="users/logout">
                 <button>Logout</button>
             </form>
-            <button  id="returnProx" href="./proxy" name="returnProx">Return to proxy menu</button>  
+            <%if(msg != "voted"){%>
+                <button  id="returnProx" href="./proxy" name="returnProx">Return to proxy menu</button>
+            <%}%>
+            
         <script>
             $('document').ready(function(){
                 var href = window.location.href;
                 if(     href.indexOf("proxy") == -1 ){
                     $('#returnProx').hide();
-                }
-                if( href.indexOf("msg=voted") >= 0){
-                    $('#returnProx').html("Review list of voters");
                 }
             });
 

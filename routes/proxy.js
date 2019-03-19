@@ -62,12 +62,7 @@ router.post('/ballot/cast_vote', ensureAuthticated, function(req, res, next){
   }); 
 });
 
-
-router.get('/vote_confirmed', function(req, res, next){
-  res.render('vote_cast');
-});
-
-router.get('/ballot/vote_msg', function(req, res, next){
+router.get('/ballot/vote_msg', ensureAuthticated, function(req, res, next){
   var data = {
     msg: ""
   } 
@@ -79,11 +74,10 @@ router.get('/ballot/vote_msg', function(req, res, next){
         case 'error':
           data.msg = "There was an error! :O";
           break;
-        case 'voted':
-          data.msg = "All available voter accounts have voted, please logout."
-        break;
+        case 'voted': 
+          data.msg = "All assoicated voters for this account have voted, please log out";
+          break;
   }
-
   res.render('vote_msg', data);
 });
 
