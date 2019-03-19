@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Constituency</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+    <script type="text/javascript" src="/javascript/addConstituency.js"></script>
+  </head>
+  <body>
+    <a href="/admin">Back</a>
+    <h1>Add Constituency</h1>
+      <%
+        console.log(err);
+        if(err[0]){
+          err.forEach(function(error){
+            %><div class="error"><%=error.msg%></div><%
+          });
+        }
+      %>
+
+<div class='constituencyDetails'>
+  <form method = "post" action="/admin/constituency/add">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name"/>
+    <label for="candidates">Candidates</label>
+    <%candidates.forEach(function(candidate){%>
+        <label><%=candidate._firstName + " " + candidate._surname%></label>
+        <input type="checkbox" name="candidates"value="<%=candidate._id%>">
+    <%});%>
+    <input type="text" name="postcode" id="postcode"/>
+    <button type='button' onclick="addPostcode()">Add Postcode</button>
+      <div id="postcodeGroup">
+
+      </div>
+    <button type='submit'>Add</button>
+  </div>
+  </form>
+</div>
+</html>

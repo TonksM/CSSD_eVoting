@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Election Results</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script type="text/javascript" src="/javascript/results.js"></script>
+  </head>
+  <body>
+    <a href="/admin">Back</a>
+    <h1>Results</h1>
+    <div class='ResultsDetails'>
+      <%electionsChartData.forEach(function(chartData){
+      console.log(chartData);%>
+        <h2><%=chartData.electionName%></h2>
+        <h3>Current Lead: <%=chartData.currentLead%></h3>
+        <canvas id="<%=chartData.id%>" style="display: block;"></canvas>
+      <%});%>
+    </body>
+    <script type="text/javascript">
+     <%electionsChartData.forEach(function(chartData){
+      console.log("Chart Data: " + chartData);%>
+       var electionJSON = <%-JSON.stringify(chartData)%>;
+       configureChart(electionJSON);
+    <%});%>
+    </script>
+  </html>

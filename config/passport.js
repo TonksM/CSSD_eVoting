@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Voter = mongoose.model('Voter');
 
+
 module.exports = passport=>{
 	passport.use(new LocalStrategy({
 	  usernameField: 'email'
@@ -34,7 +35,11 @@ module.exports = passport=>{
 			      		return done(null, false, { message: "Invalid email and password combination"});
 			      	}
 			      });
-		      	
+			      if(voter._loginAttempts > 3){
+			    	//cssdevoting@gmail.com
+			    	//cssdevoting12345
+			    }
+		      	voter.save();
 			  }
 			/*}
 			else{

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Constituency</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+    <script type="text/javascript" src="/javascript/editConstituency.js"></script>
+  </head>
+  <body>
+    <a href="/admin">Back</a>
+    <h1>Edit Constituency</h1>
+      <%
+        console.log(err);
+        if(err[0]){
+          err.forEach(function(error){
+            %><div class="error"><%=error.msg%></div><%
+          });
+        }
+      %>
+
+<div class='constituenciesDetails'>
+  <%constituencies.forEach(function(constituency){%>
+  <form method = "post" action="/admin/constituency/edit">
+    <input type="hidden" name="constituencyId" value='<%=constituency._id%>'/>
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" value="<%=constituency._name%>"/>
+    <label for="candidates">Candidates</label>
+    <%candidates.forEach(function(candidate){%>
+        <label><%=candidate._firstName + " " + candidate._surname%></label>
+        <%
+        console.log("Constituency" + constituency._candidates);
+        if(constituency._candidates != null && constituency._candidates.toString().includes(candidate._id.toString())){
+          console.log('Candidate' + candidate._id);
+          console.log("Match Found");%>
+          <input type="checkbox" checked name="candidates"value="<%=candidate._id%>">
+        <%}else{
+          console.log('Match Not Found');%>
+          <input type="checkbox" name="candidates"value="<%=candidate._id%>">
+    <%}});%>
+
+    <label for="postcode">Postcode</label>
+    <input type="text" name="postcode" id="postcode<%=constituency._id%>"/>
+    <button type='button' onclick="addPostcode('<%=constituency._id%>')">Add Postcode</button>
+      <div id="postcodeGroup<%=constituency._id%>">
+        <%constituency._validPostcodes.forEach(function(postcode){%>
+          <div id ='<%=postcode%>'>
+            <label><%=postcode%></label>
+            <input type="checkbox" checked name="postcodes"value="<%=postcode%>">
+          </div>
+        <%});%>
+      </div>
+    <button type='submit'>Update</button>
+    <button type='submit' formaction="/admin/constituency/remove">Remove</button>
+  </form>
+  <%});%>
+</div>
+</html>

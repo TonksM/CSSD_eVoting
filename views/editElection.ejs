@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit elections</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+  </head>
+  <body>
+    <a href="/admin">Back</a>
+    <h1>Elections</h1>
+    <%
+      console.log(err);
+      if(err[0]){
+        err.forEach(function(error){
+          %><div class="error"><%=error.msg%></div><%
+        });
+      }
+    %>
+    <div class='ElectionDetails'>
+      <%elections.forEach(function(election){
+      console.log(election);%>
+        <h2><%=election._electionName%></h2>
+        <form method = "post" action="/admin/election/edit">
+          <input type="hidden" name="electionId" value='<%=election._id%>'/>
+          <label for="name">Edit election Name</label>
+          <input type="text" name="name" value= "<%=election._electionName%>"/>
+          <label for="startDate">Start Date</label>
+          <input type="date" name="startDate" value="<%=election._electionStart%>"/>
+          <label for="endDate">End Date</label>
+          <input type="date" name="endDate" value="<%=election._electionEnd%>"/>
+          <label>Constituencies</label>
+          <%constituencies.forEach(function(constituency){%>
+            <label><%=constituency._name%></label>
+            <%
+            console.log("Constituency" + constituency._candidates);
+            if(election._constituencies != null && election._constituencies.toString().includes(constituency._id.toString())){
+              console.log('constituency' + constituency._id);
+              console.log("Match Found");%>
+              <input type="checkbox" checked name="constituencies"value="<%=constituency._id%>">
+            <%}else{
+              console.log('Match Not Found');%>
+              <input type="checkbox" name="constituencies"value="<%=constituency._id%>">
+          <%}});%>
+          <button type="submit">Update</button>
+          <button type='submit' formaction="/admin/election/remove">Remove</button>
+        </div>
+      </form>
+      <%});%>
+    </body>
+  </html>

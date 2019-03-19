@@ -1,15 +1,14 @@
 var mongoose = require('mongoose');
-var addressSchema = require('./address');
-var Schema = mongoose.Schema, 
+var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 
 var candidateSchema = new Schema({
-    _id:            {type: ObjectId, default: mongoose.Types.ObjectId()},
     _firstName:     String,
     _surname:       String,
     _party:         {type: ObjectId, ref: 'Party'},
     _address:       {type: ObjectId, ref: 'Address' },
-    _constituency:  {type: ObjectId, ref: 'Constituency'}
+    _constituency:  {type: ObjectId, ref: 'Constituency'},
+    _deleted:      	Boolean
 })
 
 module.exports = mongoose.model('Candidate', candidateSchema);

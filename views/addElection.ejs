@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Election</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+  </head>
+  <body>
+    <a href="/admin">Back</a>
+    <h1>Add Election</h1>
+    
+      <%
+        console.log(err);
+        if(err[0]){
+          err.forEach(function(error){
+            %><div class="error"><%=error.msg%></div><%
+          });
+        }
+      %>
+<div class='electionDetails'>
+  <form method = "post" action="/admin/election/add">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name"/>
+    <label for="startDate">Start Date</label>
+    <input type="date" name="startDate" id="startDate"/>
+    <label for="endDate">End Date</label>
+    <input type="date" name="endDate" id="endDate"/>
+    <label >Constituencies</label>
+    <%constituencies.forEach(function(constituency){%>
+      <label><%=constituency._name%></label>
+      <input type="checkbox" name='constituencies'value="<%=constituency._id%>">
+    <%});%>
+    <button type='submit'>Add</button>
+  </form>
+</div>
+</html>

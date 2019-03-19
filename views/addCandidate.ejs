@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Candidate</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+  </head>
+  <body>
+    <a href="/admin">Back</a>
+    <h1>Add Candidate</h1>
+      <%
+        console.log(err);
+        if(err[0]){
+          err.forEach(function(error){
+            %><div class="error"><%=error.msg%></div><%
+          });
+        }
+      %>
+    <div class='CandidateDetails'>
+    <form method = "post" action="/admin/candidate/add">
+      <label for="firstName">First Name</label>
+      <input type="text" name="firstName" id ="firstname"/>
+      <label for="surname">Surname</label>
+      <input type="text" name="surname" id= "surname"/>
+
+      <label for="party">Party</label>
+      <select type="text" name="party" id= "party">
+        <%parties.forEach(function(party){%>
+          <option value="<%=party._id%>"><%=party._name%></option>
+        <%});%>
+      </select>
+
+      <label for="address">Address</label>
+      <select name="address" id="address">
+        <%addresses.forEach(function(address){%> 
+          <option value="<%=address._id%>"><%=address._addressLine1 + " " + address._postcode%></option>
+          <%
+        });%>
+      </select>
+    <button type='submit'>Add</button>
+  </form>
+  </div>
+</div>
+</html>

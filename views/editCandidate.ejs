@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Candidate</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+  </head>
+  <body>
+    <a href="/admin">Back</a>
+    <h1>Candidates</h1>
+    <%
+      console.log(err);
+      if(err[0]){
+        err.forEach(function(error){
+          %><div class="error"><%=error.msg%></div><%
+        });
+      }
+    %>
+    <%candidates.forEach(function(candidate){console.log(candidate);%>
+    <h2><%=candidate._firstName + " " + candidate._surname%></h2>
+    <div class='candidateDetails'>
+      <form method = "post" action="/admin/candidate/edit">
+        <input type="hidden" name="candidateId" value='<%=candidate._id%>'/>
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstName" value="<%=candidate._firstName%>"/>
+        <label for="surname">Surname</label>
+        <input type="text" name="surname" value="<%=candidate._surname%>"/>
+        <label for="party">Affliated Party</label>
+        <select name="party" id="party">
+        <%parties.forEach(function(party){
+            console.log(party);
+            if(candidate._party.equals(party._id))
+            {%>
+              <option selected value="<%=party._id%>"><%=party._name%></option>
+          <%}else{%>
+              <option value="<%=party._id%>"><%=party._name%></option>
+          <%}
+          });%>
+        </select>
+        <label for="address">Address</label>
+        <select name="address" id="address">
+        <%addresses.forEach(function(address){
+            if(candidate._address.equals(address._id))
+            {%>
+              <option selected value="<%=address._id%>"><%=address._addressLine1 + " " + address._postcode%></option>
+          <%}else{%>
+              <option value="<%=address._id%>"><%=address._addressLine1 + " " + address._postcode%></option>
+          <%}
+          });%>
+        </select>
+        <button type='submit'>Update</button>
+        <button type='submit' formaction="/admin/candidate/remove">Remove</button>
+      </div>
+      </form>
+    <%});%>
+  </body>
+</html>

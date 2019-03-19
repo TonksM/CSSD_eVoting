@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add Address</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+  </head>
+  <body>
+    <a href="/admin">Back</a>
+    <h1>Add Address</h1>
+      <%
+        console.log(err);
+        if(err[0]){
+          err.forEach(function(error){
+            %><div class="error"><%=error.msg%></div><%
+          });
+        }
+      %>
+  <div class='addressDetails'>
+  <form method = "post" action="/admin/address/add">
+    <label for="addressLine1">Address line 1</label>
+    <input type="text" name="addressLine1" id="addressLine1"/>
+
+    <label for="addressLine2">Address line 2</label>
+    <input type="text" name="addressLine2" id="addressLine2"/>
+
+    <label for="addressLine3">Address line 3</label>
+    <input type="text" name="addressLine3" id="addressLine3"/>
+
+    <label for="city">City Name</label>
+    <input type="text" name="city" id="city"/>
+
+    <label for="county">County Name</label>
+    <input type="text" name="county" id="county"/>
+
+    <label for="postcode">Postcode</label>
+
+    <input type="text" name="postcode" id="postcode"/>
+    <button type='submit'>Add</button>
+  </form>
+  </div>
+</div>
+</html>
