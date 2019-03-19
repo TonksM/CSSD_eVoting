@@ -14,8 +14,16 @@
       console.log(chartData);%>
         <h2><%=chartData.electionName%></h2>
         <h3>Current Lead: <%=chartData.currentLead%></h3>
-        <canvas id="<%=chartData.id%>" style="display: block;"></canvas>
-      <%});%>
+        <canvas id="<%=chartData.id%>" style="display: block;"></canvas><%
+        for(var i = 0;i<chartData.partyId.length;i++)
+        {
+          %>
+            <p><%=chartData.partyNames[i] + ": " + chartData.partyVotes[i]%></p>
+          <%
+        }
+
+      });%>
+
     </body>
     <script type="text/javascript">
      <%electionsChartData.forEach(function(chartData){
