@@ -25,8 +25,6 @@
         <input type="text" name="firstName" value="<%=voter._firstName%>"/>
         <label for="surname">Surname</label>
         <input type="text" name="surname" value="<%=voter._surname%>"/>
-        <label for="password">Password</label>
-        <input type="text" name="password" value="<%=voter._password%>"/>
         <label for="address">Address</label>
         <select name="address" id="address">
         <%addresses.forEach(function(address){
@@ -39,17 +37,17 @@
           });%>
         </select>
 
-        <label for="proxies">Proxys</label>
+        <label for="proxyFor">Proxies</label>
         <%voters.forEach(function(pVoter){
           if(!pVoter._id.equals(voter._id)){
-            if(voter._proxyFor != null && voter.voter.toString().includes(pVoter._id.toString())){
+            if(voter._proxyFor != null && voter._proxyFor.toString().includes(pVoter._id.toString())){
           %>
               <label><%=pVoter._firstName + " " + pVoter._surname%></label>
-              <input type="checkbox" checked name="proxiesFor"value="<%=pVoter._id%>">
+              <input type="checkbox" checked name="proxyFor"value="<%=pVoter._id%>">
           <%}else{
             %>
               <label><%=pVoter._firstName + " " + pVoter._surname%></label>
-              <input type="checkbox" name="proxiesFor"value="<%=pVoter._id%>">
+              <input type="checkbox" name="proxyFor"value="<%=pVoter._id%>">
             <%
             }
           }

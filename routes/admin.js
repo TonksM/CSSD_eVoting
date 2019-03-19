@@ -636,6 +636,10 @@ router.post('/voter/add', ensureAuthticated, isAdmin, function(req, res){
   
   // Get errors
   let errors = req.validationErrors();
+  var proxies = req.body.proxyFor.length;
+  if(proxies != null && proxies > 2){
+    errors = ({"msg":"Only select two prxoies"});
+  }
 
  if(errors){
     req.flash('errors',errors);
@@ -670,11 +674,15 @@ router.post('/voter/edit', ensureAuthticated, isAdmin, function(req, res){
   req.checkBody('firstName', 'First name is required').notEmpty();
   req.checkBody('surname', 'Surname is required').notEmpty();
   req.checkBody('address', 'Address is required').notEmpty();
-  req.checkBody('proxyFor', 'Address is required').notEmpty();
 
+  
   
   // Get errors
   let errors = req.validationErrors();
+
+  if(req.body.proxyFor.length > 2){
+    errors = ({"msg":"Only select two prxoies"});
+  }
 
  if(errors){
     req.flash('errors',errors);
@@ -706,11 +714,10 @@ router.post('/voter/edit', ensureAuthticated, isAdmin, function(req, res){
 router.post('/voter/remove', ensureAuthticated, isAdmin, function(req, res){
   let voter = {};
   voter._id = req.body.voterId;
-  voter._voterName = req.body.name;
-  voter._voterStart = req.body.startDate;
-  voter._voterEnd = req.body.endDate;
-  voter._constituencies = req.body.constituencies;
-  voter._deleted = true;
+  voter._firstName = req.body.firstName;
+  voter._surname = req.body.surname;
+  voter._address = req.body.address;
+  voter._proxyFor = req.body.proxyFor;
 
   let query = {_id: voter._id};
 
