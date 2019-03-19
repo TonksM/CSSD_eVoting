@@ -22,8 +22,9 @@ module.exports = {
                 allVoted.push(p._hasVoted);
             });
             allVoted.push(voter._hasVoted);
-            if(allVoted.every(function(voted){voted})){
-                res.redirect("./proxy/vote_msg?msg=voted")
+            console.log("All voted" + allVoted);
+            if(allVoted.every(function(voted){return voted})){
+                res.redirect("./proxy/ballot/vote_msg?msg=voted")
             }else{
                 return(next());
             }

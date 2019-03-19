@@ -79,14 +79,15 @@
                   <label for="<%=candidate._id%>">
                     <ul class="candidateDetails">
                       <li>
+                        <input id="<%=candidate._id%>_name" type="hidden" name="votingFor" val="<%=candidate._firstName%> <%=candidate._surname%>, <%=candidate._party._name%>"></input>
                         <p class="txtBold"><span class="txtUpper"><%=candidate._surname%></span>, <%=candidate._firstName%></p>
                         <p class="txtRegular"><%=candidate._address._addressLine1%>, 
                                                 <%=candidate._address._addressLine2%>,
                                                 <%=candidate._address._postcode%></p>
-                        <p class="txtBold"><%=candidate._party._name%>
+                        <p class="txtBold"><%=candidate._party._name%></p>
                       </li>
                       <li>
-                        <img src="/images/parties/<%=candidate._party._name%>.png" alt="">
+                        <img src="/images/parties/<%=candidate._party._name%>.png" alt="&nbsp;">
                       </li>
                     </ul>
                   </label>
@@ -99,7 +100,11 @@
             <%});%>
           </tbody>
         </table>
-        <button id="btn_vote" value="Submit">Submit</button>
+        <form method="post" action="ballot/cast_vote">
+          <input type="hidden" id="votingFor" name="votingFor" value=""></input>
+          <input type="hidden" id="voterId" name="voterId" value="<%=voter%>"></input>
+          <button id="btn_vote" value="Submit">Submit</button>
+        </form>
       </div>
     </div>
     

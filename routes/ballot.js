@@ -24,7 +24,8 @@ router.get('/', ensureAuthticated, isNotProxy, ensureNotVoted, function(req, res
     }).exec(function(err, constituency){
       console.log(constituency._candidates);
         var data = {
-          candidates : constituency._candidates
+          voter:     voterId,
+          candidates: constituency._candidates
         }
         res.render('ballot', data)
       
@@ -32,7 +33,7 @@ router.get('/', ensureAuthticated, isNotProxy, ensureNotVoted, function(req, res
   });
 });
 
-router.get('/proxy', function(req, res, next){
+/*router.get('/proxy', function(req, res, next){
   let voterId = req.user;
   Voter.findOne({_id: voterId}).populate('_proxyFor').exec(function (err, voter){
     var data = {
@@ -41,7 +42,7 @@ router.get('/proxy', function(req, res, next){
     }
     res.render('proxy', data)
   });
-});
+});*/
 
 router.get('/proxy/vote', function(req, res, next){
 
