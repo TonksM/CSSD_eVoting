@@ -12,7 +12,16 @@ const Party = require('../models/party');
 const Address = require('../models/address');
 const Voter = require('../models/voter');
 
-/* GET admin view. */
+/**
+ * Route to admin folder
+ * @name Admin index route
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback '/' 
+ */
 router.get('/', ensureAuthticated, isAdmin, function(req, res, next) {
 	res.render('admin',{err: req.flash('errors')});
 });
@@ -587,7 +596,7 @@ router.get('/results', ensureAuthticated, isAdmin, function(req, res, next) {
   } 
   var itemsProcessed = 0;
   Election.find({_deleted:false}).populate({path:'_constituencies', populate:{path:'_candidates', populate:{path:'_party'}}}).exec((err,elections) =>{
-    if(elections){
+    if(elections !=null){
       elections.forEach(election=>{
         console.log("Election: ");
         console.log(election);
