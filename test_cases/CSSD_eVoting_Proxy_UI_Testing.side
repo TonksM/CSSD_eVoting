@@ -1,0 +1,247 @@
+{
+  "id": "55c1fdfe-8596-4490-b114-4aee308eaf9a",
+  "version": "2.0",
+  "name": "CSSD_eVoting_Proxy_UI_Testing",
+  "url": "http://localhost:3000",
+  "tests": [{
+    "id": "4b77ac6c-6ded-46ac-bbc9-43d189e3f874",
+    "name": "Proxy-AllUsersVoted",
+    "commands": [{
+      "id": "dabaf7a2-d7dc-4851-95e9-d8c796fd8fcd",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ff7781da-53d1-48c3-bb36-811cfa9ec331",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "550x692",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ca50e909-4fb8-49fc-a871-b32fc9f667bc",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "614c6e07-4d03-4ff4-9816-47a8ecfbaa48",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "tonks@llynx.uk"
+    }, {
+      "id": "c40de360-4ac7-4481-9bac-a468d4303e6b",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "qwerty"
+    }, {
+      "id": "b1e01d74-8fb0-44e2-9f2f-797cd104388d",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4d0db684-96f3-4996-8164-0e1d2cd8ec6e",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(1)",
+      "targets": [
+        ["css=button:nth-child(1)", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "ee194ad7-4fbd-41a4-a670-d43f20787f7a",
+    "name": "Proxy-VoteAsSelf",
+    "commands": [{
+      "id": "053b0abc-1ac1-4ce3-8823-936df13c06bf",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "30dced41-a299-4d47-a7c7-ceea4212f6b0",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "550x692",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a102f41e-ea3d-40aa-a68d-96d97ce2641d",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dc7ff173-8bca-44f9-8c19-89132a5a9981",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "tonks@llynx.uk"
+    }, {
+      "id": "cac7c2e7-a34e-4b8d-a1e5-abfbea2f2e5d",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "qwerty"
+    }, {
+      "id": "0fc1b98b-424c-43aa-a26c-4e306a806624",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f21ed7a4-ea6e-4267-bbb2-d143fa8312d9",
+      "comment": "",
+      "command": "click",
+      "target": "css=#\\35 c8bba319519072ed8df8fdf > p:nth-child(2)",
+      "targets": [
+        ["css=#\\35 c8bba319519072ed8df8fdf > p:nth-child(2)", "css:finder"],
+        ["xpath=//li[@id='5c8bba319519072ed8df8fdf']/p[2]", "xpath:idRelative"],
+        ["xpath=//p[2]", "xpath:position"],
+        ["xpath=//p[contains(.,'64 Intake Road, LS28 9BZ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "33c4dd6a-7afb-490d-a708-dec7c9f41082",
+      "comment": "",
+      "command": "click",
+      "target": "id=continue",
+      "targets": [
+        ["id=continue", "id"],
+        ["css=#continue", "css:finder"],
+        ["xpath=//button[@id='continue']", "xpath:attributes"],
+        ["xpath=//div/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Continue to ballot')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "69914b0d-1249-410d-8e64-9bb70d495e63",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Voting as Tonks Ions ",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "da00a542-e496-4ea6-8c9e-5a4d78856601",
+      "comment": "",
+      "command": "click",
+      "target": "id=5c8bc17712c4e51020d1aca4",
+      "targets": [
+        ["id=5c8bc17712c4e51020d1aca4", "id"],
+        ["name=candidate", "name"],
+        ["css=#\\35 c8bc17712c4e51020d1aca4", "css:finder"],
+        ["xpath=//input[@id='5c8bc17712c4e51020d1aca4']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fd5d82d1-42b3-4f83-8e09-bc29e251ca41",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn_vote",
+      "targets": [
+        ["id=btn_vote", "id"],
+        ["css=#btn_vote", "css:finder"],
+        ["xpath=//button[@id='btn_vote']", "xpath:attributes"],
+        ["xpath=//div[2]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d01953a-a707-494f-b0c2-f6cdb61462e1",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "You have voted for: Sparkle Fox, Gay",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "88fddfba-6704-4dc2-b1a6-278d19734eb2",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(1)",
+      "targets": [
+        ["css=button:nth-child(1)", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0fee13d4-aeda-4fc8-bd23-f661600c02a5",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "9af60741-a80b-4734-98e4-5ababadb16de",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:3000/"],
+  "plugins": []
+}
