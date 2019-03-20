@@ -128,6 +128,16 @@ router.post('/party/edit', ensureAuthticated, isAdmin, function(req, res){
 });
 
 // remove party
+/**
+ * Route to remove party  index
+ * @name Admin  party remove  route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback '/party/remove'
+ */
 router.post('/party/remove', ensureAuthticated, isAdmin, function(req, res){    // lists each form of party and removes it by ID/Name/PartyColour and sets deleted to true
   let party = {};
   party._id = req.body.partyId;
@@ -170,6 +180,17 @@ router.get('/address', ensureAuthticated, isAdmin, function(req, res, next) {
 });
 
 /* GET ADDRESS add view. */
+/**
+ * Route to address add  index
+ * @name Admin  party edit route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback '/address/add'
+ */
 router.get('/address/add', ensureAuthticated, isAdmin, function(req, res, next) {
 	res.render('addAddress',{err: req.flash('errors')});
 });
@@ -210,8 +231,17 @@ router.post('/address/add', ensureAuthticated, isAdmin, function(req, res){
     });
   }
 });
-
 // update submit new party
+/**
+ * Route to update new party  index
+ * @name Admin  party edit route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback 'address/edit'
+ */
 router.post('/address/edit', ensureAuthticated, isAdmin, function(req, res){
 
   req.checkBody('addressLine1', 'Address Line 1 is required').notEmpty();
@@ -250,7 +280,6 @@ router.post('/address/edit', ensureAuthticated, isAdmin, function(req, res){
     });
   }
 });
-
 // remove party
 router.post('/address/remove', ensureAuthticated, isAdmin, function(req, res){
   let address = {};
@@ -300,8 +329,18 @@ router.get('/candidate', ensureAuthticated, isAdmin, function(req, res, next) {
     });
   });
 });
-
 /* GET CANDIDATE add view. */
+/**
+ * Route to add candidate index
+ * @name Admin  camdidate add route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'candidate/add'
+ */
 router.get('/candidate/add', ensureAuthticated, isAdmin, function(req, res, next) {
 	Party.find({_deleted:false}).then(parties=>{
     Address.find({_deleted:false}).then(addresses=>{
@@ -311,6 +350,16 @@ router.get('/candidate/add', ensureAuthticated, isAdmin, function(req, res, next
 });
 
 // submit new candidate
+/**
+ * Route to add candidtate  index
+ * @name Admin  add candidate route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback 'candidate/add'
+ */
 router.post('/candidate/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('firstName', 'First name is required').notEmpty();
