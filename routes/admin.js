@@ -95,6 +95,16 @@ router.post('/party/add', ensureAuthticated, isAdmin, function(req, res){
 });
 
 // update submit new party
+/**
+ * Route to party edit index
+ * @name Admin  party edit route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback '/party/edit'
+ */
 router.post('/party/edit', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('partyName', 'Party name is required').notEmpty();
@@ -178,7 +188,6 @@ router.get('/address', ensureAuthticated, isAdmin, function(req, res, next) {
     res.render('editAddress',{addresses:addresses,err: req.flash('errors')});
   });
 });
-
 /* GET ADDRESS add view. */
 /**
  * Route to address add  index
@@ -281,6 +290,17 @@ router.post('/address/edit', ensureAuthticated, isAdmin, function(req, res){
   }
 });
 // remove party
+/**
+ * Route  index
+ * @name Admin  constituency index route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback '/address'
+ */
 router.post('/address/remove', ensureAuthticated, isAdmin, function(req, res){
   let address = {};
   address._id = req.body.addressId;
@@ -353,7 +373,7 @@ router.get('/candidate/add', ensureAuthticated, isAdmin, function(req, res, next
 /**
  * Route to add candidtate  index
  * @name Admin  add candidate route
- * @param RequestType GET
+ * @param RequestType POST
  * @param ensureAuthticated Checks if user is authenticated
  * @param isAdmin Checks if user is an admin
  * @param Request The request being sent to the route.
@@ -397,6 +417,16 @@ router.post('/candidate/add', ensureAuthticated, isAdmin, function(req, res){
 });
 
 // update submit new candidate
+/**
+ * Route to edit candidate  index
+ * @name Admin  candidate edit route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback '/candidate/edit'
+ */
 router.post('/candidate/edit', ensureAuthticated, isAdmin, function(req, res){
 
   // Express validator
@@ -436,6 +466,16 @@ router.post('/candidate/edit', ensureAuthticated, isAdmin, function(req, res){
 });
 
 //remove candidate
+/**
+ * Route to remove candidate index
+ * @name Admin  remove candidate route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback '/candidate/remove'
+ */
 router.post('/candidate/remove/', ensureAuthticated, isAdmin, function(req, res){
   let candidate = new Candidate();
   candidate._id = req.body.candidateId;
@@ -479,12 +519,22 @@ router.get('/constituency', ensureAuthticated, isAdmin, function(req, res, next)
 });
 
 /* GET CONSTITUENCEY add view. */
+
 router.get('/constituency/add', ensureAuthticated, isAdmin, function(req, res, next) {
   Candidate.find({_deleted:false}).then(candidates =>{
 	 res.render('addConstituency',{err: req.flash('errors'), candidates:candidates});
   });
 });
-
+/**
+ * Route to constituency index
+ * @name Admin  constituency add index route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback '/constituency/add'
+ */
 // submit new constituency
 router.post('/constituency/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
