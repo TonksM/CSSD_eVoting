@@ -1,3 +1,13 @@
+/** @module Admin Schema */
+
+/**
+ * Mongoose Schema for which user is a admin
+ * @name Admin Schema
+ * @param _id{ObjectID} Mongodb generated unique ID
+ * @param _adminId{ObjectID} Reference to a voter
+ * @callback Admin
+ */
+
 var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema, 

@@ -1,3 +1,19 @@
+/** @module Election Schema */
+
+/**
+ * Mongoose Schema to hold information about a constituency
+ * @name Election Schema
+ * @param _id{ObjectID} Mongodb generated unique ID
+ * @param _electionName{string} Election Name
+ * @param _electionStart{string} Election Start Date
+ * @param _electionEnd{string} Election End Date
+ * @param _constituencies{ObjectID} Array of references to consituencies
+ * @param _allCandidates{ObjectID} Array of references to candidates
+ * @param _winningCandidate{ObjectID} Reference to the Winning candidate
+ * @param _deleted{Boolean} Whether the document is deleted or not
+ * @callback Election
+ */
+
 var mongoose = require('mongoose');
 const Vote = require('../models/vote');
 const Constituency = require('../models/constituency');
@@ -15,6 +31,12 @@ var electionSchema = new Schema({
     _deleted:      		Boolean
 });
 
+/**
+ * Function to tally up all of the votes that have been place in the election
+ * @name tallyElection
+ * @param callback{function} callback
+ * @callback tallyElection
+ */
 electionSchema.methods.tallyElection = function(callback){
 	console.log("Enter tallyElection");
 	this.setAllCandidates(function(candidates){
@@ -75,6 +97,12 @@ electionSchema.methods.tallyElection = function(callback){
 	});	
 }
 
+/**
+ * Function to set all the candidates of the election
+ * @name setAllCandidates
+ * @param callback{function} callback
+ * @callback setAllCandidates
+ */
 electionSchema.methods.setAllCandidates = function(callback){
 	console.log("Enter setAllCandidates");
 	
@@ -91,6 +119,12 @@ electionSchema.methods.setAllCandidates = function(callback){
 	callback(this._allCandidates);
 }
 
+/**
+ * Function to generate chart data for the chartjs chart in the results page
+ * @name generateChartData
+ * @param votes{[ObjectID]} Array pf references to Votes
+ * @callback generateChartData
+ */
 electionSchema.methods.generateChartData = function(votes){
 	var chartData = {partyId:[], partyColours:[], partyName:[], partyVotes:[]};
 	votes.forEach((err,vote)=>{
