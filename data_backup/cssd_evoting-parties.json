@@ -1,0 +1,45 @@
+{
+	"_id": {
+		"$oid": "5c8bc0bf12c4e51020d1aca0"
+	},
+	"_name": "Labour",
+	"_partyColour": "Red",
+	"__v": 0,
+	"_deleted": false
+}
+{
+	"_id": {
+		"$oid": "5c8bc0c812c4e51020d1aca1"
+	},
+	"_name": "Neutral",
+	"_partyColour": "Grey",
+	"__v": 0,
+	"_deleted": false
+}
+{
+	"_id": {
+		"$oid": "5c916ea8d38f1a2f30319b51"
+	},
+	"_name": "Conservatives",
+	"_partyColour": "Blue",
+	"__v": 0,
+	"_deleted": false
+}
+{
+	"_id": {
+		"$oid": "5c916ebfd38f1a2f30319b52"
+	},
+	"_name": "Liberal Democrats",
+	"_partyColour": "Yellow",
+	"__v": 0,
+	"_deleted": false
+}
+{
+	"_id": {
+		"$oid": "5c916edad38f1a2f30319b53"
+	},
+	"_name": "The Green Party",
+	"_partyColour": "Green",
+	"__v": 0,
+	"_deleted": false
+}

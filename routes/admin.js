@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const flash = require('connect-flash');
+const flash = require('connect-flash'); // used within admin to display messages when an edit/update or delete was submitted
 const bcrypt = require('bcryptjs');
 const {ensureAuthticated} = require("../config/auth");
 const {isAdmin} = require("../config/isAdmin");
@@ -29,15 +29,15 @@ router.get('/', ensureAuthticated, isAdmin, function(req, res, next) {
 /* START of PARTY ROUTES*/
 /* GET PARTY listing. */
 router.get('/party', ensureAuthticated, isAdmin, function(req, res, next) {
-  Party.find({_deleted:false}).then(parties =>{
-    console.log(parties);
+  Party.find({_deleted:false}).then(parties =>{                                 // checks to see if any party has been added already
+	  console.log(parties);                                                       // logs the current parties
     res.render('editParty',{parties:parties,err: req.flash('errors')});
-    console.log(req.flash('errors'))  
+    console.log(req.flash('errors'))
   });
 });
 
 /* GET PARTY add view. */
-router.get('/party/add', ensureAuthticated, isAdmin, function(req, res, next) {
+router.get('/party/add', ensureAuthticated, isAdmin, function(req, res, next) { // displays the view form to add a party
 	res.render('addParty', {err: req.flash('errors')});
 });
 
@@ -106,7 +106,7 @@ router.post('/party/edit', ensureAuthticated, isAdmin, function(req, res){
 });
 
 // remove party
-router.post('/party/remove', ensureAuthticated, isAdmin, function(req, res){
+router.post('/party/remove', ensureAuthticated, isAdmin, function(req, res){    // lists each form of party and removes it by ID/Name/PartyColour and sets deleted to true
   let party = {};
   party._id = req.body.partyId;
   party._name = req.body.partyName;
@@ -116,7 +116,7 @@ router.post('/party/remove', ensureAuthticated, isAdmin, function(req, res){
   console.log('Party:' + party);
   let query = {_id: party._id};
 
-  Party.update(query, party, function(err){
+  Party.update(query, party, function(err){																			// updates the party view and renders party audit
     if(err) {
       console.error(err);
       return;
@@ -252,7 +252,7 @@ router.get('/candidate', ensureAuthticated, isAdmin, function(req, res, next) {
     Party.find({_deleted:false}).then(parties=>{
       Address.find({_deleted:false}).then(addresses=>{
         res.render('editCandidate',{candidates:candidates,parties:parties,addresses:addresses,err: req.flash('errors')});
-      });  
+      });
     });
   });
 });
@@ -305,7 +305,7 @@ router.post('/candidate/add', ensureAuthticated, isAdmin, function(req, res){
 
 // update submit new candidate
 router.post('/candidate/edit', ensureAuthticated, isAdmin, function(req, res){
-  
+
   // Express validator
   req.checkBody('firstName', 'First name is required').notEmpty();
   req.checkBody('surname', 'Surname is required').notEmpty();
@@ -496,7 +496,7 @@ router.post('/election/add', ensureAuthticated, isAdmin, function(req, res){
   req.checkBody('startDate', 'The start date of the election is required').notEmpty();
   req.checkBody('endDate', 'The end date of the election is required').notEmpty();
   req.checkBody('constituencies', 'Constituencies are required').notEmpty();
-  
+
   // Get errors
   let errors = req.validationErrors();
 
@@ -533,7 +533,7 @@ router.post('/election/edit', ensureAuthticated, isAdmin, function(req, res){
   req.checkBody('startDate', 'The start date of the election is required').notEmpty();
   req.checkBody('endDate', 'The end date of the election is required').notEmpty();
   req.checkBody('constituencies', 'Constituencies are required').notEmpty();
-  
+
   // Get errors
   let errors = req.validationErrors();
 
@@ -593,7 +593,7 @@ router.get('/results', ensureAuthticated, isAdmin, function(req, res, next) {
   var electionsChartData = [];
   function displayResults(electionsChartData){
     res.render('results',{err: req.flash('errors'), electionsChartData:electionsChartData});
-  } 
+  }
   var itemsProcessed = 0;
   Election.find({_deleted:false}).populate({path:'_constituencies', populate:{path:'_candidates', populate:{path:'_party'}}}).exec((err,elections) =>{
     if(elections !=null){
@@ -619,7 +619,7 @@ router.get('/results', ensureAuthticated, isAdmin, function(req, res, next) {
         res.redirect('/admin');
       });
     }
-    
+
   });
 });
 
@@ -651,7 +651,7 @@ router.post('/voter/add', ensureAuthticated, isAdmin, function(req, res){
   req.checkBody('address', 'Address is required').notEmpty();
   req.checkBody('password', 'Password is required').notEmpty();
   req.checkBody('email', 'Email address is required').notEmpty();
-  
+
   // Get errors
   let errors = req.validationErrors();
   var proxies = function(){
@@ -697,8 +697,8 @@ router.post('/voter/edit', ensureAuthticated, isAdmin, function(req, res){
   req.checkBody('surname', 'Surname is required').notEmpty();
   req.checkBody('address', 'Address is required').notEmpty();
 
-  
-  
+
+
   // Get errors
   let errors = req.validationErrors();
   var proxies = function(){

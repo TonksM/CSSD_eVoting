@@ -1,0 +1,31 @@
+{
+	"_id": {
+		"$oid": "5c8bc26d4de64a2b941cc685"
+	},
+	"_candidates": [
+		{
+			"$oid": "5c8bc18812c4e51020d1aca5"
+		},
+		{
+			"$oid": "5c916b78d38f1a2f30319b47"
+		},
+		{
+			"$oid": "5c916ba0d38f1a2f30319b48"
+		},
+		{
+			"$oid": "5c916bcbd38f1a2f30319b49"
+		}
+	],
+	"_validPostcodes": [
+		"LS28 9BZ",
+		"LS28 8QW",
+		"LS28 9AD",
+		"LS28 9AF",
+		"LS28 9AX",
+		"LS28 2AX"
+	],
+	"_victor": null,
+	"_name": "Pudsey",
+	"__v": 0,
+	"_deleted": false
+}

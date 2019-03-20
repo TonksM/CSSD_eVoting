@@ -1,0 +1,113 @@
+{
+	"_id": {
+		"$oid": "5c8bba319519072ed8df8fdf"
+	},
+	"_email": "admin@email.com",
+	"_password": "$2y$12$q60MCtkltbU419piXio4fuper0xyEEwD/6W2VHl1YuwP/A6nnthHC",
+	"_firstName": "The",
+	"_surname": "Admin",
+	"_hasVoted": true,
+	"_address": {
+		"$oid": "5c8bbc299519072ed8df8fe0"
+	},
+	"_lastLogin": {
+		"$date": "2019-03-15T13:51:31.000Z"
+	},
+	"_loginAttempts": 0,
+	"_proxyFor": null,
+	"__v": 1
+}
+{
+	"_id": {
+		"$oid": "5c8faa74fb5f591de02d377c"
+	},
+	"_email": "participant1@email.com",
+	"_password": "$2y$12$q60MCtkltbU419piXio4fuper0xyEEwD/6W2VHl1YuwP/A6nnthHC",
+	"_firstName": "Bob",
+	"_surname": "Katz",
+	"_hasVoted": false,
+	"_address": {
+		"$oid": "5c8bc15d12c4e51020d1aca3"
+	},
+	"_lastLogin": {
+		"$date": "2019-03-15T13:51:52.000Z"
+	},
+	"_loginAttempts": 0,
+	"_proxyFor": null
+}
+{
+	"_id": {
+		"$oid": "5c9122c5d38f1a2f30319b46"
+	},
+	"_email": "participant2@email.com",
+	"_password": "$2y$12$qq91yaJEYiD4fdzmo.Yz4.wkY4q8GEA6XW0WfL3wCR8vl9jK1H26C",
+	"_firstName": "Jon",
+	"_surname": "Rycroft",
+	"_hasVoted": false,
+	"_address": {
+		"$oid": "5c8bc15d12c4e51020d1aca3"
+	},
+	"_lastLogin": {
+		"$date": "2019-03-15T13:51:52.000Z"
+	},
+	"_loginAttempts": 0,
+	"_proxyFor": null
+}
+{
+	"_id": {
+		"$oid": "5c916ca5d38f1a2f30319b4a"
+	},
+	"_email": "participant3@email.com",
+	"_password": "$2y$12$edGatnJlHcXOiWN8hjK7HeIUQHUwxPBe2Q9u5tV8C6pwNYC87ytF6",
+	"_firstName": "Gwen",
+	"_surname": "Davies",
+	"_hasVoted": false,
+	"_address": {
+		"$oid": "5c8bbc299519072ed8df8fe0"
+	},
+	"_lastLogin": {
+		"$date": "2019-03-15T13:51:52.000Z"
+	},
+	"_loginAttempts": 4,
+	"_proxyFor": [
+		{
+			"$oid": "5c916ccad38f1a2f30319b4b"
+		}
+	]
+}
+{
+	"_id": {
+		"$oid": "5c916ccad38f1a2f30319b4b"
+	},
+	"_email": "participant4@email.com",
+	"_password": "$2y$12$qq91yaJEYiD4fdzmo.Yz4.wkY4q8GEA6XW0WfL3wCR8vl9jK1H26C",
+	"_firstName": "Michael",
+	"_surname": "Cleef",
+	"_hasVoted": false,
+	"_address": {
+		"$oid": "5c916e20d38f1a2f30319b4f"
+	},
+	"_lastLogin": {
+		"$date": "2019-03-15T13:51:52.000Z"
+	},
+	"_loginAttempts": 0,
+	"_proxyFor": null
+}
+{
+	"_id": {
+		"$oid": "5c916cf1d38f1a2f30319b4c"
+	},
+	"_email": "participant5@email.com",
+	"_password": "$2y$12$qq91yaJEYiD4fdzmo.Yz4.wkY4q8GEA6XW0WfL3wCR8vl9jK1H26C",
+	"_firstName": "Sarah",
+	"_surname": "Steinburge",
+	"_hasVoted": false,
+	"_address": {
+		"$oid": "5c8bc15d12c4e51020d1aca3"
+	},
+	"_lastLogin": {
+		"$date": "2019-03-15T13:51:52.000Z"
+	},
+	"_loginAttempts": 0,
+	"_proxyFor": null
+}
