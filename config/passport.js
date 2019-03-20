@@ -17,6 +17,9 @@ module.exports = passport=>{
 
 	      //if(!voter._hasVoted){ moved hasVoted its own config file to streamline the validation of the user
 		      if(voter._loginAttempts >= 3){
+				//Tonks - moved hasVoted its own config file to streamline the validation of the user and
+				//				proxy voter performs a different test when determining if a voter and its
+				//				associated accounts have voted
 		      	console.log("Too many failed login attempts have been made");
 		      	//cssdevoting@gmail.com
 			    	//cssdevoting12345
