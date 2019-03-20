@@ -1,3 +1,5 @@
+/** @module User Routes */
+
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -5,12 +7,31 @@ const passport = require('passport');
 const Voter = mongoose.model('Voter');
 var nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
+
 /* GET users listing. */
+/**
+ * Route to users index
+ * @name Users index route
+ * @param RequestType GET
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback '/'
+ */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Index' });
 });
 
 /* POST users listing. */
+/**
+ * Route to login where the user's 
+ * @name Users login route
+ * @param RequestType POST
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/login'
+ */
 router.post('/login', function(req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
@@ -34,10 +55,29 @@ router.post('/login', function(req, res, next) {
   }
 });
 
+/**
+ * Route to logout the current user
+ * @name Users logout route
+ * @param RequestType GET
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/logout'
+ */
 router.get('/logout', function(req, res, next) {
   req.logout();
   res.redirect("/");
 });
+
+/**
+ * Route to unlock a users account 
+ * @name Users unlock account
+ * @param RequestType GET
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/unlockAccount'
+ */
 router.get('/unlockAccount', function(req, res, next) {
   console.log(req.param('id'));
   Voter.findOne({_id:req.param('id')}).then(voter => {
@@ -53,6 +93,16 @@ router.get('/unlockAccount', function(req, res, next) {
   });
 });
 
+/**
+ * Route to request a password reset from the login page
+ * Sends an email to a valid email
+ * @name Users request password reset
+ * @param RequestType POST
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/requestPasswordReset'
+ */
 router.post('/requestPasswordReset', function(req, res, next) {
   req.checkBody('email', 'Email is required to reset password').notEmpty();
   console.log(req.body.email);
@@ -102,9 +152,15 @@ router.post('/requestPasswordReset', function(req, res, next) {
   });
 });
 
-
-
-
+/**
+ * Route to show the password reset page
+ * @name Users password reset page
+ * @param RequestType GET
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/passwordReset'
+ */
 router.get('/passwordReset', function(req, res, next) {
   console.log(req.param('id'));
   Voter.findOne({_id:req.param('id')}).then(voter => {
@@ -118,7 +174,18 @@ router.get('/passwordReset', function(req, res, next) {
 });
 
 
-
+/**
+ * Route to change a users password
+ * Checks whether the two passwords the user submits
+ * If they match then encrypt the passwords and
+ * chnage the users password, if not then redirect to the login
+ * @name Users request password reset
+ * @param RequestType POST
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/passwordReset'
+ */
 router.post('/passwordReset', function(req, res, next) {
   var id = req.body.voterId;
   req.checkBody('newPassword', 'Password is required').notEmpty();
