@@ -1,3 +1,4 @@
+/** @module Admin Routes */
 var express = require('express');
 var router = express.Router();
 const flash = require('connect-flash'); // used within admin to display messages when an edit/update or delete was submitted
