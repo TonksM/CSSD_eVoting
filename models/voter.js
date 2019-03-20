@@ -34,10 +34,21 @@ var voterSchema = new Schema({
     _proxyFor:      [{type: ObjectId, ref: 'Voter', default: null}]
 });
 
+/**
+ * Function to increment the number of login attempts by 1
+ * @name incrementLoginAttempts
+ * @callback incrementLoginAttempts
+ */
 voterSchema.methods.incrementLoginAttempts = function(){
 	console.log(this._loginAttempts);
 	this._loginAttempts++;
 }
+
+/**
+ * Function to set the current amount of login attempts to 0
+ * @name incrementLoginAttempts
+ * @callback incrementLoginAttempts
+ */
 voterSchema.methods.resetLoginAttempts = function(){
 	console.log(this._loginAttempts);
 	this._loginAttempts = 0;
