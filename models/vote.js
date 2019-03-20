@@ -1,3 +1,13 @@
+/** @module Vote Schema */
+
+/**
+ * Mongoose Schema to hold in information of a vote
+ * @name Vote Schema
+ * @param _id{ObjectID} Mongodb generated unique ID
+ * @param _vote{ObjectID} Reference to a candidates object ID
+ * @callback Vote
+ */
+
 var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema, 
