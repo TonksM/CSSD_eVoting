@@ -1,3 +1,7 @@
+/** @module isAdmin.js 
+* Determines whether or not a user is an admin
+*/
+
 module.exports = {
 	isAdmin: (req,res,next)=>{
 		var Admin = require('../models/admin');
