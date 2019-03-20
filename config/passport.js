@@ -14,8 +14,10 @@ module.exports = passport=>{
 	      	console.log("Email ivalid");
 	        return done(null, false, { message:"Email and password combination is incorrect"});
 	      }
-
-	      //if(!voter._hasVoted){ moved hasVoted its own config file to streamline the validation of the user
+				//Tonks - moved hasVoted its own config file to streamline the validation of the user and
+				//				proxy voter performs a different test when determining if a voter and its
+				//				associated accounts have voted
+	      //if(!voter._hasVoted){
 		      if(voter._loginAttempts > 3){
 		      	console.log("Too many failed login attempts have been made");
 		      	//cssdevoting@gmail.com
