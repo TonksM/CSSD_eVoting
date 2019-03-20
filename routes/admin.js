@@ -292,14 +292,13 @@ router.post('/address/edit', ensureAuthticated, isAdmin, function(req, res){
 // remove party
 /**
  * Route  index
- * @name Admin  constituency index route
- * @param RequestType GET
+ * @name Admin  Remove party route
+ * @param RequestType POST
  * @param ensureAuthticated Checks if user is authenticated
  * @param isAdmin Checks if user is an admin
  * @param Request The request being sent to the route.
  * @param Response The response being sent to the route.
- * @param Next The callback function.
- * @callback '/address'
+ * @callback '/address/remove'
  */
 router.post('/address/remove', ensureAuthticated, isAdmin, function(req, res){
   let address = {};
