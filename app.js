@@ -1,4 +1,5 @@
 const express = require('express');
+const router = require('express').Router();
 const path = require('path');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
@@ -11,6 +12,8 @@ const createError = require('http-errors');
 const expressValidator = require('express-validator');
 const session = require('express-session');
 const flash = require('connect-flash');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 //passport config
 require('./config/passport')(passport);
@@ -58,16 +61,27 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+var options ={
+  explorer: true
+}
+
+router.use('/', swaggerUi.serve);
+router.get('/', swaggerUi.setup(swaggerDocument, options));
+
+
 
 
 
 require('./models/voter');
+
+app.use('/api-docs',router);
 
 app.use('/', loginRouter);
 app.use('/users', usersRouter);
 app.use('/ballot', ballotRouter);
 app.use('/proxy', proxyRouter);
 app.use('/admin', adminRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
