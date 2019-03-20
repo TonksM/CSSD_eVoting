@@ -4,7 +4,7 @@ var router = express.Router();
 const flash = require('connect-flash'); // used within admin to display messages when an edit/update or delete was submitted
 const bcrypt = require('bcryptjs');
 const {ensureAuthticated} = require("../config/auth");
-const {isAdmin} = require("../config/isAdmin");
+const {isAdmin} = require("../config/isAdmin"); // used to be passed as a parameter set if the voter is admin or not
 const Election = require('../models/election');
 const Constituency = require('../models/constituency');
 const Candidate = require('../models/candidate');
@@ -26,7 +26,6 @@ const Voter = require('../models/voter');
 router.get('/', ensureAuthticated, isAdmin, function(req, res, next) {
 	res.render('admin',{err: req.flash('errors')});
 });
-
 /* START of PARTY ROUTES*/
 /* GET PARTY listing. */
 /**
@@ -59,8 +58,8 @@ router.get('/party', ensureAuthticated, isAdmin, function(req, res, next) {
  * @param Next The callback function.
  * @callback 'admin/party/add'
  */
-router.get('/party/add', ensureAuthticated, isAdmin, function(req, res, next) { // displays the view form to add a party
-	res.render('addParty', {err: req.flash('errors')});
+router.get('/party/add', ensureAuthticated, isAdmin, function(req, res, next) {
+	res.render('addParty', {err: req.flash('errors')});														// renders the view form to add a party
 });
 // submit new party
 /**
@@ -76,14 +75,14 @@ router.get('/party/add', ensureAuthticated, isAdmin, function(req, res, next) { 
  */
 router.post('/party/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
-  req.checkBody('partyName', 'Party name is required').notEmpty();
-  req.checkBody('partyColour', 'Party colour is required').notEmpty();
+  req.checkBody('partyName', 'Party name is required').notEmpty();    //body to add name of party
+  req.checkBody('partyColour', 'Party colour is required').notEmpty(); // body to add patry colour
 
   // Get errors
   let errors = req.validationErrors();
 
   if(errors){
-    req.flash('errors',errors);
+    req.flash('errors',errors);               												// if theres an error use Flash to display
     req.session.save(function () {
       res.redirect('/admin/party/add');
     });
@@ -93,7 +92,7 @@ router.post('/party/add', ensureAuthticated, isAdmin, function(req, res){
     party._partyColour = req.body.partyColour;
     party._deleted = false;
 
-    party.save(function(err){
+    party.save(function(err){																					// saves the added party
       if(err) {
         console.error(err);
         return;
@@ -117,14 +116,14 @@ router.post('/party/add', ensureAuthticated, isAdmin, function(req, res){
  */
 router.post('/party/edit', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
-  req.checkBody('partyName', 'Party name is required').notEmpty();
-  req.checkBody('partyColour', 'Party colour is required').notEmpty();
+  req.checkBody('partyName', 'Party name is required').notEmpty();   // body to edit the party name in
+  req.checkBody('partyColour', 'Party colour is required').notEmpty(); // body to edit party colour in
 
   // Get errors
   let errors = req.validationErrors();
 
   if(errors){
-    req.flash('errors',errors);
+    req.flash('errors',errors);																			// displays error
     res.redirect('/admin/party');
   } else {
     let party = {};
@@ -136,7 +135,7 @@ router.post('/party/edit', ensureAuthticated, isAdmin, function(req, res){
     console.log('Party:' + party);
     let query = {_id: party._id};
 
-    Party.update(query, party, function(err){
+    Party.update(query, party, function(err){                // updates the ediited party
       if(err) {
         console.error(err);
         return;
@@ -146,7 +145,6 @@ router.post('/party/edit', ensureAuthticated, isAdmin, function(req, res){
     });
   }
 });
-
 // remove party
 /**
  * Route to remove party  index
@@ -196,7 +194,7 @@ router.post('/party/remove', ensureAuthticated, isAdmin, function(req, res){    
 router.get('/address', ensureAuthticated, isAdmin, function(req, res, next) {
 	Address.find({_deleted:false}).then(addresses =>{
     console.log(addresses);
-    res.render('editAddress',{addresses:addresses,err: req.flash('errors')});
+    res.render('editAddress',{addresses:addresses,err: req.flash('errors')});  //renders the edit address form
   });
 });
 /* GET ADDRESS add view. */
@@ -211,7 +209,7 @@ router.get('/address', ensureAuthticated, isAdmin, function(req, res, next) {
  * @param Next The callback function.
  * @callback 'admin/address/add'
  */
-router.get('/address/add', ensureAuthticated, isAdmin, function(req, res, next) {
+router.get('/address/add', ensureAuthticated, isAdmin, function(req, res, next) { // renders the add address form
 	res.render('addAddress',{err: req.flash('errors')});
 });
 // submit new candidate
@@ -228,17 +226,17 @@ router.get('/address/add', ensureAuthticated, isAdmin, function(req, res, next) 
  */
 router.post('/address/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
-  req.checkBody('addressLine1', 'Address Line 1 is required').notEmpty();
-  req.checkBody('city', 'City Name is required').notEmpty();
-  req.checkBody('county', 'County is required').notEmpty();
-  req.checkBody('postcode', 'Postcode is required').notEmpty();
+  req.checkBody('addressLine1', 'Address Line 1 is required').notEmpty();      // body to add first address
+  req.checkBody('city', 'City Name is required').notEmpty();                   // body to add city
+  req.checkBody('county', 'County is required').notEmpty();										// body to add the county
+  req.checkBody('postcode', 'Postcode is required').notEmpty();								//body to add the postcode
 
   // Get errors
-  let errors = req.validationErrors();
+  let errors = req.validationErrors();																				// if no bodys was enterted correctly show validation.
 
   if(errors){
     req.flash('errors',errors);
-    req.session.save(function () {
+    req.session.save(function () {																							//saves the added address
       res.redirect('/admin/address/add');
     });
   } else {
@@ -301,7 +299,7 @@ router.post('/address/edit', ensureAuthticated, isAdmin, function(req, res){
     console.log('Address:' + address);
     let query = {_id: address._id};
 
-    Address.update(query, address, function(err){
+    Address.update(query, address, function(err){      //update the address with the new values passed in
       if(err) {
         console.error(err);
         return;
@@ -337,7 +335,7 @@ router.post('/address/remove', ensureAuthticated, isAdmin, function(req, res){
   console.log('Address:' + address);
   let query = {_id: address._id};
 
-  Address.update(query, address, function(err){
+  Address.update(query, address, function(err){                                 // updates the adress values with the removed values
     if(err) {
       console.error(err);
       return;
@@ -358,7 +356,7 @@ router.post('/address/remove', ensureAuthticated, isAdmin, function(req, res){
  * @param Request The request being sent to the route.
  * @param Response The response being sent to the route.
  * @param Next The callback function.
- * @callback '/candidate'
+ * @callback 'admin/candidate'
  */
 router.get('/candidate', ensureAuthticated, isAdmin, function(req, res, next) {
 	Candidate.find({_deleted:false}).then(candidates =>{
@@ -380,7 +378,7 @@ router.get('/candidate', ensureAuthticated, isAdmin, function(req, res, next) {
  * @param Request The request being sent to the route.
  * @param Response The response being sent to the route.
  * @param Next The callback function.
- * @callback 'candidate/add'
+ * @callback '/admin/candidate/add'
  */
 router.get('/candidate/add', ensureAuthticated, isAdmin, function(req, res, next) {
 	Party.find({_deleted:false}).then(parties=>{
@@ -399,7 +397,7 @@ router.get('/candidate/add', ensureAuthticated, isAdmin, function(req, res, next
  * @param isAdmin Checks if user is an admin
  * @param Request The request being sent to the route.
  * @param Response The response being sent to the route.
- * @callback 'candidate/add'
+ * @callback '/admin/candidate/add'
  */
 router.post('/candidate/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
@@ -450,18 +448,18 @@ router.post('/candidate/add', ensureAuthticated, isAdmin, function(req, res){
 router.post('/candidate/edit', ensureAuthticated, isAdmin, function(req, res){
 
   // Express validator
-  req.checkBody('firstName', 'First name is required').notEmpty();
-  req.checkBody('surname', 'Surname is required').notEmpty();
-  req.checkBody('party', 'Party is required').notEmpty();
-  req.checkBody('address', 'Address is required').notEmpty();
+  req.checkBody('firstName', 'First name is required').notEmpty();              // body to enter the first name in
+  req.checkBody('surname', 'Surname is required').notEmpty();										// body to enter the surname in
+  req.checkBody('party', 'Party is required').notEmpty(); 											// body to enter party in
+  req.checkBody('address', 'Address is required').notEmpty();									  // body to enter address in
 
   // Get errors
   let errors = req.validationErrors();
 
-  if(errors){
+  if(errors){																																		// flash validation if theres any errors.
     req.flash('errors',errors);
     req.session.save(function () {
-      res.redirect('/admin/candidate');
+      res.redirect('/admin/candidate');																					//redirects the page to the edit candidate view
     });
   } else {
     let candidate = new Candidate();
@@ -474,7 +472,7 @@ router.post('/candidate/edit', ensureAuthticated, isAdmin, function(req, res){
 
     let query = {_id: candidate._id};
 
-    Candidate.update(query, candidate, function(err){
+    Candidate.update(query, candidate, function(err){														//updates the editied values of candidates
       if(err) {
         console.error(err);
         return;
@@ -493,7 +491,7 @@ router.post('/candidate/edit', ensureAuthticated, isAdmin, function(req, res){
  * @param isAdmin Checks if user is an admin
  * @param Request The request being sent to the route.
  * @param Response The response being sent to the route.
- * @callback '/candidate/remove'
+ * @callback 'admin/candidate/remove'
  */
 router.post('/candidate/remove/', ensureAuthticated, isAdmin, function(req, res){
   let candidate = new Candidate();
@@ -505,7 +503,7 @@ router.post('/candidate/remove/', ensureAuthticated, isAdmin, function(req, res)
 
   let query = {_id: candidate._id};
 
-  Candidate.update(query, candidate, function(err){
+  Candidate.update(query, candidate, function(err){                             // updates the removed candidate
     if(err) {
       console.error(err);
       return;
@@ -526,7 +524,7 @@ router.post('/candidate/remove/', ensureAuthticated, isAdmin, function(req, res)
  * @param Request The request being sent to the route.
  * @param Response The response being sent to the route.
  * @param Next The callback function.
- * @callback '/address'
+ * @callback 'admin/address'
  */
 router.get('/constituency', ensureAuthticated, isAdmin, function(req, res, next) {
 	Constituency.find({_deleted:false}).then(constituencies =>{
@@ -553,7 +551,8 @@ router.get('/constituency/add', ensureAuthticated, isAdmin, function(req, res, n
   });
 });
 /**
- * Route to the consituency add form
+ * Route to add a constituency for the slected User to the database
+ * checks the users if inputs are valid if not error messages are displayed
  * @name Admin  constituency add index route
  * @param RequestType POST
  * @param ensureAuthticated Checks if user is authenticated
@@ -561,8 +560,7 @@ router.get('/constituency/add', ensureAuthticated, isAdmin, function(req, res, n
  * @param Request The request being sent to the route.
  * @param Response The response being sent to the route.
  * @callback '/constituency/add'
- */
-// submit new constituency
+ c
 router.post('/constituency/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('name', 'Name is required').notEmpty();
