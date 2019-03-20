@@ -14,8 +14,8 @@ router.get('/', ensureAuthticated, ensureNotAllVoted, function(req, res, next){
   let voterId = req.user;
   Voter.findOne({_id: voterId}).populate({path: '_address _proxyFor', populate:{ path: '_address'}}).exec(function (err, voter){
     var data = {
-      voter: voter,
-      proxees: voter._proxyFor
+      voter:          voter,
+      proxees:        voter._proxyFor
     }
     res.render('proxy', data)
   });
@@ -32,8 +32,9 @@ router.post('/ballot', ensureAuthticated, function(req, res, next){
     }).exec(function(err, constituency){
       console.log(constituency._candidates);
         var data = {
-          voter:      voterId, 
-          candidates: constituency._candidates
+          constitiuency:  constituency,
+          voter:          voterId, 
+          candidates:     constituency._candidates
         };
         res.status(200);
         res.render('ballot', data);

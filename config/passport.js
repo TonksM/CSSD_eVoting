@@ -15,7 +15,7 @@ module.exports = passport=>{
 	        return done(null, false, { message:"Email and password combination is incorrect"});
 	      }
 
-	      //if(!voter._hasVoted){ moved hasVoted its own config file to streamline the validation of the user
+	      //if(!voter._hasVoted){
 		      if(voter._loginAttempts >= 3){
 				//Tonks - moved hasVoted its own config file to streamline the validation of the user and
 				//				proxy voter performs a different test when determining if a voter and its
