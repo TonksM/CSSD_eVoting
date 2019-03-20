@@ -30,7 +30,7 @@ router.get('/', ensureAuthticated, isAdmin, function(req, res, next) {
 /* START of PARTY ROUTES*/
 /* GET PARTY listing. */
 /**
- * Route to add party  index
+ * Route to edit party  index
  * @name Admin  party edit route
  * @param RequestType GET
  * @param ensureAuthticated Checks if user is authenticated
@@ -47,8 +47,18 @@ router.get('/party', ensureAuthticated, isAdmin, function(req, res, next) {
     console.log(req.flash('errors'))
   });
 });
-
 /* GET PARTY add view. */
+/**
+ * Route to add party  index
+ * @name Admin  party edit route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback '/party/add'
+ */
 router.get('/party/add', ensureAuthticated, isAdmin, function(req, res, next) { // displays the view form to add a party
 	res.render('addParty', {err: req.flash('errors')});
 });
@@ -269,6 +279,17 @@ router.post('/address/remove', ensureAuthticated, isAdmin, function(req, res){
 
 /* START of CANDIDATE ROUTES*/
 /* GET CANDIDATE listing. */
+/**
+ * Route to candidate index
+ * @name Admin  candidate index route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback '/candidate'
+ */
 router.get('/candidate', ensureAuthticated, isAdmin, function(req, res, next) {
 	Candidate.find({_deleted:false}).then(candidates =>{
     console.log(candidates);
@@ -389,6 +410,17 @@ router.post('/candidate/remove/', ensureAuthticated, isAdmin, function(req, res)
 
 /* START of CONSTITUENCEY ROUTES*/
 /* GET CONSTITUENCEY listing. */
+/**
+ * Route to constituency index
+ * @name Admin  constituency index route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback '/address'
+ */
 router.get('/constituency', ensureAuthticated, isAdmin, function(req, res, next) {
 	Constituency.find({_deleted:false}).then(constituencies =>{
     Candidate.find({_deleted:false}).then(candidates =>{
@@ -497,6 +529,17 @@ router.post('/constituency/remove', ensureAuthticated, isAdmin, function(req, re
 
 /* START of ELECTION ROUTES*/
 /* GET ELECTION listing. */
+/**
+ * Route to election index
+ * @name Admin  election index route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback '/election'
+ */
 router.get('/election', ensureAuthticated, isAdmin, function(req, res, next) {
   Election.find({_deleted:false}).then(elections =>{
     Constituency.find({_deleted:false}).then(constituencies=>{
@@ -612,6 +655,17 @@ router.post('/election/remove', ensureAuthticated, isAdmin, function(req, res){
 
 /* START of RESULTS ROUTES*/
 /* GET RESULTS listing. */
+/**
+ * Route to results index
+ * @name Admin  party edit route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback '/results'
+ */
 router.get('/results', ensureAuthticated, isAdmin, function(req, res, next) {
   var electionsChartData = [];
   function displayResults(electionsChartData){
@@ -648,6 +702,17 @@ router.get('/results', ensureAuthticated, isAdmin, function(req, res, next) {
 
 /* START of VOTER ROUTES*/
 /* GET VOTER listing. */
+/**
+ * Route to voter index
+ * @name Admin  vote index route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback '/voter'
+ */
 router.get('/voter', ensureAuthticated, isAdmin, function(req, res, next) {
   Voter.find().then(voters =>{
     console.log(voters);
