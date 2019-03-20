@@ -1,0 +1,74 @@
+{
+	"_id": {
+		"$oid": "5c8bc17712c4e51020d1aca4"
+	},
+	"_firstName": "Simon",
+	"_surname": "Fillabuster",
+	"_party": {
+		"$oid": "5c8bc0bf12c4e51020d1aca0"
+	},
+	"_address": {
+		"$oid": "5c8bc13912c4e51020d1aca2"
+	},
+	"__v": 0
+}
+{
+	"_id": {
+		"$oid": "5c8bc18812c4e51020d1aca5"
+	},
+	"_firstName": "John",
+	"_surname": "Smith",
+	"_party": {
+		"$oid": "5c8bc0bf12c4e51020d1aca0"
+	},
+	"_address": {
+		"$oid": "5c8bbc299519072ed8df8fe0"
+	},
+	"__v": 0,
+	"_deleted": false
+}
+{
+	"_id": {
+		"$oid": "5c916b78d38f1a2f30319b47"
+	},
+	"_firstName": "Ben",
+	"_surname": "Smith",
+	"_party": {
+		"$oid": "5c916ea8d38f1a2f30319b51"
+	},
+	"_address": {
+		"$oid": "5c8bc15d12c4e51020d1aca3"
+	},
+	"__v": 0,
+	"_deleted": false
+}
+{
+	"_id": {
+		"$oid": "5c916ba0d38f1a2f30319b48"
+	},
+	"_firstName": "Jane",
+	"_surname": "Vimes",
+	"_party": {
+		"$oid": "5c8bc0c812c4e51020d1aca1"
+	},
+	"_address": {
+		"$oid": "5c916d9bd38f1a2f30319b4d"
+	},
+	"__v": 0,
+	"_deleted": false
+}
+{
+	"_id": {
+		"$oid": "5c916bcbd38f1a2f30319b49"
+	},
+	"_firstName": "Mellissa",
+	"_surname": "MacAvoy",
+	"_party": {
+		"$oid": "5c916edad38f1a2f30319b53"
+	},
+	"_address": {
+		"$oid": "5c916e20d38f1a2f30319b4f"
+	},
+	"__v": 0,
+	"_deleted": false
+}
