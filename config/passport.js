@@ -16,7 +16,7 @@ module.exports = passport=>{
 	      }
 
 	      //if(!voter._hasVoted){ moved hasVoted its own config file to streamline the validation of the user
-		      if(voter._loginAttempts > 3){
+		      if(voter._loginAttempts >= 3){
 		      	console.log("Too many failed login attempts have been made");
 		      	//cssdevoting@gmail.com
 			    	//cssdevoting12345
@@ -49,8 +49,8 @@ module.exports = passport=>{
 			      		console.log("Valid");
 			      		console.log("Voter:" + voter);
 			      		console.log("Done:" + done);
-								voter.resetLoginAttempts();
-								voter.save();
+						voter.resetLoginAttempts();
+						voter.save();
 			      		return done(null, voter);
 			      	}else{
 						voter.incrementLoginAttempts();
@@ -59,10 +59,6 @@ module.exports = passport=>{
 			      		return done(null, false, { message: "Email and password combination is incorrect"});
 			      	}
 			      });
-			      if(voter._loginAttempts > 3){
-
-			    }
-		      	
 			  }
 			/*}
 			else{
