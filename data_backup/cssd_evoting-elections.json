@@ -1,0 +1,16 @@
+{
+	"_id": {
+		"$oid": "5c917e0ca62bab2cf8163955"
+	},
+	"_constituencies": [
+		{
+			"$oid": "5c8bc26d4de64a2b941cc685"
+		}
+	],
+	"_allCandidates": [],
+	"_electionName": "2019-GeneralElection",
+	"_electionStart": "2019-03-21",
+	"_electionEnd": "2019-03-21",
+	"_deleted": false,
+	"__v": 0
+}

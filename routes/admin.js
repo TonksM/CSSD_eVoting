@@ -14,7 +14,7 @@ const Voter = require('../models/voter');
 
 /* GET admin view. */
 router.get('/', ensureAuthticated, isAdmin, function(req, res, next) {
-	res.render('admin');
+	res.render('admin',{err: req.flash('errors')});
 });
 
 /* START of PARTY ROUTES*/
@@ -33,7 +33,7 @@ router.get('/party/add', ensureAuthticated, isAdmin, function(req, res, next) { 
 });
 
 // submit new party
-router.post('/party/add', ensureAuthticated, isAdmin, function(req, res){       
+router.post('/party/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('partyName', 'Party name is required').notEmpty();
   req.checkBody('partyColour', 'Party colour is required').notEmpty();
@@ -603,6 +603,13 @@ router.get('/results', ensureAuthticated, isAdmin, function(req, res, next) {
 
       });
     }
+    else{
+      let errors = {'msg':'There are no elections to view the results of'};
+      req.flash('errors',errors);
+      req.session.save(function () {
+        res.redirect('/admin');
+      });
+    }
 
   });
 });
@@ -633,6 +640,8 @@ router.post('/voter/add', ensureAuthticated, isAdmin, function(req, res){
   req.checkBody('firstName', 'First name is required').notEmpty();
   req.checkBody('surname', 'Surname is required').notEmpty();
   req.checkBody('address', 'Address is required').notEmpty();
+  req.checkBody('password', 'Password is required').notEmpty();
+  req.checkBody('email', 'Email address is required').notEmpty();
 
   // Get errors
   let errors = req.validationErrors();
@@ -651,23 +660,24 @@ router.post('/voter/add', ensureAuthticated, isAdmin, function(req, res){
     });
   } else {
     let voter = new Voter();
-    voter._id = req.body.candidateId;
-    voter._firstName = req.body.firstName;
-    voter._surname = req.body.surname;
-    voter._address = req.body.address;
-    voter._proxyFor = req.body.proxyFor;
-
-
     console.log("Voter: "+voter);
-
-    voter.save(function(err){
-      if(err) {
-        console.error(err);
-        return;
-      } else {
-        res.redirect('/admin');
-      }
-    });
+    bcrypt.hash(req.body.password, 12, function(err, hash) {
+        voter._password = hash;
+        voter._email = req.body.email;
+        voter._id = req.body.candidateId;
+        voter._firstName = req.body.firstName;
+        voter._surname = req.body.surname;
+        voter._address = req.body.address;
+        voter._proxyFor = req.body.proxyFor;
+        voter.save(function(err){
+          if(err) {
+            console.error(err);
+            return;
+          } else {
+            res.redirect('/admin');
+          }
+        });
+      });
   }
 });
 
@@ -706,6 +716,7 @@ router.post('/voter/edit', ensureAuthticated, isAdmin, function(req, res){
     voter._surname = req.body.surname;
     voter._address = req.body.address;
     voter._proxyFor = req.body.proxyFor;
+    voter._email = req.body.email;
 
     let query = {_id: voter._id};
 
