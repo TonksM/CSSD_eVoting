@@ -11,7 +11,6 @@ const Ballot = require('../models/ballot');
 const Party = require('../models/party');
 const Address = require('../models/address');
 const Voter = require('../models/voter');
-
 /**
  * Route to admin index
  * @name Admin index route
@@ -30,7 +29,7 @@ router.get('/', ensureAuthticated, isAdmin, function(req, res, next) {
 /* START of PARTY ROUTES*/
 /* GET PARTY listing. */
 /**
- * Route to edit party  index
+ * Route to the  edit party view
  * @name Admin  party edit route
  * @param RequestType GET
  * @param ensureAuthticated Checks if user is authenticated
@@ -598,7 +597,8 @@ router.post('/constituency/add', ensureAuthticated, isAdmin, function(req, res){
 });
 // update submit new constituency
 /**
- * Route to edit the constituency
+ * Route to the edit constituency view
+ * checks the users if inputs are valid if not error messages are displayed
  * @name Admin constituency edit route
  * @param RequestType POST
  * @param ensureAuthticated Checks if user is authenticated
@@ -677,7 +677,7 @@ router.post('/constituency/remove', ensureAuthticated, isAdmin, function(req, re
 /* START of ELECTION ROUTES*/
 /* GET ELECTION listing. */
 /**
- * Route to election edit edit screen
+ * Route to election edit edit screeview
  * @name Admin  election  route
  * @param RequestType GET
  * @param ensureAuthticated Checks if user is authenticated
@@ -696,7 +696,7 @@ router.get('/election', ensureAuthticated, isAdmin, function(req, res, next) {
 });
 /* GET ELECTION add view. */
 /**
- * Route to render the add election add view form
+ * Route to render the add election add view form for the admin
  * @name Admin  election add route
  * @param RequestType GET
  * @param ensureAuthticated Checks if user is authenticated
@@ -713,7 +713,8 @@ router.get('/election/add', ensureAuthticated, isAdmin, function(req, res, next)
 });
 /* POST ELECTION */
 /**
- * Route to add an election to database by a seleclted by a user
+ * Route to add a election to the database
+ * checks the users if inputs are valid if not error messages are displayed
  * @name Admin  election add  route
  * @param RequestType POST
  * @param ensureAuthticated Checks if user is authenticated
