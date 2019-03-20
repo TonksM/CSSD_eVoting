@@ -679,8 +679,15 @@ router.post('/voter/edit', ensureAuthticated, isAdmin, function(req, res){
   
   // Get errors
   let errors = req.validationErrors();
-
-  if(req.body.proxyFor.length > 2){
+  var proxies = function(){
+    if(req.body.proxyFor == null){
+      return 0;
+    }else{
+      return req.body.proxyFor.length;
+    }
+  }
+  console.log("Prox="+proxies);
+  if( proxies > 2){
     errors = ({"msg":"Only select two prxoies"});
   }
 
