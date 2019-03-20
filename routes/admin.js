@@ -346,7 +346,6 @@ router.post('/address/remove', ensureAuthticated, isAdmin, function(req, res){
   })
 });
 /* END of ADDRESS ROUTES*/
-
 /* START of CANDIDATE ROUTES*/
 /* GET CANDIDATE listing. */
 /**
@@ -484,7 +483,6 @@ router.post('/candidate/edit', ensureAuthticated, isAdmin, function(req, res){
     });
   }
 });
-
 //remove candidate
 /**
  * Route to remove candidate index
@@ -760,7 +758,8 @@ router.post('/election/add', ensureAuthticated, isAdmin, function(req, res){
 });
 // update submit new election
 /**
- * Route to edit a election selected by user
+* Route to edit a election for a selected user.
+* checks the users if inputs are valid if not error messages are displayed
  * @name Admin  elecition edit route
  * @param RequestType POST
  * @param ensureAuthticated Checks if user is authenticated
@@ -1038,7 +1037,7 @@ router.post('/voter/edit', ensureAuthticated, isAdmin, function(req, res){
 /**
 	*Route to remove a voter from the database
 	* if no id is provided redirect to /admin/voter
- * Route to remove voter route
+ * Route to remove a voter route
  * @name Admin  remove voter route
  * @param RequestType POST
  * @param ensureAuthticated Checks if user is authenticated
