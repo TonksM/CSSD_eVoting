@@ -37,6 +37,10 @@ router.get('/', ensureAuthticated, isNotProxy, ensureNotVoted, function(req, res
 });
 
 router.post('/cast_vote', ensureAuthticated, function(req, res, next){
+  //Mongoose creates a new Vote, based on the Vote Schema, then saves to the appropriate collection.
+  //The voter's _voted flag is set to true, and then if successful in both the save and the update
+  //to the database, the user is presented with a confirmation screen with only the option to log out.
+  //If either databse action is unsuccessful, the user will be presented with a simple error message.
   let voterId = req.user;
   let noo = new Vote({
       _vote: req.body.vote
@@ -57,6 +61,7 @@ router.post('/cast_vote', ensureAuthticated, function(req, res, next){
 });
 
 router.get("/vote_msg", ensureAuthticated, function(req, res, next){
+  //Determines to correct message to display based on the GET message query
   var data = {
     msg: ""
   } 
