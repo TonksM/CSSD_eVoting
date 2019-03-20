@@ -184,7 +184,7 @@ router.get('/passwordReset', function(req, res, next) {
  * @param Request The request being sent to the route.
  * @param Response The response being sent to the route.
  * @param Next The callback function.
- * @callback 'users/requestPasswordReset'
+ * @callback 'users/passwordReset'
  */
 router.post('/passwordReset', function(req, res, next) {
   var id = req.body.voterId;
