@@ -23,13 +23,16 @@ module.exports = passport=>{
 	      	console.log("Email ivalid");
 	        return done(null, false, { message:"Email and password combination is incorrect"});
 	      }
-      	//Tonks - moved hasVoted its own config file to streamline the validation of the user and
+		//Tonks - moved hasVoted its own config file to streamline the validation of the user and
 		//				proxy voter performs a different test when determining if a voter and its
 		//				associated accounts have voted
 
 
+		//if the user has failed to log in more than 3 times then send an email
+		//to them to inform them the account is locked with a link to unlock it
 		if(voter._loginAttempts >= 3){
 			console.log("Too many failed login attempts have been made");
+			//Set up email options
 			var transporter = nodemailer.createTransport({
 			  service: 'gmail',
 			  auth: {
@@ -37,6 +40,7 @@ module.exports = passport=>{
 			    pass: 'cssdevoting12345'
 			  }
 			});
+			//Set up Email message
 			var mailOptions = {
 			  from: 'cssdevoting@gmail.com',
 			  to: email,
@@ -44,6 +48,7 @@ module.exports = passport=>{
 			  text: 'Dear Voter, Your account has been locked. If this was you go to this address to unlock it http://localhost:3000/users/unlockAccount?id='+voter._id+' If this was not you, speak to a system admin'
 			};
 
+			//Send the email off to the voter
 			transporter.sendMail(mailOptions, function(error, info){
 			  if (error) {
 			    console.log(error);
@@ -54,7 +59,9 @@ module.exports = passport=>{
       		return done(null, false, { message: "Too many failed login attempts have been made and this account is locked"});
 	      }
 	      else{
+	      	  //Encrypt the inputted password and compare it to the stored hashed password in the database
 		      bcrypt.compare(password, voter._password,(err,isMatch)=>{
+		      	//if there is a match then reset the login attempts and redirect
 		      	if(isMatch){
 		      		console.log("Valid");
 		      		console.log("Voter:" + voter);
@@ -63,6 +70,7 @@ module.exports = passport=>{
 					voter.save();
 		      		return done(null, voter);
 		      	}else{
+		      		//else increment the login attempts, save the voter and redirect back the login page
 					voter.incrementLoginAttempts();
 					voter.save();
 		      		console.log("Password invalid");
