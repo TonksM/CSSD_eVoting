@@ -1,0 +1,288 @@
+{
+	"info": {
+		"_postman_id": "76ae2e53-11fe-4abb-96cb-93c8ee64a0c8",
+		"name": "CSSD_b5017778 API Testing",
+		"description": "API CALLS INDIVIDUAL TESTING",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Request Password Reset With Valid Email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd44e8d7-b468-4692-8bda-fd1c59c05faa",
+						"exec": [
+							"pm.test(\"Request Password With Valid Email\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Email has been sent\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "benhastings97@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/requestPasswordReset",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"requestPasswordReset"
+					]
+				},
+				"description": "Request Password Reset"
+			},
+			"response": []
+		},
+		{
+			"name": "Request Password Reset With Invalid Email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd44e8d7-b468-4692-8bda-fd1c59c05faa",
+						"exec": [
+							"pm.test(\"Request password reset with invalid email\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Email invalid\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "abcdef",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/requestPasswordReset",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"requestPasswordReset"
+					]
+				},
+				"description": "Request Password Reset"
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "017bcb87-9173-49c7-a47f-f66667eef05e",
+						"exec": [
+							"pm.test(\"Login With Admin Credentails\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"admin\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "benhastings97@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"login"
+					]
+				},
+				"description": "Login as an admin and be redirected to the admin page"
+			},
+			"response": []
+		},
+		{
+			"name": "Voter Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "374b8b02-5e35-4407-9102-d9fb683f30d5",
+						"exec": [
+							"pm.test(\"Login With Voter Credentails\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"vote\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "johnsmith@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"login"
+					]
+				},
+				"description": "Login as a voter and be redirected to the ballot page"
+			},
+			"response": []
+		},
+		{
+			"name": "Try to show password reset page without providing a id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b78e1317-11c5-4bcc-a1b3-6be2e520630d",
+						"exec": [
+							"pm.test(\"Redirected to login when no id present\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Login\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/passwordReset",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"passwordReset"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "88bc6362-0cf2-41e8-ab29-aabba9f5ec4f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "692bca6c-ff81-4547-bac6-e2692f94d20f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

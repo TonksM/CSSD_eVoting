@@ -35,12 +35,12 @@ router.get('/', function(req, res, next) {
 router.post('/login', function(req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
-
+  //Check inputs to make sure they are not empty
   req.checkBody('email','Email is required').notEmpty();
   req.checkBody('password','Password is required').notEmpty();
 
   var err = req.validationErrors();
-
+  //If at least one of the inputs are empty then redirect back with associated errors
   if(err){
   	req.flash('inputError',err);                                      // if theres an error use Flash to display
     req.session.save(function () {
@@ -111,11 +111,12 @@ router.post('/requestPasswordReset', function(req, res, next) {
   console.log(req.body.email);
   let errors = req.validationErrors();
   if(errors){
-    req.flash('errors',errors);
+    req.flash('inputError',errors);
     req.session.save(function () {
       res.redirect('/');
     });
   }
+  else{
   var email = req.body.email;
   Voter.findOne({_email:email}).then(voter=>{
     console.log(voter);
@@ -139,7 +140,7 @@ router.post('/requestPasswordReset', function(req, res, next) {
               console.log(error);
             } else {
               console.log('Email sent: ' + info.response);
-              req.flash('loginError',"Email has been sent");
+              req.flash('inputError',{"msg":"Email has been sent"});
               req.session.save(function () {
                 res.redirect('/');
               });
@@ -147,12 +148,13 @@ router.post('/requestPasswordReset', function(req, res, next) {
           });
         }
         else{
-          req.flash('loginError',"Email has been sent");
+          req.flash('inputError',{"msg":"Email invalid"});
             req.session.save(function () {
               res.redirect('/');
           });
         }
   });
+}
 });
 
 /**
