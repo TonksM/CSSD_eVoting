@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: users.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: users.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module User Routes */
+
+var express = require('express');
+var router = express.Router();
+var mongoose = require('mongoose');
+const passport = require('passport');
+const Voter = mongoose.model('Voter');
+var nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
+
+/* GET users listing. */
+/**
+ * Route to users index
+ * @name Users index route
+ * @param RequestType GET
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback '/'
+ */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Index' });
+});
+
+/* POST users listing. */
+/**
+ * Route to login where the user's 
+ * @name Users login route
+ * @param RequestType POST
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/login'
+ */
+router.post('/login', function(req, res, next) {
+  var email = req.body.email;
+  var password = req.body.password;
+
+  req.checkBody('email','Email is required').notEmpty();
+  req.checkBody('password','Password is required').notEmpty();
+
+  var err = req.validationErrors();
+
+  if(err){
+  	console.log(err);
+  	res.redirect('login', {err:err})
+  }
+  else{
+  	console.log('Valid Inputs');
+  	passport.authenticate('local', {
+  		successRedirect:'/admin',
+  		failureRedirect:'/',
+      failureFlash:true
+  	})(req,res,next);
+  }
+});
+
+/**
+ * Route to logout the current user
+ * @name Users logout route
+ * @param RequestType GET
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/logout'
+ */
+router.get('/logout', function(req, res, next) {
+  req.logout();
+  res.redirect("/");
+});
+
+/**
+ * Route to unlock a users account 
+ * @name Users unlock account
+ * @param RequestType GET
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/unlockAccount'
+ */
+router.get('/unlockAccount', function(req, res, next) {
+  console.log(req.param('id'));
+  Voter.findOne({_id:req.param('id')}).then(voter => {
+    voter._loginAttempts = 0;
+    voter.save(function(err){
+      if(err) {
+        console.error(err);
+        return;
+      } else {
+        res.redirect('/');
+      }
+    });
+  });
+});
+
+/**
+ * Route to request a password reset from the login page
+ * Sends an email to a valid email
+ * @name Users request password reset
+ * @param RequestType POST
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/requestPasswordReset'
+ */
+router.post('/requestPasswordReset', function(req, res, next) {
+  req.checkBody('email', 'Email is required to reset password').notEmpty();
+  console.log(req.body.email);
+  let errors = req.validationErrors();
+  if(errors){
+    req.flash('errors',errors);
+    req.session.save(function () {
+      res.redirect('/');
+    });
+  }
+  var email = req.body.email;
+  Voter.findOne({_email:email}).then(voter=>{
+    console.log(voter);
+    if(voter != null){
+      var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'cssdevoting@gmail.com',
+              pass: 'cssdevoting12345'
+            }
+          });
+          var mailOptions = {
+            from: 'cssdevoting@gmail.com',
+            to: voter._email,
+            subject: 'EVoting Password Reset',
+            text: 'Dear Voter, You have requested a password change. If this was you go to this address to unlock it http://localhost:3000/users/passwordReset?id='+voter._id+' If this was not you, speak to a system admin'
+          };
+
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+              req.flash('loginError',"Email has been sent");
+              req.session.save(function () {
+                res.redirect('/');
+              });
+            }
+          });
+        }
+        else{
+          req.flash('loginError',"Email has been sent");
+            req.session.save(function () {
+              res.redirect('/');
+          });
+        }
+  });
+});
+
+/**
+ * Route to show the password reset page
+ * @name Users password reset page
+ * @param RequestType GET
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/passwordReset'
+ */
+router.get('/passwordReset', function(req, res, next) {
+  console.log(req.param('id'));
+  Voter.findOne({_id:req.param('id')}).then(voter => {
+    if(voter){
+      res.render('passwordReset', {err:req.flash('errors'),voter:voter});
+    }else
+    {
+      res.redirect('/');
+    }
+  });
+});
+
+
+/**
+ * Route to change a users password
+ * Checks whether the two passwords the user submits
+ * If they match then encrypt the passwords and
+ * chnage the users password, if not then redirect to the login
+ * @name Users request password reset
+ * @param RequestType POST
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/passwordReset'
+ */
+router.post('/passwordReset', function(req, res, next) {
+  var id = req.body.voterId;
+  req.checkBody('newPassword', 'Password is required').notEmpty();
+  req.checkBody('confirmPassword', 'Please confirm the password').notEmpty();
+  let password = req.body.newPassword;
+  let errors = req.validationErrors();
+  if(!password == req.body.confirmPassword){
+    errors = ({"msg":"Passwords need to match"});
+  }
+
+  if(errors){
+    req.flash('errors',errors);
+      req.session.save(function () {
+      res.redirect('/users/passwordReset?id='+id);
+    });
+  }
+  Voter.findOne({_id:id}).then((voter) => {
+    if(!voter){
+      req.flash('errors',{"msg":"Incorrect Id Consult Admin"});
+        req.session.save(function () {
+        res.redirect('/users/passwordReset?id='+id);
+      });
+    }else
+    {
+      bcrypt.hash(password, 12, function(err, hash) {
+        voter._password = hash;
+        voter.save(function(err){
+          if(err) {
+            console.error(err);
+            return;
+          } else {
+            res.redirect('/');
+          }
+        });
+      });
+    }
+  });
+});
+
+module.exports = router;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Admin%2520Routes.html">Admin Routes</a></li><li><a href="module-Login%2520Routes.html">Login Routes</a></li><li><a href="module-User%2520Routes.html">User Routes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 20 2019 20:47:17 GMT+0000 (Greenwich Mean Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

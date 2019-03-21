@@ -26,7 +26,8 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>var express = require('express');
+            <pre class="prettyprint source linenums"><code>/** @module Admin Routes */
+var express = require('express');
 var router = express.Router();
 const flash = require('connect-flash'); // used within admin to display messages when an edit/update or delete was submitted
 const bcrypt = require('bcryptjs');
@@ -39,7 +40,6 @@ const Ballot = require('../models/ballot');
 const Party = require('../models/party');
 const Address = require('../models/address');
 const Voter = require('../models/voter');
-
 /**
  * Route to admin index
  * @name Admin index route
@@ -58,7 +58,7 @@ router.get('/', ensureAuthticated, isAdmin, function(req, res, next) {
 /* START of PARTY ROUTES*/
 /* GET PARTY listing. */
 /**
- * Route to edit party  index
+ * Route to the  edit party view
  * @name Admin  party edit route
  * @param RequestType GET
  * @param ensureAuthticated Checks if user is authenticated
@@ -77,21 +77,31 @@ router.get('/party', ensureAuthticated, isAdmin, function(req, res, next) {
 });
 /* GET PARTY add view. */
 /**
- * Route to add party  index
- * @name Admin  party edit route
+ * Route to render a party add view
+ * @name Admin  party add route
  * @param RequestType GET
  * @param ensureAuthticated Checks if user is authenticated
  * @param isAdmin Checks if user is an admin
  * @param Request The request being sent to the route.
  * @param Response The response being sent to the route.
  * @param Next The callback function.
- * @callback '/party/add'
+ * @callback 'admin/party/add'
  */
 router.get('/party/add', ensureAuthticated, isAdmin, function(req, res, next) { // displays the view form to add a party
 	res.render('addParty', {err: req.flash('errors')});
 });
-
 // submit new party
+/**
+ * Route to add a new party to the database
+ * checks the users if inputs are valid if not error messages are displayed
+ * @name Admin  add party route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback 'admin/party/add'
+ */
 router.post('/party/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('partyName', 'Party name is required').notEmpty();
@@ -123,6 +133,16 @@ router.post('/party/add', ensureAuthticated, isAdmin, function(req, res){
 });
 
 // update submit new party
+/**
+ * Route to edit the party
+ * @name Admin  party edit route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback '/party/edit'
+ */
 router.post('/party/edit', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('partyName', 'Party name is required').notEmpty();
@@ -158,6 +178,7 @@ router.post('/party/edit', ensureAuthticated, isAdmin, function(req, res){
 // remove party
 /**
  * Route to remove party  index
+ * if no id is provided redirect to /admin/party
  * @name Admin  party remove  route
  * @param RequestType POST
  * @param ensureAuthticated Checks if user is authenticated
@@ -206,10 +227,9 @@ router.get('/address', ensureAuthticated, isAdmin, function(req, res, next) {
     res.render('editAddress',{addresses:addresses,err: req.flash('errors')});
   });
 });
-
 /* GET ADDRESS add view. */
 /**
- * Route to address add  index
+ * Route to render an add address view
  * @name Admin  party edit route
  * @param RequestType GET
  * @param ensureAuthticated Checks if user is authenticated
@@ -217,13 +237,23 @@ router.get('/address', ensureAuthticated, isAdmin, function(req, res, next) {
  * @param Request The request being sent to the route.
  * @param Response The response being sent to the route.
  * @param Next The callback function.
- * @callback '/address/add'
+ * @callback 'admin/address/add'
  */
 router.get('/address/add', ensureAuthticated, isAdmin, function(req, res, next) {
 	res.render('addAddress',{err: req.flash('errors')});
 });
-
 // submit new candidate
+/**
+ * Route to add and adrress for a slected user
+ * checks the users if inputs are valid if not error messages are displayed
+ * @name Admin  index route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback 'admin/address/add'
+ */
 router.post('/address/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('addressLine1', 'Address Line 1 is required').notEmpty();
@@ -261,7 +291,8 @@ router.post('/address/add', ensureAuthticated, isAdmin, function(req, res){
 });
 // update submit new party
 /**
- * Route to update new party  index
+ * Route to edit a party for a selected user.
+ * checks the users if inputs are valid if not error messages are displayed
  * @name Admin  party edit route
  * @param RequestType GET
  * @param ensureAuthticated Checks if user is authenticated
@@ -309,6 +340,17 @@ router.post('/address/edit', ensureAuthticated, isAdmin, function(req, res){
   }
 });
 // remove party
+/**
+ * Route  the removing of an address for a slected user
+ * if no id is provided redirect to /admin/address
+ * @name Admin  Remove party route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback 'admin/address/remove'
+ */
 router.post('/address/remove', ensureAuthticated, isAdmin, function(req, res){
   let address = {};
   address._id = req.body.addressId;
@@ -333,7 +375,6 @@ router.post('/address/remove', ensureAuthticated, isAdmin, function(req, res){
   })
 });
 /* END of ADDRESS ROUTES*/
-
 /* START of CANDIDATE ROUTES*/
 /* GET CANDIDATE listing. */
 /**
@@ -359,7 +400,7 @@ router.get('/candidate', ensureAuthticated, isAdmin, function(req, res, next) {
 });
 /* GET CANDIDATE add view. */
 /**
- * Route to add candidate index
+ * Route to render the add candidate view
  * @name Admin  camdidate add route
  * @param RequestType GET
  * @param ensureAuthticated Checks if user is authenticated
@@ -379,7 +420,7 @@ router.get('/candidate/add', ensureAuthticated, isAdmin, function(req, res, next
 
 // submit new candidate
 /**
- * Route to add candidtate  index
+ * Route to add a candidtate to a sleclted party to the database.
  * @name Admin  add candidate route
  * @param RequestType POST
  * @param ensureAuthticated Checks if user is authenticated
@@ -423,10 +464,9 @@ router.post('/candidate/add', ensureAuthticated, isAdmin, function(req, res){
     });
   }
 });
-
 // update submit new candidate
 /**
- * Route to new candidate  index
+ * Route to edit candidate  index
  * @name Admin  candidate edit route
  * @param RequestType POST
  * @param ensureAuthticated Checks if user is authenticated
@@ -472,8 +512,17 @@ router.post('/candidate/edit', ensureAuthticated, isAdmin, function(req, res){
     });
   }
 });
-
 //remove candidate
+/**
+ * Route to remove candidate index
+ * @name Admin  remove candidate route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback '/candidate/remove'
+ */
 router.post('/candidate/remove/', ensureAuthticated, isAdmin, function(req, res){
   let candidate = new Candidate();
   candidate._id = req.body.candidateId;
@@ -494,7 +543,6 @@ router.post('/candidate/remove/', ensureAuthticated, isAdmin, function(req, res)
   })
 });
 /* END of CANDIDATE ROUTES*/
-
 /* START of CONSTITUENCEY ROUTES*/
 /* GET CONSTITUENCEY listing. */
 /**
@@ -515,14 +563,33 @@ router.get('/constituency', ensureAuthticated, isAdmin, function(req, res, next)
     });
   });
 });
-
 /* GET CONSTITUENCEY add view. */
+/**
+ * Route to render the consituency add view form for the selected user
+ * @name Admin  constituency  add index route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'admin/constituency/add'
+ */
 router.get('/constituency/add', ensureAuthticated, isAdmin, function(req, res, next) {
   Candidate.find({_deleted:false}).then(candidates =>{
 	 res.render('addConstituency',{err: req.flash('errors'), candidates:candidates});
   });
 });
-
+/**
+ * Route to the consituency add form
+ * @name Admin  constituency add index route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback '/constituency/add'
+ */
 // submit new constituency
 router.post('/constituency/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
@@ -555,8 +622,18 @@ router.post('/constituency/add', ensureAuthticated, isAdmin, function(req, res){
     });
   }
 });
-
 // update submit new constituency
+/**
+ * Route to the edit constituency view
+ * checks the users if inputs are valid if not error messages are displayed
+ * @name Admin constituency edit route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback 'admin/constituency/edit'
+ */
 router.post('/constituency/edit', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('name', 'Name is required').notEmpty();
@@ -591,8 +668,18 @@ router.post('/constituency/edit', ensureAuthticated, isAdmin, function(req, res)
     });
   }
 });
-
 //remove constituency
+/**
+ * Route to remove a user elected constituency from database
+ * if no id is provided redirect to /admin/constituency
+ * @name Admin  constituency index route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback 'admin/consituency/remove'
+ */
 router.post('/constituency/remove', ensureAuthticated, isAdmin, function(req, res){
   let constituency = {};
   constituency._id = req.body.constituencyId;
@@ -617,15 +704,15 @@ router.post('/constituency/remove', ensureAuthticated, isAdmin, function(req, re
 /* START of ELECTION ROUTES*/
 /* GET ELECTION listing. */
 /**
- * Route to election index
- * @name Admin  election index route
+ * Route to election edit edit screeview
+ * @name Admin  election  route
  * @param RequestType GET
  * @param ensureAuthticated Checks if user is authenticated
  * @param isAdmin Checks if user is an admin
  * @param Request The request being sent to the route.
  * @param Response The response being sent to the route.
  * @param Next The callback function.
- * @callback '/election'
+ * @callback 'admin/election'
  */
 router.get('/election', ensureAuthticated, isAdmin, function(req, res, next) {
   Election.find({_deleted:false}).then(elections =>{
@@ -634,15 +721,35 @@ router.get('/election', ensureAuthticated, isAdmin, function(req, res, next) {
     });
   });
 });
-
 /* GET ELECTION add view. */
+/**
+ * Route to render the add election add view form for the admin
+ * @name Admin  election add route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'admin/election/add'
+ */
 router.get('/election/add', ensureAuthticated, isAdmin, function(req, res, next) {
 	Constituency.find({_deleted:false}).then(constituencies=>{
     res.render('addElection',{err: req.flash('errors'), constituencies:constituencies});
   });
 });
-
 /* POST ELECTION */
+/**
+ * Route to add a election to the database
+ * checks the users if inputs are valid if not error messages are displayed
+ * @name Admin  election add  route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback 'admin/election/add'
+ */
 router.post('/election/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('name', 'Election name is required').notEmpty();
@@ -678,15 +785,24 @@ router.post('/election/add', ensureAuthticated, isAdmin, function(req, res){
     });
   }
 });
-
 // update submit new election
+/**
+* Route to edit a election for a selected user.
+* checks the users if inputs are valid if not error messages are displayed
+ * @name Admin  elecition edit route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback 'admin/election/edit'
+ */
 router.post('/election/edit', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('name', 'Election name is required').notEmpty();
   req.checkBody('startDate', 'The start date of the election is required').notEmpty();
   req.checkBody('endDate', 'The end date of the election is required').notEmpty();
   req.checkBody('constituencies', 'Constituencies are required').notEmpty();
-
   // Get errors
   let errors = req.validationErrors();
 
@@ -716,8 +832,18 @@ router.post('/election/edit', ensureAuthticated, isAdmin, function(req, res){
     });
   }
 });
-
 //remove election
+/**
+*Route to remove an election from database
+* if no id is provided redirect to /admin/election
+ * @name Admin  election edit  route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route..
+ * @callback 'admin/address/remove'
+ */
 router.post('/election/remove', ensureAuthticated, isAdmin, function(req, res){
   let election = {};
   election._id = req.body.electionId;
@@ -739,12 +865,11 @@ router.post('/election/remove', ensureAuthticated, isAdmin, function(req, res){
   })
 });
 /* END of ELECTION ROUTES*/
-
 /* START of RESULTS ROUTES*/
 /* GET RESULTS listing. */
 /**
  * Route to results index
- * @name Admin  party edit route
+ * @name Admin  results route
  * @param RequestType GET
  * @param ensureAuthticated Checks if user is authenticated
  * @param isAdmin Checks if user is an admin
@@ -786,19 +911,18 @@ router.get('/results', ensureAuthticated, isAdmin, function(req, res, next) {
 
   });
 });
-
 /* START of VOTER ROUTES*/
 /* GET VOTER listing. */
 /**
- * Route to voter index
- * @name Admin  vote index route
+ * Route to voter route
+ * @name Admin  vote route
  * @param RequestType GET
  * @param ensureAuthticated Checks if user is authenticated
  * @param isAdmin Checks if user is an admin
  * @param Request The request being sent to the route.
  * @param Response The response being sent to the route.
  * @param Next The callback function.
- * @callback '/voter'
+ * @callback 'admin/voter'
  */
 router.get('/voter', ensureAuthticated, isAdmin, function(req, res, next) {
   Voter.find().then(voters =>{
@@ -808,8 +932,18 @@ router.get('/voter', ensureAuthticated, isAdmin, function(req, res, next) {
     });
   });
 });
-
 /* GET VOTER add view. */
+/**
+ * Route to render voter add page.
+ * @name Admin  voter add route
+ * @param RequestType GET
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'admin/voter/add'
+ */
 router.get('/voter/add', ensureAuthticated, isAdmin, function(req, res, next) {
   Voter.find().then(voters =>{
      Address.find({_deleted:false}).then(addresses=>{
@@ -817,8 +951,18 @@ router.get('/voter/add', ensureAuthticated, isAdmin, function(req, res, next) {
     });
   });
 });
-
 /* POST VOTER */
+/**
+ * Route to add a voter to the database
+ * checks the users if inputs are valid if not error messages are displayed
+ * @name Admin  voter add route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback 'admin/voter/add'
+ */
 router.post('/voter/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('firstName', 'First name is required').notEmpty();
@@ -826,7 +970,6 @@ router.post('/voter/add', ensureAuthticated, isAdmin, function(req, res){
   req.checkBody('address', 'Address is required').notEmpty();
   req.checkBody('password', 'Password is required').notEmpty();
   req.checkBody('email', 'Email address is required').notEmpty();
-
   // Get errors
   let errors = req.validationErrors();
   var proxies = function(){
@@ -836,7 +979,6 @@ router.post('/voter/add', ensureAuthticated, isAdmin, function(req, res){
       return req.body.proxyFor.length;
     }
   }
-
  if(errors){
     req.flash('errors',errors);
     req.session.save(function () {
@@ -864,16 +1006,22 @@ router.post('/voter/add', ensureAuthticated, isAdmin, function(req, res){
       });
   }
 });
-
 // update submit new voter
+/**
+ * Route to voter edit route
+ * @name Admin voter edit route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback '/admin/voter/edit'
+ */
 router.post('/voter/edit', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('firstName', 'First name is required').notEmpty();
   req.checkBody('surname', 'Surname is required').notEmpty();
   req.checkBody('address', 'Address is required').notEmpty();
-
-
-
   // Get errors
   let errors = req.validationErrors();
   var proxies = function(){
@@ -914,8 +1062,19 @@ router.post('/voter/edit', ensureAuthticated, isAdmin, function(req, res){
     });
   }
 });
-
 //remove voter
+/**
+	*Route to remove a voter from the database
+	* if no id is provided redirect to /admin/voter
+ * Route to remove a voter route
+ * @name Admin  remove voter route
+ * @param RequestType POST
+ * @param ensureAuthticated Checks if user is authenticated
+ * @param isAdmin Checks if user is an admin
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @callback 'admin/voters/remove'
+ */
 router.post('/voter/remove', ensureAuthticated, isAdmin, function(req, res){
   let voter = {};
   voter._id = req.body.voterId;
@@ -936,7 +1095,6 @@ router.post('/voter/remove', ensureAuthticated, isAdmin, function(req, res){
   })
 });
 /* END of VOTER ROUTES*/
-
 module.exports = router;
 </code></pre>
         </article>
@@ -948,13 +1106,13 @@ module.exports = router;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Admin%2520Routes.html">Admin Routes</a></li><li><a href="module-Login%2520Routes.html">Login Routes</a></li><li><a href="module-User%2520Routes.html">User Routes</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 20 2019 18:36:58 GMT+0000 (Greenwich Mean Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 20 2019 20:47:17 GMT+0000 (Greenwich Mean Time)
 </footer>
 
 <script> prettyPrint(); </script>
