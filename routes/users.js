@@ -42,8 +42,10 @@ router.post('/login', function(req, res, next) {
   var err = req.validationErrors();
 
   if(err){
-  	console.log(err);
-  	res.redirect('login', {err:err})
+  	req.flash('inputError',err);                                      // if theres an error use Flash to display
+    req.session.save(function () {
+      res.redirect('/');
+    });
   }
   else{
   	console.log('Valid Inputs');
@@ -85,6 +87,7 @@ router.get('/unlockAccount', function(req, res, next) {
     voter.save(function(err){
       if(err) {
         console.error(err);
+        res.redirect('/');
         return;
       } else {
         res.redirect('/');

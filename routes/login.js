@@ -15,7 +15,7 @@ var router = express.Router();
  * @callback '/'
  */
 router.get('/', function(req, res, next) {
-  res.render('login',{err:{},loginError:req.flash("error")});
+  res.render('login',{err:req.flash("inputError"),loginError:req.flash("error")});
 });
 
 module.exports = router;
