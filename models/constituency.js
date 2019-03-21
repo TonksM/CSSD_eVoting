@@ -1,4 +1,4 @@
-/** @module Constituency Schema */
+/** @module models/Constituency Schema */
 
 /**
  * Mongoose Schema to hold information about a constituency

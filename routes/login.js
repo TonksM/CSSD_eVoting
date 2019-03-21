@@ -1,4 +1,4 @@
-/** @module Login Routes */
+/** @module routes/login Routes */
 
 var express = require('express');
 var router = express.Router();

@@ -1,4 +1,4 @@
-/** @module Admin Routes */
+/** @module routes/admin Routes */
 var express = require('express');
 var router = express.Router();
 const flash = require('connect-flash'); // used within admin to display messages when an edit/update or delete was submitted
@@ -838,6 +838,8 @@ router.post('/election/remove', ensureAuthticated, isAdmin, function(req, res){
 /* GET RESULTS listing. */
 /**
  * Route to results index
+ * Populates the elections which consitituencies and candidates to send to election model to
+ * get the chart data for displaing the results.
  * @name Admin  results route
  * @param RequestType GET
  * @param ensureAuthticated Checks if user is authenticated
@@ -858,6 +860,7 @@ router.get('/results', ensureAuthticated, isAdmin, function(req, res, next) {
       elections.forEach(election=>{
         console.log("Election: ");
         console.log(election);
+        //for each election get the tally up the votes, and add the chart data to an array to send to the view
         election.tallyElection(function(chartData){
           chartData.electionName = election._electionName;
           chartData.id = election._id;
@@ -871,6 +874,7 @@ router.get('/results', ensureAuthticated, isAdmin, function(req, res, next) {
       });
     }
     else{
+      //if no elections, redirect to admin base page and output error message.
       let errors = {'msg':'There are no elections to view the results of'};
       req.flash('errors',errors);
       req.session.save(function () {

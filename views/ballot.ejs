@@ -7,59 +7,6 @@
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" 
             crossorigin="anonymous">   </script>
     <style>
-      table, tr{
-        border: 4px solid black;
-        border-collapse: collapse;
-        width: 100%
-      }
-
-      .checkbox{
-        -webkit-appearance: checkbox;
-        -webkit-transform:;
-        margin: 20px;
-      }
-
-      .candidateName{
-        font-weight: bold;
-      }
-
-      .candidateDetails{
-        list-style-type: none;
-        overflow: hidden;
-        margin: 0;
-        padding: 5% 5%;
-        height: 100%
-      }
-
-      .candidateDetails li:first-child {
-        float: left;
-        text-decoration: none;
-        width: 75%
-      }
-      
-      .candidateDetails li p{
-        padding: 2px 0;
-        margin: 0;
-      }
-
-      .candidateDetails li p.txtBold{
-        font-weight: bold;
-      }
-
-      .candidateDetails li p.txtBold .txtUpper{
-        text-transform: uppercase;
-      }
-
-      .candidateDetails li p.txtRegular{
-        font-weight: normal;
-      }
-
-      .candidateDetails li:last-child {
-        float: right;
-        text-decoration: none;
-        text-align: center;
-        width: 25%;
-      }
 
     </style>
   </head>
@@ -67,9 +14,9 @@
     <form method = "get" action="./users/logout">
       <button>Logout</button>
     </form>
-    <div class='ballot'>
+    <div class='ballotContainer'>
       <div class='ballotHeader'>
-        Ballot for <%=constituency._name%>
+        Ballot for <span><%=constituency._name%><span>
       </div>
       <div class='ballotContents'>
         <table class="ballotTable">
@@ -110,6 +57,6 @@
     </div>
     
     
-    <script src="/javascripts/ballot.js"></script>
+    <script src="/javascript/ballot.js"></script>
   </body>
 </html>

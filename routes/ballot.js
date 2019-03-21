@@ -1,4 +1,4 @@
-/** @module Ballot Routes */
+/** @module routes/ballot Routes */
 
 var express = require('express');
 var router = express.Router();

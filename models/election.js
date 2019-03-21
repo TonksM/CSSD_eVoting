@@ -1,4 +1,4 @@
-/** @module Election Schema */
+/** @module models/Election Schema */
 
 /**
  * Mongoose Schema to hold information about a constituency

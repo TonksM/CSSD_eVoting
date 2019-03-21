@@ -1,4 +1,4 @@
-/** @module Admin Schema */
+/** @module models/Admin Schema */
 
 /**
  * Mongoose Schema for which user is a admin
