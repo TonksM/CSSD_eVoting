@@ -1,6 +1,4 @@
-/** @module isAdmin.js
-* Determines whether or not a user is an admin
-*/
+/** @module config/isAdmin*/
 
 module.exports = {
     /**
