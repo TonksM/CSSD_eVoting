@@ -1,4 +1,4 @@
-/** @module Address Schema */
+/** @module models/Address Schema */
 
 /**
  * Mongoose Schema for holding addresses

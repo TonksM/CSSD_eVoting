@@ -1,4 +1,4 @@
-/** @module Party Schema */
+/** @module models/Party Schema */
 
 /**
  * Mongoose Schema to hold information about a party

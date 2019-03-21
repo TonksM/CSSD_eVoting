@@ -1,4 +1,4 @@
-/** @module Results Schema */
+/** @module javascript/results Schema */
 
 /**
  * Function to configure the charts to show the election's results

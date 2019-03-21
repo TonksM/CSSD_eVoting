@@ -1,6 +1,4 @@
-/** @module Passport Config 
-* Configures the passport package for how to log a user in.
-*/
+/** @module config/Passport */
 
 const LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
