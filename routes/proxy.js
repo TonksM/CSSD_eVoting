@@ -1,4 +1,4 @@
-/** @module routes/ballot Routes */
+/** @module routes/proxy Routes */
 
 var express = require('express');
 var router = express.Router();
