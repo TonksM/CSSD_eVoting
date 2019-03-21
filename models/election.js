@@ -39,33 +39,42 @@ var electionSchema = new Schema({
  */
 electionSchema.methods.tallyElection = function(callback){
 	console.log("Enter tallyElection");
+	//for each candidate that is in the election, get their unique IDS
 	this.setAllCandidates(function(candidates){
 		console.log(candidates);
 		const ids = candidates.map(candidate => candidate._id);
+		//Get the votes that have been voted for this election
 		Vote.find({_vote:candidates}).populate({path:'_vote', populate:{path:'_party'}}).exec((err,votes) =>{
 			console.log("Votes");
 			console.log(votes);
-			var chartData = {partyId:[], partyColours:[], partyNames:[], partyVotes:[], currentLead:"test"};
+			//Set up array which will hold the chart data to be show in the result page
+			var chartData = {partyId:[], partyColours:[], partyNames:[], partyVotes:[], currentLead:""};
+			//For each vote check whether or not we have already seen the party
 			votes.forEach(vote=>{
 				console.log("vote");
 				console.log(vote);
 				if(chartData.partyId.toString().includes(vote._vote._party._id))
 				{	
+					//If we have seen the party before, increment the number of votes it has
 					var index = chartData.partyId.indexOf(vote._vote._party._id);
 					console.log(index);
 					var votes = chartData.partyVotes[index] + 1;
 					chartData.partyVotes[index] = votes;
 				}
 				else{
+					//If we have not seen the party before, adds its config to the array
 					chartData.partyId.push(vote._vote._party._id);
 					chartData.partyNames.push(vote._vote._party._name);
 					chartData.partyColours.push(vote._vote._party._partyColour);
 					chartData.partyVotes.push(1);
 				}
 			});
+
+			
 			var previousVotes = -1;
 			var currentLead = "";
 			var i = 0;
+			//Now that we have all the votes, we need to get who is currently in the lead
 			chartData.partyVotes.forEach(partyVotes=>{
 				if(partyVotes>previousVotes)
 				{
@@ -80,6 +89,9 @@ electionSchema.methods.tallyElection = function(callback){
 			const parties = candidates.map(candidate => candidate._party);
 			console.log("Parties: ");
 			console.log(parties);
+			//Now that we have all the information to do with the votes themselves
+			//We need to make sure parties which have not been
+			//voted for are included in the result as well
 			parties.forEach(party=>{
 				if(!chartData.partyId.toString().includes(party._id.toString()))
 				{
@@ -89,6 +101,7 @@ electionSchema.methods.tallyElection = function(callback){
 					chartData.partyVotes.push(0);
 				}
 			});
+			//Get the current lead party and store it in the chart data
 			chartData.currentLead = chartData.partyNames[currentLead];
 			console.log("chartData: ");
 			console.log(chartData);
@@ -106,6 +119,7 @@ electionSchema.methods.tallyElection = function(callback){
 electionSchema.methods.setAllCandidates = function(callback){
 	console.log("Enter setAllCandidates");
 	
+	//For each constituency, get its candidates and push them onto all candidates
 	this._constituencies.forEach(constituency=>{
 		console.log(constituency);
 		constituency._candidates.forEach(candidate=>{
@@ -119,29 +133,4 @@ electionSchema.methods.setAllCandidates = function(callback){
 	callback(this._allCandidates);
 }
 
-/**
- * Function to generate chart data for the chartjs chart in the results page
- * @name generateChartData
- * @param votes{[ObjectID]} Array pf references to Votes
- * @callback generateChartData
- */
-electionSchema.methods.generateChartData = function(votes){
-	var chartData = {partyId:[], partyColours:[], partyName:[], partyVotes:[]};
-	votes.forEach((err,vote)=>{
-		console.log("vote");
-		console.log(vote);
-		if(chartData.partyId.toString().includes(vote._vote._party._id))
-		{	
-			var index = array.indexOf(vote._vote._party._id);
-			chartData.partyVotes[index]++;
-		}else{
-			chartData.partyId.push(vote._vote._party._id);
-			chartData.partyName.push(vote._vote._party._name);
-			chartData.partyVotes.push(1);
-		}
-	});
-	console.log("chartData: ");
-		console.log(chartData);
-	return(chartData);
-}
 module.exports = mongoose.model('Election', electionSchema);
