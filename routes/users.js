@@ -109,6 +109,7 @@ router.get('/unlockAccount', function(req, res, next) {
 router.post('/requestPasswordReset', function(req, res, next) {
   req.checkBody('email', 'Email is required to reset password').notEmpty();
   console.log(req.body.email);
+  //if no email provided then redirect to login page and show errors
   let errors = req.validationErrors();
   if(errors){
     req.flash('inputError',errors);
@@ -117,10 +118,15 @@ router.post('/requestPasswordReset', function(req, res, next) {
     });
   }
   else{
+    //if email is not empty then find if the email is for a registered voter
   var email = req.body.email;
   Voter.findOne({_email:email}).then(voter=>{
     console.log(voter);
+    
+    //if the email provided is not to a registered voter then dont send the email and redirect to
+    //the login page and show the error
     if(voter != null){
+      //else if there is a voter with the specified email then set up email service
       var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -135,6 +141,7 @@ router.post('/requestPasswordReset', function(req, res, next) {
             text: 'Dear Voter, You have requested a password change. If this was you go to this address to unlock it http://localhost:3000/users/passwordReset?id='+voter._id+' If this was not you, speak to a system admin'
           };
 
+          //send the email with the relevant configuration and redirectto login
           transporter.sendMail(mailOptions, function(error, info){
             if (error) {
               console.log(error);
@@ -193,6 +200,7 @@ router.get('/passwordReset', function(req, res, next) {
  */
 router.post('/passwordReset', function(req, res, next) {
   var id = req.body.voterId;
+  //validates the passwords to make sure they are not empty
   req.checkBody('newPassword', 'Password is required').notEmpty();
   req.checkBody('confirmPassword', 'Please confirm the password').notEmpty();
   let password = req.body.newPassword;
@@ -201,12 +209,14 @@ router.post('/passwordReset', function(req, res, next) {
     errors = ({"msg":"Passwords need to match"});
   }
 
+  //if errors then refresh and show the errors
   if(errors){
     req.flash('errors',errors);
       req.session.save(function () {
       res.redirect('/users/passwordReset?id='+id);
     });
   }
+  //if no errors and validation is successful then find the voter in the database and change their password
   Voter.findOne({_id:id}).then((voter) => {
     if(!voter){
       req.flash('errors',{"msg":"Incorrect Id Consult Admin"});
