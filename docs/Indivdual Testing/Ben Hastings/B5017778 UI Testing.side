@@ -1,0 +1,210 @@
+{
+  "id": "b40eae6c-e872-4c73-80de-7ae59c41aa60",
+  "version": "2.0",
+  "name": "B5017778 UI Testing",
+  "url": "http://localhost:3000",
+  "tests": [{
+    "id": "099dfde4-c5ea-4c31-90ec-c913662a69ed",
+    "name": "Try and log in without any inputs",
+    "commands": [{
+      "id": "049bc387-9622-495a-b78f-e66e84b108db",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e9764df7-3c51-41b0-8170-0b175e32bc88",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "683x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "142bf791-1d13-4895-bda1-1c5efbb43b7e",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(5)",
+      "targets": [
+        ["css=button:nth-child(5)", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f859af74-5d3f-4a9b-b195-a3305f332820",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(5)",
+      "targets": [
+        ["css=button:nth-child(5)", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "74a7dc7c-a35c-46ce-a5c4-d1a9590b91b9",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "1f2fc26e-bcd7-4d28-84f6-0cfbe491c35c",
+    "name": "Try and log in with only email",
+    "commands": [{
+      "id": "ebabffd0-c346-4f9e-aac8-0b40b6be7cfb",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b8ca70e3-e3ae-4c93-82a3-f710f45d50e6",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "683x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "790cc4c0-92ce-49fb-af37-dd4a12ec51dc",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab19395d-7b96-4e85-8694-e75673bbdab5",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "benhastings97@gmail.com"
+    }, {
+      "id": "4ed9c780-90b9-4101-8e12-b1e847b0b96a",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(5)",
+      "targets": [
+        ["css=button:nth-child(5)", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "ed001126-a88a-4996-bf7f-8b53af915410",
+    "name": "Try and log in with only password",
+    "commands": [{
+      "id": "21e95be9-2a06-474b-b47b-f6ddf93743a0",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0b402311-ba59-4cd7-ba99-fa29606acb31",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "683x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fb55ae75-1ce2-4eda-bd7b-a2531f996daf",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "808bc2bb-2b0a-49de-be04-ff97b5fb333f",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "test"
+    }, {
+      "id": "c9512074-3652-4be5-a89c-08db9b8009c8",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(5)",
+      "targets": [
+        ["css=button:nth-child(5)", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "d050e9e4-aad9-4de7-b56a-c8000900a950",
+    "name": "Try to reset password without using an email",
+    "commands": [{
+      "id": "1830f019-2ed5-4900-bfc8-ab2912ae2746",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2429ffc5-d2c8-40f7-81c0-1c7dce684717",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "683x728",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "289068a9-2841-4ba3-b125-2994d650dab2",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(6)",
+      "targets": [
+        ["css=button:nth-child(6)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Reset Password')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "3a8cd616-e202-4523-a3af-beeff5b9dab9",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["099dfde4-c5ea-4c31-90ec-c913662a69ed"]
+  }],
+  "urls": ["http://localhost:3000/"],
+  "plugins": []
+}

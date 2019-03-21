@@ -1,4 +1,4 @@
-/** @module Candidate Schema */
+/** @module models/Candidate Schema */
 
 /**
  * Mongoose Schema to hold information about a candidate

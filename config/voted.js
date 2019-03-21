@@ -1,8 +1,16 @@
+/** @module config/voted */
 var Voter = require('../models/voter');
 
 module.exports = {
+    /**
+     * Function which is called to redirect anyone who was voted
+     * @name ensureNotVoted
+     * @param Request The request being sent to the route
+     * @param Response The response being sent from the route
+     * @param Next The callback function
+     * @callback PassportAuthenticate
+     */
 	ensureNotVoted: (req,res,next)=>{
-        //This function checks the 
         let voterId = req.user;
 
         Voter.findOne({_id: voterId}, function(err, voter){

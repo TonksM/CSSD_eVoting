@@ -1,4 +1,4 @@
-/** @module Voter Schema */
+/** @module models/Voter Schema */
 
 /**
  * Mongoose Schema to hold information about a voter

@@ -1,4 +1,4 @@
-/** @module addConstituency Schema */
+/** @module javascript/addConstituency Schema */
 
 /**
  * Function to add a postcode checkbox to the ui to be assiociated to the constituency
