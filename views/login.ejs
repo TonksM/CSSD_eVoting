@@ -3,6 +3,8 @@
   <head>
     <title>Login</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/admin.css' />
+
   </head>
   <body>
     <h1>Login</h1>
@@ -20,12 +22,14 @@
     %>
     <div class='loginDetails'>
       <form method = "post" action="/users/login">
-        <label for="email">Email</label>
-      <input type="text" name="email" id="email"/>
-      <label for="password">Password</label>
-      <input type="password" name="password" id="password"/>
-      <button>Login</button>
-      <button type="submit" formmethod = "post" formaction="/users/requestPasswordReset">Reset Password</button>
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email"/>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password"/>
+            <button>Login</button>
+            <button type="submit" formmethod = "post" formaction="/users/requestPasswordReset">Reset Password</button>
+          </li>
+        </ul>
       </div>
     </form>
   </body>

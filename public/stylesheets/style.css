@@ -10,3 +10,209 @@ a {
 	width: 60%;
 	height: 60%;
 }
+
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: #2e282a;
+}
+
+a {
+  text-decoration: none;
+}
+
+.buttonGroup{
+	padding-left:2%;
+}a,button{
+	padding:10px;
+	background-color: #2e282a;
+	transition: background 0.2s;
+	color: #fff;
+	padding-left: 20px;
+	padding-right: 20px;
+	border:0;
+	border: 1px solid #ddd;
+}
+a:hover,button:hover{
+	background-color: #5E585A;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+form{
+	display: inline-block;
+	width:25%;
+	text-align: left;
+}
+
+form input,form select, form label{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+	width:100%;
+	float:left;
+	vertical-align: middle;
+	
+	background-color: #fff;
+}
+form input[type="checkbox"]{
+	width:10px;
+	margin:10px;
+}
+form input,form select{
+	border: 1px solid #ddd;
+	padding: 10px;
+	margin: 5px 10px 5px 0;
+}
+
+
+/* Add some margins for each label */
+form label {
+  margin: 5px 10px 5px 0;
+  font-weight: bold;
+}
+
+form button{
+	float:left;
+}
+.postcodeGroup label,.postcodeGroup input{
+	width:100%;
+	margin:auto;
+}
+
+
+
+/* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
+@media (max-width: 800px) {
+  form input {
+    margin: 10px 0;
+  }
+
+  form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+} 
+
+.displayProx{
+            list-style-type: none;
+            overflow: hidden;
+            border: 5px #000000 solid;
+            padding: 0 0;
+            margin: auto;
+            width: 100%;
+            max-width: 600px;
+        }
+.displayProx p{
+            font-weight: bold;
+            padding: 0 10px;
+}
+.displayProx li{
+            border-bottom: 2px #aaaaaa solid;
+            color: #000000;
+            padding: 2px 5px;
+        }
+.displayProx li.hasVotedtrue{
+            color: #888888;
+            padding: 2px 5px;
+            background-color: #dddddd
+        }
+.displayProx li.hasVotedtrue:hover{
+            cursor: default;
+        }
+.displayProx li p{
+            padding: 1px 0;
+            margin: 0;
+}
+.displayProx li p:first-child{
+            font-weight: Bold;
+        }
+
+.displayProx li p:first-child .upper{
+            text-transform: uppercase;
+        }
+
+.displayProx li:hover{
+            /*background-color:cornflowerblue;
+            color: #ffffff;*/
+            cursor:pointer;
+        }
+
+.displayProx .selected{
+            background-color:cornflowerblue;
+            color: #ffffff
+        }
+.displayProx li:last-child{
+            border-bottom: none;
+        }
+      
+      .ballotHeader{
+        margin: auto;
+        padding: 0 20% 20px 20%;
+        text-align: center;
+        font-weight: bold; 
+        font-size: 16pt;
+      }
+
+      .ballotHeader span{
+        text-transform: uppercase;
+
+      }
+
+      .ballotTable, tr{
+        border: 4px solid black;
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 600px;
+        padding: 0 20%;
+        margin: auto;
+      }
+
+      .checkbox{
+        -webkit-appearance: checkbox;
+        margin: 20px;
+      }
+
+      .candidateName{
+        font-weight: bold;
+      }
+
+      .candidateDetails{
+        list-style-type: none;
+        overflow: hidden;
+        margin: 0;
+        padding: 5% 5%;
+        height: 100%
+      }
+
+      .candidateDetails li:first-child {
+        float: left;
+        text-decoration: none;
+        width: 75%
+      }
+      
+      .candidateDetails li p{
+        padding: 2px 0;
+        margin: 0;
+      }
+
+      .candidateDetails li p.txtBold{
+        font-weight: bold;
+      }
+
+      .candidateDetails li p.txtBold .txtUpper{
+        text-transform: uppercase;
+      }
+
+      .candidateDetails li p.txtRegular{
+        font-weight: normal;
+      }
+
+      .candidateDetails li:last-child {
+        float: right;
+        text-decoration: none;
+        text-align: center;
+        width: 25%;
+      }
+
+
