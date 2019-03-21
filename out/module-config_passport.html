@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: config/isAdmin</title>
+    <title>JSDoc: Module: config/passport</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: config/isAdmin</h1>
+    <h1 class="page-title">Module: config/passport</h1>
 
     
 
@@ -66,7 +66,7 @@
     
 
     
-    <h4 class="name" id="~isAdmin"><span class="type-signature"></span>isAdmin<span class="signature">(Request, Response, Next)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~deserializeUser"><span class="type-signature"></span>deserializeUser<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -74,7 +74,7 @@
 
 
 <div class="description">
-    Ensures the users stored in the session is an admin and redirects accordingly
+    Function to deserialize the user for the session
 </div>
 
 
@@ -83,86 +83,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>Request</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The request being sent to the route.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>Response</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The response being sent to the route.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>Next</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The callback function.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -198,7 +118,179 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="config_isAdmin.js.html">config/isAdmin.js</a>, <a href="config_isAdmin.js.html#line4">line 4</a>
+        <a href="config_passport.js.html">config/passport.js</a>, <a href="config_passport.js.html#line93">line 93</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~deserializeUser"><span class="type-signature"></span>deserializeUser<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function to deserialize the user for the session
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="config_passport.js.html">config/passport.js</a>, <a href="config_passport.js.html#line83">line 83</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~PassportAuthenticate"><span class="type-signature"></span>PassportAuthenticate<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Function which is called to authorise the user's credentials
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="config_passport.js.html">config/passport.js</a>, <a href="config_passport.js.html#line9">line 9</a>
     </li></ul></dd>
     
 

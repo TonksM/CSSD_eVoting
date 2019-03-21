@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/proxy.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/proxy.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module routes/proxy Routes */
+
+var express = require('express');
+var router = express.Router();
+var passport = require('passport')
+var Constituency = require('../models/constituency');
+var Candidate = require('../models/candidate');
+var Voter = require('../models/voter');
+var Vote = require('../models/vote');
+const session = require('express-session');
+const {ensureAuthticated} = require("../config/auth");
+const {ensureNotAllVoted} = require("../config/voted")
+
+/**
+ * This router uses the voter's id to query their index within the user collection
+    retrieving any associated proxy accounts, and populating their fields by
+    referencing the Voter schema. For easy distinguisability between the proxy,
+    and thier associated accounts, their addresses are also populated.
+  * @name Proxy view associated accounts of proxy voter
+  * @param RequestType GET
+  * @param Request The request being sent to the route
+  * @param Response The response being sent from the route
+  * @param Next The callback function
+  * @param voterId The current voter/user's ObjectId
+  * @param data The data to be sent to the response (ejs template)
+  * @param ensureAuthenticated Verifies the voter
+  * @param ensureNotAllVoted Verifies that all associated voter accounts with the proxy have not voted
+  * @callback 'proxy/'
+ **/
+
+router.get('/', ensureAuthticated, ensureNotAllVoted, function(req, res, next){
+  
+  let voterId = req.user;
+  Voter.findOne({_id: voterId}).populate({
+      path: '_address _proxyFor', 
+      populate:{ path: '_address'}
+    }).exec(function (err, voter){
+    //The Voter and the proxy are both stored within the data that is sent to the ejs template
+    var data = {
+      voter:          voter,
+      proxees:        voter._proxyFor
+    }
+    res.render('proxy', data)
+  });
+});
+
+/**
+ *  The route functions similar to its counterpart in the ballot router, however,
+      has a couple major differences:
+      - The router is POSTed due to the sending the selected user id from the '/' GET route
+      - The voterId is determined by a hidden field on the rendered ejs template for '/'
+        GET route
+    Other than that, please refer to the documentation for the Ballot.js router
+  * @name ProxyBallot Displays the ballot for proxy voter and associated voters
+  * @param RequestType POST
+  * @param Request The request being sent to the route
+  * @param Response The response being sent from the route
+  * @param Next The callback function
+  * @param voterId The selected user from the proxy select screen
+  * @param data The data to be sent to the response (ejs template)
+  * @param ensureAuthenticated Verifies the voter
+  * @callback 'proxy/ballot'
+ **/
+
+router.post('/ballot', ensureAuthticated, function(req, res, next){
+
+  let voterId = req.body.selectedUser;
+  Voter.findOne({_id: voterId}).populate('_address').exec( function (err, voter){
+    let vpc = voter._address._postcode;
+    console.log("Postcode:"+vpc);
+
+    Constituency.findOne({_validPostcodes: vpc}).populate({
+      path: '_candidates', populate:{path : '_address _party'}
+    }).exec(function(err, constituency){
+      console.log(constituency._candidates);
+        var data = {
+          constituency:  constituency,
+          voter:          voterId, 
+          candidates:     constituency._candidates
+        };
+        res.status(200);
+        res.render('ballot', data);
+      
+    });
+  });
+});
+
+/**
+ *  The route functions similar to its counterpart in the ballot router, however,
+      has a couple major differences:
+      - The router is POSTed due to the sending the selected user id from the '/' GET route
+      - The voterId is determined by a hidden field on the rendered ejs template for '/'
+        GET route
+    Other than that, please refer to the documentation for the Ballot.js router
+ * @name ProxyBallotCastVote Cast Vote route
+ * @param RequestType POST
+ * @param Request The request being sent to the route
+ * @param Response The response being sent from the route
+ * @param Next The callback function
+ * @param voterId The selected user from the proxy select screen 
+ * @param noo The new Vote object
+ * @param _voted The flag that tells the system that the voter has voted
+ * @param ensureAuthenticated Verifies the voter
+  * @callback 'proxy/ballot/cast_vote'
+ **/
+
+router.post('/ballot/cast_vote', ensureAuthticated, function(req, res, next){
+  let voterId = req.body.voterId;
+  let noo = new Vote({
+      _vote: req.body.votingFor
+  });
+  noo.save(function(err, nu){
+    if(err) return function(){
+        console.error(err);
+        res.redirect('./vote_msg/?msg=error' )
+      };
+    Voter.findOneAndUpdate({_id: voterId}, { _hasVoted: true}, function(err){
+      if(err) return function(){
+        console.error(err);
+        res.redirect('./vote_msg/?msg=error' )
+      };
+      res.redirect('./vote_msg/?msg=confirm')
+    });
+  }); 
+});
+
+/**
+ * This route is almost identical to its non-proxy counterpart, however, has a
+    slightly different message for when the proxy has voted for all associated
+    including their own.
+ * @name ProxyBallotVoteMessage Vote Message route
+ * @param RequestType GET
+ * @param Request The request being sent to the route
+ * @param Response The response being sent from the route
+ * @param Next The callback function
+ * @param data The data to be sent to the response (ejs template)
+ * @param ensureAuthenticated Verifies the voter
+ * @callback 'proxy/ballot/vote_msg'
+ */
+
+router.get('/ballot/vote_msg', ensureAuthticated, function(req, res, next){
+
+  var data = {
+    msg: ""
+  } 
+  
+  switch(req.query.msg){
+        case 'confirm':
+          data.msg = "Thank you for voting!";
+          break;
+        case 'error':
+          data.msg = "There was an error!";
+          break;
+        case 'voted': 
+          data.msg = "All assoicated voters for this account have voted, please log out";
+          break;
+  }
+  res.render('vote_msg', data);
+});
+
+module.exports = router;
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-config_auth.html">config/auth</a></li><li><a href="module-config_isAdmin.html">config/isAdmin</a></li><li><a href="module-config_passport.html">config/passport</a></li><li><a href="module-config_proxy%2520Routes.html">config/proxy Routes</a></li><li><a href="module-config_voted.html">config/voted</a></li><li><a href="module-javascript_addConstituency%2520Schema.html">javascript/addConstituency Schema</a></li><li><a href="module-javascript_editConstituency%2520Schema.html">javascript/editConstituency Schema</a></li><li><a href="module-javascript_results%2520Schema.html">javascript/results Schema</a></li><li><a href="module-models_Address%2520Schema.html">models/Address Schema</a></li><li><a href="module-models_Admin%2520Schema.html">models/Admin Schema</a></li><li><a href="module-models_Candidate%2520Schema.html">models/Candidate Schema</a></li><li><a href="module-models_Constituency%2520Schema.html">models/Constituency Schema</a></li><li><a href="module-models_Election%2520Schema.html">models/Election Schema</a></li><li><a href="module-models_Party%2520Schema.html">models/Party Schema</a></li><li><a href="module-models_Vote%2520Schema.html">models/Vote Schema</a></li><li><a href="module-models_Voter%2520Schema.html">models/Voter Schema</a></li><li><a href="module-routes_admin%2520Routes.html">routes/admin Routes</a></li><li><a href="module-routes_ballot%2520Routes.html">routes/ballot Routes</a></li><li><a href="module-routes_login%2520Routes.html">routes/login Routes</a></li><li><a href="module-routes_proxy%2520Routes.html">routes/proxy Routes</a></li><li><a href="module-routes_user%2520Routes.html">routes/user Routes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Mar 21 2019 14:27:38 GMT+0000 (Greenwich Mean Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

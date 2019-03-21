@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: config/isAdmin</title>
+    <title>JSDoc: Source: models/party.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,222 +17,40 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: config/isAdmin</h1>
+    <h1 class="page-title">Source: models/party.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Type Definitions</h3>
-
-        
-                
-
-    
-
-    
-    <h4 class="name" id="~isAdmin"><span class="type-signature"></span>isAdmin<span class="signature">(Request, Response, Next)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Ensures the users stored in the session is an admin and redirects accordingly
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>Request</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The request being sent to the route.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>Response</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The response being sent to the route.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>Next</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The callback function.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="config_isAdmin.js.html">config/isAdmin.js</a>, <a href="config_isAdmin.js.html#line4">line 4</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module models/Party Schema */
+
+/**
+ * Mongoose Schema to hold information about a party
+ * @name Party Schema
+ * @param _id{ObjectID} Mongodb generated unique ID
+ * @param _name{string} Party Name
+ * @param _partyColour{string} The colour of the party
+ * @param _deleted{Boolean} Whether the document is deleted or not
+ * @callback Party
+ */
+
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema, 
+    ObjectId = Schema.ObjectId;
+
+var partySchema = new Schema({
+    _name: 				String,
+    _partyColour: 		String,
+    _deleted:      	Boolean
+})
+
+module.exports = mongoose.model('Party', partySchema);</code></pre>
+        </article>
+    </section>
 
 
 

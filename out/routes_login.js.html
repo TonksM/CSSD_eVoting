@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: config/isAdmin</title>
+    <title>JSDoc: Source: routes/login.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,222 +17,39 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: config/isAdmin</h1>
+    <h1 class="page-title">Source: routes/login.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Type Definitions</h3>
-
-        
-                
-
-    
-
-    
-    <h4 class="name" id="~isAdmin"><span class="type-signature"></span>isAdmin<span class="signature">(Request, Response, Next)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Ensures the users stored in the session is an admin and redirects accordingly
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>Request</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The request being sent to the route.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>Response</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The response being sent to the route.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>Next</code></td>
-            
-
-            <td class="type">
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The callback function.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="config_isAdmin.js.html">config/isAdmin.js</a>, <a href="config_isAdmin.js.html#line4">line 4</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module routes/login Routes */
+
+var express = require('express');
+var router = express.Router();
+
+
+/* GET login page */
+/**
+ * Route render the login page
+ * @name Login Render Login Page
+ * @param RequestType GET
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback '/'
+ */
+router.get('/', function(req, res, next) {
+  res.render('login',{err:req.flash("inputError"),loginError:req.flash("error")});
+});
+
+module.exports = router;
+</code></pre>
+        </article>
+    </section>
 
 
 

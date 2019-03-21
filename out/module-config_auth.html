@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: config/isAdmin</title>
+    <title>JSDoc: Module: config/auth</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: config/isAdmin</h1>
+    <h1 class="page-title">Module: config/auth</h1>
 
     
 
@@ -66,7 +66,7 @@
     
 
     
-    <h4 class="name" id="~isAdmin"><span class="type-signature"></span>isAdmin<span class="signature">(Request, Response, Next)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~ensureAuthticated"><span class="type-signature"></span>ensureAuthticated<span class="signature">(Request, Response, Next)</span><span class="type-signature"></span></h4>
     
 
     
@@ -74,7 +74,7 @@
 
 
 <div class="description">
-    Ensures the users stored in the session is an admin and redirects accordingly
+    Ensures the users is authenticated by checking a web token stored as a session =
 </div>
 
 
@@ -198,7 +198,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="config_isAdmin.js.html">config/isAdmin.js</a>, <a href="config_isAdmin.js.html#line4">line 4</a>
+        <a href="config_auth.js.html">config/auth.js</a>, <a href="config_auth.js.html#line3">line 3</a>
     </li></ul></dd>
     
 

@@ -1,0 +1,3659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: routes/ballot Routes</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: routes/ballot Routes</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+
+    
+
+    
+    <h4 class="name" id="~'ballot/'"><span class="type-signature"></span>'ballot/'<span class="signature">(RequestType, Request, Response, Next, voterId, data, ensureAuthenticated, ensureNotVoted, isNotAWP, isNotProxy)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    This route gets the current user's id, and queries the user collection with it. The .populate 
+    command uses the reference within the Voter schema to populate the address fields. The Postcode 
+    is used to retrieve the appropriate constitiuency and then populates the candidates that are 
+    associated with that constituency. The voterId, the constituency, candidates are then placed 
+    into an array called 'data' to populate the ejs template variables on the ejs template.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">GET</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>voterId</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The current voter/user's ObjectId</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The data to be sent to the response (ejs template)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureNotVoted</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies that the voter has not voted</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>isNotAWP</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">AWP stands for "associated with proxt", and this checks if the voter has another account voting on their account, redirecting a message explaining this.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>isNotProxy</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Checks if the voter is a proxy for any other accounts, and redirects them to the proxy voter select screen</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_ballot.js.html">routes/ballot.js</a>, <a href="routes_ballot.js.html#line16">line 16</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~'ballot/cast_vote'"><span class="type-signature"></span>'ballot/cast_vote'<span class="signature">(RequestType, Request, Response, Next, voterId, noo, _voted, ensureAuthenticated)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Mongoose creates a new Vote object, based on the Vote Schema, then saves to the appropriate collection.
+    The voter's _voted flag is set to true, and then if successful in both the save and the update
+    to the database, the user is presented with a confirmation screen with only the option to log out.
+    If either databse action is unsuccessful, the user will be presented with a simple error message.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">POST</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>voterId</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The current voter/user's ObjectId</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>noo</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new Vote object</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_voted</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The flag that tells the system that the voter has voted</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_ballot.js.html">routes/ballot.js</a>, <a href="routes_ballot.js.html#line57">line 57</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~'ballot/vote_msg'"><span class="type-signature"></span>'ballot/vote_msg'<span class="signature">(RequestType, Request, Response, Next, data, ensureAuthenticated)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Determines to correct message to display based on the GET message query
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">GET</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The data to be sent to the response (ejs template)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_ballot.js.html">routes/ballot.js</a>, <a href="routes_ballot.js.html#line94">line 94</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~'proxy/'"><span class="type-signature"></span>'proxy/'<span class="signature">(RequestType, Request, Response, Next, voterId, data, ensureAuthenticated, ensureNotAllVoted)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    This router uses the voter's id to query their index within the user collection
+    retrieving any associated proxy accounts, and populating their fields by
+    referencing the Voter schema. For easy distinguisability between the proxy,
+    and thier associated accounts, their addresses are also populated.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">GET</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>voterId</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The current voter/user's ObjectId</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The data to be sent to the response (ejs template)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureNotAllVoted</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies that all associated voter accounts with the proxy have not voted</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_proxy.js.html">routes/proxy.js</a>, <a href="routes_proxy.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~'proxy/ballot'"><span class="type-signature"></span>'proxy/ballot'<span class="signature">(RequestType, Request, Response, Next, voterId, data, ensureAuthenticated)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The route functions similar to its counterpart in the ballot router, however,
+      has a couple major differences:
+      - The router is POSTed due to the sending the selected user id from the '/' GET route
+      - The voterId is determined by a hidden field on the rendered ejs template for '/'
+        GET route
+    Other than that, please refer to the documentation for the Ballot.js router
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">POST</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>voterId</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The selected user from the proxy select screen</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The data to be sent to the response (ejs template)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_proxy.js.html">routes/proxy.js</a>, <a href="routes_proxy.js.html#line47">line 47</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~'proxy/ballot/cast_vote'"><span class="type-signature"></span>'proxy/ballot/cast_vote'<span class="signature">(RequestType, Request, Response, Next, voterId, noo, _voted, ensureAuthenticated)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The route functions similar to its counterpart in the ballot router, however,
+      has a couple major differences:
+      - The router is POSTed due to the sending the selected user id from the '/' GET route
+      - The voterId is determined by a hidden field on the rendered ejs template for '/'
+        GET route
+    Other than that, please refer to the documentation for the Ballot.js router
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">POST</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>voterId</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The selected user from the proxy select screen</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>noo</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new Vote object</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_voted</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The flag that tells the system that the voter has voted</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_proxy.js.html">routes/proxy.js</a>, <a href="routes_proxy.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~'proxy/ballot/vote_msg'"><span class="type-signature"></span>'proxy/ballot/vote_msg'<span class="signature">(RequestType, Request, Response, Next, data, ensureAuthenticated)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    This route is almost identical to its non-proxy counterpart, however, has a
+    slightly different message for when the proxy has voted for all associated
+    including their own.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">GET</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The data to be sent to the response (ejs template)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_proxy.js.html">routes/proxy.js</a>, <a href="routes_proxy.js.html#line127">line 127</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+
+    
+
+    
+    <h4 class="name" id="~'ballot/'"><span class="type-signature"></span>'ballot/'<span class="signature">(RequestType, Request, Response, Next, voterId, data, ensureAuthenticated, ensureNotVoted, isNotAWP, isNotProxy)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    This route gets the current user's id, and queries the user collection with it. The .populate 
+    command uses the reference within the Voter schema to populate the address fields. The Postcode 
+    is used to retrieve the appropriate constitiuency and then populates the candidates that are 
+    associated with that constituency. The voterId, the constituency, candidates are then placed 
+    into an array called 'data' to populate the ejs template variables on the ejs template.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">GET</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>voterId</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The current voter/user's ObjectId</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The data to be sent to the response (ejs template)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureNotVoted</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies that the voter has not voted</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>isNotAWP</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">AWP stands for "associated with proxt", and this checks if the voter has another account voting on their account, redirecting a message explaining this.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>isNotProxy</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Checks if the voter is a proxy for any other accounts, and redirects them to the proxy voter select screen</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_ballot.js.html">routes/ballot.js</a>, <a href="routes_ballot.js.html#line16">line 16</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~'ballot/cast_vote'"><span class="type-signature"></span>'ballot/cast_vote'<span class="signature">(RequestType, Request, Response, Next, voterId, noo, _voted, ensureAuthenticated)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Mongoose creates a new Vote object, based on the Vote Schema, then saves to the appropriate collection.
+    The voter's _voted flag is set to true, and then if successful in both the save and the update
+    to the database, the user is presented with a confirmation screen with only the option to log out.
+    If either databse action is unsuccessful, the user will be presented with a simple error message.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">POST</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>voterId</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The current voter/user's ObjectId</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>noo</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new Vote object</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_voted</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The flag that tells the system that the voter has voted</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_ballot.js.html">routes/ballot.js</a>, <a href="routes_ballot.js.html#line57">line 57</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~'ballot/vote_msg'"><span class="type-signature"></span>'ballot/vote_msg'<span class="signature">(RequestType, Request, Response, Next, data, ensureAuthenticated)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Determines to correct message to display based on the GET message query
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">GET</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The data to be sent to the response (ejs template)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_ballot.js.html">routes/ballot.js</a>, <a href="routes_ballot.js.html#line94">line 94</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~'proxy/'"><span class="type-signature"></span>'proxy/'<span class="signature">(RequestType, Request, Response, Next, voterId, data, ensureAuthenticated, ensureNotAllVoted)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    This router uses the voter's id to query their index within the user collection
+    retrieving any associated proxy accounts, and populating their fields by
+    referencing the Voter schema. For easy distinguisability between the proxy,
+    and thier associated accounts, their addresses are also populated.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">GET</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>voterId</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The current voter/user's ObjectId</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The data to be sent to the response (ejs template)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureNotAllVoted</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies that all associated voter accounts with the proxy have not voted</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_proxy.js.html">routes/proxy.js</a>, <a href="routes_proxy.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~'proxy/ballot'"><span class="type-signature"></span>'proxy/ballot'<span class="signature">(RequestType, Request, Response, Next, voterId, data, ensureAuthenticated)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The route functions similar to its counterpart in the ballot router, however,
+      has a couple major differences:
+      - The router is POSTed due to the sending the selected user id from the '/' GET route
+      - The voterId is determined by a hidden field on the rendered ejs template for '/'
+        GET route
+    Other than that, please refer to the documentation for the Ballot.js router
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">POST</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>voterId</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The selected user from the proxy select screen</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The data to be sent to the response (ejs template)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_proxy.js.html">routes/proxy.js</a>, <a href="routes_proxy.js.html#line47">line 47</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~'proxy/ballot/cast_vote'"><span class="type-signature"></span>'proxy/ballot/cast_vote'<span class="signature">(RequestType, Request, Response, Next, voterId, noo, _voted, ensureAuthenticated)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The route functions similar to its counterpart in the ballot router, however,
+      has a couple major differences:
+      - The router is POSTed due to the sending the selected user id from the '/' GET route
+      - The voterId is determined by a hidden field on the rendered ejs template for '/'
+        GET route
+    Other than that, please refer to the documentation for the Ballot.js router
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">POST</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>voterId</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The selected user from the proxy select screen</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>noo</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new Vote object</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>_voted</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The flag that tells the system that the voter has voted</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_proxy.js.html">routes/proxy.js</a>, <a href="routes_proxy.js.html#line88">line 88</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~'proxy/ballot/vote_msg'"><span class="type-signature"></span>'proxy/ballot/vote_msg'<span class="signature">(RequestType, Request, Response, Next, data, ensureAuthenticated)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    This route is almost identical to its non-proxy counterpart, however, has a
+    slightly different message for when the proxy has voted for all associated
+    including their own.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>RequestType</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">GET</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Request</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request being sent to the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Response</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The response being sent from the route</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Next</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The callback function</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The data to be sent to the response (ejs template)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ensureAuthenticated</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Verifies the voter</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_proxy.js.html">routes/proxy.js</a>, <a href="routes_proxy.js.html#line127">line 127</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-config_auth.html">config/auth</a></li><li><a href="module-config_isAdmin.html">config/isAdmin</a></li><li><a href="module-config_passport.html">config/passport</a></li><li><a href="module-config_proxy%2520Routes.html">config/proxy Routes</a></li><li><a href="module-config_voted.html">config/voted</a></li><li><a href="module-javascript_addConstituency%2520Schema.html">javascript/addConstituency Schema</a></li><li><a href="module-javascript_editConstituency%2520Schema.html">javascript/editConstituency Schema</a></li><li><a href="module-javascript_results%2520Schema.html">javascript/results Schema</a></li><li><a href="module-models_Address%2520Schema.html">models/Address Schema</a></li><li><a href="module-models_Admin%2520Schema.html">models/Admin Schema</a></li><li><a href="module-models_Candidate%2520Schema.html">models/Candidate Schema</a></li><li><a href="module-models_Constituency%2520Schema.html">models/Constituency Schema</a></li><li><a href="module-models_Election%2520Schema.html">models/Election Schema</a></li><li><a href="module-models_Party%2520Schema.html">models/Party Schema</a></li><li><a href="module-models_Vote%2520Schema.html">models/Vote Schema</a></li><li><a href="module-models_Voter%2520Schema.html">models/Voter Schema</a></li><li><a href="module-routes_admin%2520Routes.html">routes/admin Routes</a></li><li><a href="module-routes_ballot%252520Routes.html">routes/ballot Routes</a></li><li><a href="module-routes_login%2520Routes.html">routes/login Routes</a></li><li><a href="module-routes_user%2520Routes.html">routes/user Routes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Mar 21 2019 14:24:40 GMT+0000 (Greenwich Mean Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

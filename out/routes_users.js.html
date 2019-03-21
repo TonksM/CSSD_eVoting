@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/users.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/users.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module routes/user Routes */
+
+var express = require('express');
+var router = express.Router();
+var mongoose = require('mongoose');
+const passport = require('passport');
+const Voter = mongoose.model('Voter');
+var nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
+
+/* GET users listing. */
+/**
+ * Route to users index
+ * @name Users index route
+ * @param RequestType GET
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback '/'
+ */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Index' });
+});
+
+/* POST users listing. */
+/**
+ * Route to login where the user's 
+ * @name Users login route
+ * @param RequestType POST
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/login'
+ */
+router.post('/login', function(req, res, next) {
+  var email = req.body.email;
+  var password = req.body.password;
+  //Check inputs to make sure they are not empty
+  req.checkBody('email','Email is required').notEmpty();
+  req.checkBody('password','Password is required').notEmpty();
+
+  var err = req.validationErrors();
+  //If at least one of the inputs are empty then redirect back with associated errors
+  if(err){
+  	req.flash('inputError',err);s
+    req.session.save(function () {
+      res.redirect('/');
+    });
+  }
+  else{
+  	console.log('Valid Inputs');
+  	passport.authenticate('local', {
+  		successRedirect:'/admin',
+  		failureRedirect:'/',
+      failureFlash:true
+  	})(req,res,next);
+  }
+});
+
+/**
+ * Route to logout the current user
+ * @name Users logout route
+ * @param RequestType GET
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/logout'
+ */
+router.get('/logout', function(req, res, next) {
+  req.logout();
+  res.redirect("/");
+});
+
+/**
+ * Route to unlock a users account 
+ * @name Users unlock account
+ * @param RequestType GET
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/unlockAccount'
+ */
+router.get('/unlockAccount', function(req, res, next) {
+  console.log(req.param('id'));
+  Voter.findOne({_id:req.param('id')}).then(voter => {
+    voter._loginAttempts = 0;
+    voter.save(function(err){
+      if(err) {
+        console.error(err);
+        res.redirect('/');
+        return;
+      } else {
+        res.redirect('/');
+      }
+    });
+  });
+});
+
+/**
+ * Route to request a password reset from the login page
+ * Sends an email to a valid email
+ * @name Users request password reset
+ * @param RequestType POST
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/requestPasswordReset'
+ */
+router.post('/requestPasswordReset', function(req, res, next) {
+  req.checkBody('email', 'Email is required to reset password').notEmpty();
+  console.log(req.body.email);
+  //if no email provided then redirect to login page and show errors
+  let errors = req.validationErrors();
+  if(errors){
+    req.flash('inputError',errors);
+    req.session.save(function () {
+      res.redirect('/');
+    });
+  }
+  else{
+    //if email is not empty then find if the email is for a registered voter
+  var email = req.body.email;
+  Voter.findOne({_email:email}).then(voter=>{
+    console.log(voter);
+    
+    //if the email provided is not to a registered voter then dont send the email and redirect to
+    //the login page and show the error
+    if(voter != null){
+      //else if there is a voter with the specified email then set up email service
+      var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'cssdevoting@gmail.com',
+              pass: 'cssdevoting12345'
+            }
+          });
+          var mailOptions = {
+            from: 'cssdevoting@gmail.com',
+            to: voter._email,
+            subject: 'EVoting Password Reset',
+            text: 'Dear Voter, You have requested a password change. If this was you go to this address to unlock it http://localhost:3000/users/passwordReset?id='+voter._id+' If this was not you, speak to a system admin'
+          };
+
+          //send the email with the relevant configuration and redirectto login
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+              req.flash('inputError',{"msg":"Email has been sent"});
+              req.session.save(function () {
+                res.redirect('/');
+              });
+            }
+          });
+        }
+        else{
+          req.flash('inputError',{"msg":"Email invalid"});
+            req.session.save(function () {
+              res.redirect('/');
+          });
+        }
+  });
+}
+});
+
+/**
+ * Route to show the password reset page
+ * @name Users password reset page
+ * @param RequestType GET
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/passwordReset'
+ */
+router.get('/passwordReset', function(req, res, next) {
+  console.log(req.param('id'));
+  Voter.findOne({_id:req.param('id')}).then(voter => {
+    if(voter){
+      res.render('passwordReset', {err:req.flash('errors'),voter:voter});
+    }else
+    {
+      res.redirect('/');
+    }
+  });
+});
+
+
+/**
+ * Route to change a users password
+ * Checks whether the two passwords the user submits
+ * If they match then encrypt the passwords and
+ * chnage the users password, if not then redirect to the login
+ * @name Users request password reset
+ * @param RequestType POST
+ * @param Request The request being sent to the route.
+ * @param Response The response being sent to the route.
+ * @param Next The callback function.
+ * @callback 'users/passwordReset'
+ */
+router.post('/passwordReset', function(req, res, next) {
+  var id = req.body.voterId;
+  //validates the passwords to make sure they are not empty
+  req.checkBody('newPassword', 'Password is required').notEmpty();
+  req.checkBody('confirmPassword', 'Please confirm the password').notEmpty();
+  let password = req.body.newPassword;
+  let errors = req.validationErrors();
+  if(!password == req.body.confirmPassword){
+    errors = ({"msg":"Passwords need to match"});
+  }
+
+  //if errors then refresh and show the errors
+  if(errors){
+    req.flash('errors',errors);
+      req.session.save(function () {
+      var url = '/users/passwordReset?id='+id;
+          res.redirect(url);
+    });
+  }
+  //if no errors and validation is successful then find the voter in the database and change their password
+  Voter.findOne({_id:id}).then((voter) => {
+    if(!voter){
+      req.flash('errors',{"msg":"Incorrect Id Consult Admin"});
+        req.session.save(function () {
+          var url = '/users/passwordReset?id='+id;
+          res.redirect(url);
+      });
+    }else
+    {
+      bcrypt.hash(password, 12, function(err, hash) {
+        voter._password = hash;
+        voter.save(function(err){
+          if(err) {
+            console.error(err);
+            return;
+          } else {
+            res.redirect('/');
+          }
+        });
+      });
+    }
+  });
+});
+
+module.exports = router;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-config_auth.html">config/auth</a></li><li><a href="module-config_isAdmin.html">config/isAdmin</a></li><li><a href="module-config_passport.html">config/passport</a></li><li><a href="module-config_proxy%2520Routes.html">config/proxy Routes</a></li><li><a href="module-config_voted.html">config/voted</a></li><li><a href="module-javascript_addConstituency%2520Schema.html">javascript/addConstituency Schema</a></li><li><a href="module-javascript_editConstituency%2520Schema.html">javascript/editConstituency Schema</a></li><li><a href="module-javascript_results%2520Schema.html">javascript/results Schema</a></li><li><a href="module-models_Address%2520Schema.html">models/Address Schema</a></li><li><a href="module-models_Admin%2520Schema.html">models/Admin Schema</a></li><li><a href="module-models_Candidate%2520Schema.html">models/Candidate Schema</a></li><li><a href="module-models_Constituency%2520Schema.html">models/Constituency Schema</a></li><li><a href="module-models_Election%2520Schema.html">models/Election Schema</a></li><li><a href="module-models_Party%2520Schema.html">models/Party Schema</a></li><li><a href="module-models_Vote%2520Schema.html">models/Vote Schema</a></li><li><a href="module-models_Voter%2520Schema.html">models/Voter Schema</a></li><li><a href="module-routes_admin%2520Routes.html">routes/admin Routes</a></li><li><a href="module-routes_ballot%2520Routes.html">routes/ballot Routes</a></li><li><a href="module-routes_login%2520Routes.html">routes/login Routes</a></li><li><a href="module-routes_proxy%2520Routes.html">routes/proxy Routes</a></li><li><a href="module-routes_user%2520Routes.html">routes/user Routes</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Mar 21 2019 14:27:38 GMT+0000 (Greenwich Mean Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
