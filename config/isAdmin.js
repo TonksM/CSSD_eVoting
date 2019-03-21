@@ -1,4 +1,4 @@
-/** @module isAdmin.js 
+/** @module isAdmin.js
 * Determines whether or not a user is an admin
 */
 
