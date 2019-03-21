@@ -59,7 +59,7 @@ router.get('/', ensureAuthticated, isNotAWP, isNotProxy, ensureNotVoted, functio
     The voter's _voted flag is set to true, and then if successful in both the save and the update
     to the database, the user is presented with a confirmation screen with only the option to log out.
     If either databse action is unsuccessful, the user will be presented with a simple error message.
- * @name Ballot cast_vote route
+ * @name BallotCastVote cast_vote route
  * @param RequestType POST
  * @param Request The request being sent to the route
  * @param Response The response being sent from the route
@@ -93,7 +93,7 @@ router.post('/cast_vote', ensureAuthticated, function(req, res, next){
 
 /**
  * Determines to correct message to display based on the GET message query
- * @name Ballot Vote Message route
+ * @name BallotVoteMessage Vote Message route
  * @param RequestType GET
  * @param Request The request being sent to the route
  * @param Response The response being sent from the route

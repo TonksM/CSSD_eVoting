@@ -1,3 +1,5 @@
+/** @module routes/ballot Routes */
+
 var express = require('express');
 var router = express.Router();
 var passport = require('passport')
@@ -49,6 +51,7 @@ router.get('/', ensureAuthticated, ensureNotAllVoted, function(req, res, next){
       - The voterId is determined by a hidden field on the rendered ejs template for '/'
         GET route
     Other than that, please refer to the documentation for the Ballot.js router
+  * @name ProxyBallot Displays the ballot for proxy voter and associated voters
   * @param RequestType POST
   * @param Request The request being sent to the route
   * @param Response The response being sent from the route
@@ -89,7 +92,7 @@ router.post('/ballot', ensureAuthticated, function(req, res, next){
       - The voterId is determined by a hidden field on the rendered ejs template for '/'
         GET route
     Other than that, please refer to the documentation for the Ballot.js router
- * @name Ballot cast_vote route
+ * @name ProxyBallotCastVote Cast Vote route
  * @param RequestType POST
  * @param Request The request being sent to the route
  * @param Response The response being sent from the route
@@ -125,7 +128,7 @@ router.post('/ballot/cast_vote', ensureAuthticated, function(req, res, next){
  * This route is almost identical to its non-proxy counterpart, however, has a
     slightly different message for when the proxy has voted for all associated
     including their own.
- * @name Ballot Vote Message route
+ * @name ProxyBallotVoteMessage Vote Message route
  * @param RequestType GET
  * @param Request The request being sent to the route
  * @param Response The response being sent from the route

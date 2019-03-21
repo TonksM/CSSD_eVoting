@@ -1,0 +1,678 @@
+{
+  "id": "55c1fdfe-8596-4490-b114-4aee308eaf9a",
+  "version": "2.0",
+  "name": "CSSD_eVoting_Proxy_UI_Testing",
+  "url": "http://localhost:3000",
+  "tests": [{
+    "id": "4b77ac6c-6ded-46ac-bbc9-43d189e3f874",
+    "name": "Proxy-AllUsersVoted",
+    "commands": [{
+      "id": "dabaf7a2-d7dc-4851-95e9-d8c796fd8fcd",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ff7781da-53d1-48c3-bb36-811cfa9ec331",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "550x692",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ca50e909-4fb8-49fc-a871-b32fc9f667bc",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "614c6e07-4d03-4ff4-9816-47a8ecfbaa48",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "participant3@email.com"
+    }, {
+      "id": "c40de360-4ac7-4481-9bac-a468d4303e6b",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "password1"
+    }, {
+      "id": "b1e01d74-8fb0-44e2-9f2f-797cd104388d",
+      "comment": "",
+      "command": "click",
+      "target": "css=button",
+      "targets": [
+        ["css=button", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4d0db684-96f3-4996-8164-0e1d2cd8ec6e",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(1)",
+      "targets": [
+        ["css=button:nth-child(1)", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "7cd08e2b-99fa-493d-9073-a8de4e43b366",
+    "name": "Proxy-VoteAsProxy",
+    "commands": [{
+      "id": "ee54bd16-dc1a-475e-af65-25c5b39724e4",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d2def2eb-4453-44fd-a236-a101b3252e05",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "891x693",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a785d2cd-03ca-480e-b821-d9f0a41051f1",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e5baae33-022e-4827-8511-f20e2bd44454",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "participant3@email.com"
+    }, {
+      "id": "b2215039-cd18-4f29-904b-33323820f9c3",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "password1"
+    }, {
+      "id": "8ce00b17-d648-4b9c-b44c-92186add88be",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(5)",
+      "targets": [
+        ["css=button:nth-child(5)", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c3a1f1e0-b424-4a44-bf62-2e0194a95404",
+      "comment": "",
+      "command": "click",
+      "target": "css=#\\35 c916ca5d38f1a2f30319b4a > p:nth-child(2)",
+      "targets": [
+        ["css=#\\35 c916ca5d38f1a2f30319b4a > p:nth-child(2)", "css:finder"],
+        ["xpath=//li[@id='5c916ca5d38f1a2f30319b4a']/p[2]", "xpath:idRelative"],
+        ["xpath=//p[2]", "xpath:position"],
+        ["xpath=//p[contains(.,'42 Left Road, LS28 9AF')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "643b2496-3e7d-40f8-b690-d81861f1bba3",
+      "comment": "",
+      "command": "click",
+      "target": "id=continue",
+      "targets": [
+        ["id=continue", "id"],
+        ["css=#continue", "css:finder"],
+        ["xpath=//button[@id='continue']", "xpath:attributes"],
+        ["xpath=//div/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Continue to ballot')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9f4a399a-df47-4126-b1fd-8634c7c35127",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Voting as Gwen Davies ",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0c35b656-a355-4c5e-a24c-7679bea72da2",
+      "comment": "",
+      "command": "click",
+      "target": "id=5c8bc17712c4e51020d1aca4",
+      "targets": [
+        ["id=5c8bc17712c4e51020d1aca4", "id"],
+        ["name=candidate", "name"],
+        ["css=#\\35 c8bc17712c4e51020d1aca4", "css:finder"],
+        ["xpath=//input[@id='5c8bc17712c4e51020d1aca4']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8baa6abb-db12-4f44-97ae-4169f97ebba7",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn_vote",
+      "targets": [
+        ["id=btn_vote", "id"],
+        ["css=#btn_vote", "css:finder"],
+        ["xpath=//button[@id='btn_vote']", "xpath:attributes"],
+        ["xpath=//div[2]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "36bca617-8f9f-484d-98f8-a8fe6344229c",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "You have voted for: Simon Fillabuster, Monster Raving Loony Party",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "88da499e-c931-4002-9588-461d392a8985",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(1)",
+      "targets": [
+        ["css=button:nth-child(1)", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "a92808c8-771c-4d89-a87f-246c598c109e",
+    "name": "Proxy-VoteAsSelf",
+    "commands": [{
+      "id": "52e74a01-5062-46c4-bf5f-4704fdfc3cad",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6c6e9c38-8f03-4e2e-98f7-c281933f5577",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "891x693",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ace0a674-0abc-499a-8388-52da26a6e660",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4505c0f7-e8ac-411e-b6b4-ae128d9be5bd",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "participant3@email.com"
+    }, {
+      "id": "b4414639-1eac-4450-883e-8adec73bd499",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "password1"
+    }, {
+      "id": "e50690a9-8604-4855-9af5-db20e11fd121",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "795b91f8-0b0c-4b60-abff-ca2b4155eff2",
+      "comment": "",
+      "command": "click",
+      "target": "css=#\\35 c916ccad38f1a2f30319b4b > p:nth-child(2)",
+      "targets": [
+        ["css=#\\35 c916ccad38f1a2f30319b4b > p:nth-child(2)", "css:finder"],
+        ["xpath=//li[@id='5c916ccad38f1a2f30319b4b']/p[2]", "xpath:idRelative"],
+        ["xpath=//li[2]/p[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b77bfa9a-3f9c-45c8-9c08-03f621077e5f",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "id=continue",
+      "targets": [
+        ["id=continue", "id"],
+        ["css=#continue", "css:finder"],
+        ["xpath=//button[@id='continue']", "xpath:attributes"],
+        ["xpath=//div/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Continue to ballot')]", "xpath:innerText"]
+      ],
+      "value": "107,18.20001220703125"
+    }, {
+      "id": "3f8d049e-cc52-4811-9787-f5dae0a2d699",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "id=continue",
+      "targets": [
+        ["id=continue", "id"],
+        ["css=#continue", "css:finder"],
+        ["xpath=//button[@id='continue']", "xpath:attributes"],
+        ["xpath=//div/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Continue to ballot')]", "xpath:innerText"]
+      ],
+      "value": "107,18.20001220703125"
+    }, {
+      "id": "3dfe0230-52c9-4f42-b39a-34321ab8a563",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "id=continue",
+      "targets": [
+        ["id=continue", "id"],
+        ["css=#continue", "css:finder"],
+        ["xpath=//button[@id='continue']", "xpath:attributes"],
+        ["xpath=//div/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Continue to ballot')]", "xpath:innerText"]
+      ],
+      "value": "107,18.20001220703125"
+    }, {
+      "id": "22bd67bc-90b1-4a2f-8a29-4828cb2d0df5",
+      "comment": "",
+      "command": "click",
+      "target": "id=continue",
+      "targets": [
+        ["id=continue", "id"],
+        ["css=#continue", "css:finder"],
+        ["xpath=//button[@id='continue']", "xpath:attributes"],
+        ["xpath=//div/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Continue to ballot')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ab9f7db-6627-486b-b10d-1ef0632f4d78",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Voting as Michael Cleef ",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d53897c8-e7ae-41ff-b83b-02a8d853c82a",
+      "comment": "",
+      "command": "click",
+      "target": "id=5c8bc17712c4e51020d1aca4",
+      "targets": [
+        ["id=5c8bc17712c4e51020d1aca4", "id"],
+        ["name=candidate", "name"],
+        ["css=#\\35 c8bc17712c4e51020d1aca4", "css:finder"],
+        ["xpath=//input[@id='5c8bc17712c4e51020d1aca4']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fa5e8a80-f24e-444b-933c-9ce94cd2cee5",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn_vote",
+      "targets": [
+        ["id=btn_vote", "id"],
+        ["css=#btn_vote", "css:finder"],
+        ["xpath=//button[@id='btn_vote']", "xpath:attributes"],
+        ["xpath=//div[2]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bc09f113-f80c-451e-993c-14aabcae3aa0",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "You have voted for: Simon Fillabuster, Monster Raving Loony Party",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f87ebcd7-426a-4352-8156-52e1f2bdae6a",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(1)",
+      "targets": [
+        ["css=button:nth-child(1)", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "9c47f053-46ed-4af3-b11d-0961c73c295e",
+    "name": "Proxy-VoteAsBoth",
+    "commands": [{
+      "id": "aead97b4-ec8d-4934-bf26-607eebce4be9",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4d927424-c105-484f-a439-df309062a7a9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "891x693",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "63685c63-cd8a-4d79-b316-e90de0bc70e0",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "25c9f2cd-72d1-42b4-9d9a-87624dcf93a3",
+      "comment": "",
+      "command": "type",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "participant3@email.com"
+    }, {
+      "id": "cd978636-20bc-414a-806c-7fe24a4b9913",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "password1"
+    }, {
+      "id": "13cdcc24-7e45-45de-827e-66835fbae5ca",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "12d3290b-d33a-459f-ab69-acf96b7b2754",
+      "comment": "",
+      "command": "click",
+      "target": "css=#\\35 c916ca5d38f1a2f30319b4a > p:nth-child(2)",
+      "targets": [
+        ["css=#\\35 c916ca5d38f1a2f30319b4a > p:nth-child(2)", "css:finder"],
+        ["xpath=//li[@id='5c916ca5d38f1a2f30319b4a']/p[2]", "xpath:idRelative"],
+        ["xpath=//p[2]", "xpath:position"],
+        ["xpath=//p[contains(.,'42 Left Road, LS28 9AF')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2b1fe254-26bd-4c6d-ac26-3278cf597ee7",
+      "comment": "",
+      "command": "click",
+      "target": "id=continue",
+      "targets": [
+        ["id=continue", "id"],
+        ["css=#continue", "css:finder"],
+        ["xpath=//button[@id='continue']", "xpath:attributes"],
+        ["xpath=//div/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Continue to ballot')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fe0da36d-6d14-4c24-a6ec-6178452d9205",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Voting as Gwen Davies ",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9af2af2b-e631-49a9-9e95-a62bdf2de65c",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(1) > .container",
+      "targets": [
+        ["css=tr:nth-child(1) > .container", "css:finder"],
+        ["xpath=//td[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8eb17584-7b08-43cf-9aa7-245aaddf682b",
+      "comment": "",
+      "command": "click",
+      "target": "id=5c8bc17712c4e51020d1aca4",
+      "targets": [
+        ["id=5c8bc17712c4e51020d1aca4", "id"],
+        ["name=candidate", "name"],
+        ["css=#\\35 c8bc17712c4e51020d1aca4", "css:finder"],
+        ["xpath=//input[@id='5c8bc17712c4e51020d1aca4']", "xpath:attributes"],
+        ["xpath=//td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0e039937-052f-46c3-ba55-68c0432c502a",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn_vote",
+      "targets": [
+        ["id=btn_vote", "id"],
+        ["css=#btn_vote", "css:finder"],
+        ["xpath=//button[@id='btn_vote']", "xpath:attributes"],
+        ["xpath=//div[2]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "99a2bdca-d62a-4f0d-9e87-67172cbd5f0c",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "You have voted for: Simon Fillabuster, Monster Raving Loony Party",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "49731d45-c3a4-4f89-8dcd-849662e59bcb",
+      "comment": "",
+      "command": "click",
+      "target": "id=returnProx",
+      "targets": [
+        ["id=returnProx", "id"],
+        ["name=returnProx", "name"],
+        ["css=#returnProx", "css:finder"],
+        ["xpath=//button[@id='returnProx']", "xpath:attributes"],
+        ["xpath=//body/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Return to proxy menu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ae913750-5d22-4cbd-92f6-562324a8a737",
+      "comment": "",
+      "command": "click",
+      "target": "css=#\\35 c916ccad38f1a2f30319b4b > p:nth-child(1)",
+      "targets": [
+        ["css=#\\35 c916ccad38f1a2f30319b4b > p:nth-child(1)", "css:finder"],
+        ["xpath=//li[@id='5c916ccad38f1a2f30319b4b']/p", "xpath:idRelative"],
+        ["xpath=//li[2]/p", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c4ce1b6a-2f03-4fba-81fc-1e86fa316bec",
+      "comment": "",
+      "command": "click",
+      "target": "id=continue",
+      "targets": [
+        ["id=continue", "id"],
+        ["css=#continue", "css:finder"],
+        ["xpath=//button[@id='continue']", "xpath:attributes"],
+        ["xpath=//div/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Continue to ballot')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ddd2ad6c-0e55-483c-a20f-d51ce27576ac",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Voting as Michael Cleef ",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "83d2f1c6-cf69-42cb-ab50-2418eb8c3960",
+      "comment": "",
+      "command": "click",
+      "target": "id=5c8bc18812c4e51020d1aca5",
+      "targets": [
+        ["id=5c8bc18812c4e51020d1aca5", "id"],
+        ["css=#\\35 c8bc18812c4e51020d1aca5", "css:finder"],
+        ["xpath=//input[@id='5c8bc18812c4e51020d1aca5']", "xpath:attributes"],
+        ["xpath=//tr[2]/td[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cfd224af-c19e-4f54-9d8f-70a4b815f843",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn_vote",
+      "targets": [
+        ["id=btn_vote", "id"],
+        ["css=#btn_vote", "css:finder"],
+        ["xpath=//button[@id='btn_vote']", "xpath:attributes"],
+        ["xpath=//div[2]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "79f345d5-2026-40b0-b9b6-f37939f0bba3",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "You have voted for: John Smith, Labour",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0fb46b70-ece1-4bf8-b136-de8c2ec2e369",
+      "comment": "",
+      "command": "click",
+      "target": "id=returnProx",
+      "targets": [
+        ["id=returnProx", "id"],
+        ["name=returnProx", "name"],
+        ["css=#returnProx", "css:finder"],
+        ["xpath=//button[@id='returnProx']", "xpath:attributes"],
+        ["xpath=//body/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Return to proxy menu')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e87b3afd-da55-4202-b3e1-05645ecf7be2",
+      "comment": "",
+      "command": "click",
+      "target": "css=button:nth-child(1)",
+      "targets": [
+        ["css=button:nth-child(1)", "css:finder"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c51b260e-305c-4d5b-a02c-ba12faa502d9",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "9af60741-a80b-4734-98e4-5ababadb16de",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:3000/"],
+  "plugins": []
+}
