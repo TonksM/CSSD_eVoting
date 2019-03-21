@@ -46,11 +46,8 @@ router.get('/', ensureAuthticated, ensureNotAllVoted, function(req, res, next){
 
 /**
  *  The route functions similar to its counterpart in the ballot router, however,
-      has a couple major differences:
-      - The router is POSTed due to the sending the selected user id from the '/' GET route
-      - The voterId is determined by a hidden field on the rendered ejs template for '/'
-        GET route
-    Other than that, please refer to the documentation for the Ballot.js router
+      has a couple major differences: 1. The router is POSTed due to the sending the selected user id from the '/' GET route, 
+      2. The voterId is determined by a hidden field on the rendered ejs template for '/' GET route. Other than that, please refer to the documentation for the Ballot.js router
   * @name ProxyBallot Displays the ballot for proxy voter and associated voters
   * @param RequestType POST
   * @param Request The request being sent to the route
