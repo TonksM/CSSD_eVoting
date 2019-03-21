@@ -42,7 +42,7 @@ router.post('/login', function(req, res, next) {
   var err = req.validationErrors();
   //If at least one of the inputs are empty then redirect back with associated errors
   if(err){
-  	req.flash('inputError',err);                                      // if theres an error use Flash to display
+  	req.flash('inputError',err);s
     req.session.save(function () {
       res.redirect('/');
     });
@@ -213,7 +213,8 @@ router.post('/passwordReset', function(req, res, next) {
   if(errors){
     req.flash('errors',errors);
       req.session.save(function () {
-      res.redirect('/users/passwordReset?id='+id);
+      var url = '/users/passwordReset?id='+id;
+          res.redirect(url);
     });
   }
   //if no errors and validation is successful then find the voter in the database and change their password
@@ -221,7 +222,8 @@ router.post('/passwordReset', function(req, res, next) {
     if(!voter){
       req.flash('errors',{"msg":"Incorrect Id Consult Admin"});
         req.session.save(function () {
-        res.redirect('/users/passwordReset?id='+id);
+          var url = '/users/passwordReset?id='+id;
+          res.redirect(url);
       });
     }else
     {
