@@ -1,4 +1,4 @@
-/** @module isAdmin*/
+/** @module config/isAdmin*/
 
 module.exports = {
     /**
