@@ -856,7 +856,7 @@ router.get('/results', ensureAuthticated, isAdmin, function(req, res, next) {
   }
   var itemsProcessed = 0;
   Election.find({_deleted:false}).populate({path:'_constituencies', populate:{path:'_candidates', populate:{path:'_party'}}}).exec((err,elections) =>{
-    if(elections !=null){
+    if(!(elections === undefined || elections.length == 0)){
       elections.forEach(election=>{
         console.log("Election: ");
         console.log(election);
@@ -1034,38 +1034,6 @@ router.post('/voter/edit', ensureAuthticated, isAdmin, function(req, res){
       }
     });
   }
-});
-//remove voter
-/**
-	*Route to remove a voter from the database
-	* if no id is provided redirect to /admin/voter
- * Route to remove a voter route
- * @name Admin  remove voter route
- * @param RequestType POST
- * @param ensureAuthticated Checks if user is authenticated
- * @param isAdmin Checks if user is an admin
- * @param Request The request being sent to the route.
- * @param Response The response being sent to the route.
- * @callback 'admin/voters/remove'
- */
-router.post('/voter/remove', ensureAuthticated, isAdmin, function(req, res){
-  let voter = {};
-  voter._id = req.body.voterId;
-  voter._firstName = req.body.firstName;
-  voter._surname = req.body.surname;
-  voter._address = req.body.address;
-  voter._proxyFor = req.body.proxyFor;
-
-  let query = {_id: voter._id};
-
-  Voter.update(query, voter, function(err){
-    if(err) {
-      console.error(err);
-      return;
-    } else {
-      res.redirect('/admin/voter');
-    }
-  })
 });
 /* END of VOTER ROUTES*/
 module.exports = router;
