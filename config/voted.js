@@ -2,6 +2,7 @@ var Voter = require('../models/voter');
 
 module.exports = {
 	ensureNotVoted: (req,res,next)=>{
+        //This function checks the 
         let voterId = req.user;
 
         Voter.findOne({_id: voterId}, function(err, voter){

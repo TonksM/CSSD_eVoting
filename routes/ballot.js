@@ -1,3 +1,5 @@
+/** @module Ballot Routes */
+
 var express = require('express');
 var router = express.Router();
 var passport = require('passport')
@@ -6,27 +8,41 @@ var Candidate = require('../models/candidate');
 var Voter = require('../models/voter');
 var Vote = require('../models/vote');
 const session = require('express-session');
-const {ensureAuthticated} = require("../config/auth"); //Verifies the voter
-const {ensureNotVoted} = require("../config/voted"); //Verifies that the voter has not voted
+const {ensureAuthticated} = require("../config/auth"); //
+const {ensureNotVoted} = require("../config/voted"); //
 const {isNotProxy} = require("../config/proxy"); 
-//Checks if the voter is a proxy for any other accounts, and redirects them to the proxy voter select screen
 
+/**
+ * This route gets the current user's id, and queries the user collection with it. The .populate 
+    command uses the reference within the Voter schema to populate the address fields. The Postcode 
+    is used to retrieve the appropriate constitiuency and then populates the candidates that are 
+    associated with that constituency. The voterId, the constituency, candidates are then placed 
+    into an array called 'data' to populate the ejs template variables on the ejs template.
+ * @name Ballot view ballot route
+ * @param RequestType GET
+ * @param Request The request being sent to the route
+ * @param Response The response being sent from the route
+ * @param Next The callback function
+ * @param voterId The current voter/user's ObjectId
+ * @param data The data to be sent to the response (ejs template)
+ * @param ensureAuthenticated Verifies the voter
+ * @param ensureNotVoted Verifies that the voter has not voted
+ * @param isNotProxy Checks if the voter is a proxy for any other accounts, and redirects them to the proxy voter select screen
+ * @callback 'ballot/'
+ **/
 
 router.get('/', ensureAuthticated, isNotProxy, ensureNotVoted, function(req, res, next) {
-  //This router gets the current user's id, and queries the user collection with it. The .populate 
-  //command uses the reference within the Voter schema to populate the address fields.
+  //
   let voterId = req.user;                                                                  
   Voter.findOne({_id: voterId}).populate('_address').exec( function (err, voter){
-    //The Postcode is used to retrieve the appropriate constitiuency and then populates the candidates
-    //that are associated with that constituency.
+    //
     let vpc = voter._address._postcode;
     Constituency.findOne({_validPostcodes: vpc}).populate({
       path: '_candidates', populate:{path : '_address _party'}
     }).exec(function(err, constituency){
-      //The voterId, the constituency, candidates are then placed into an array to populate our variables
-      //on the ejs template
+      //
       var data = {
-        constitiuency:  constituency,
+        constituency:  constituency,
         voter:          voterId,
         candidates:     constituency._candidates
       }
@@ -36,14 +52,27 @@ router.get('/', ensureAuthticated, isNotProxy, ensureNotVoted, function(req, res
   });
 });
 
+/**
+ * Mongoose creates a new Vote object, based on the Vote Schema, then saves to the appropriate collection.
+    The voter's _voted flag is set to true, and then if successful in both the save and the update
+    to the database, the user is presented with a confirmation screen with only the option to log out.
+    If either databse action is unsuccessful, the user will be presented with a simple error message.
+ * @name Ballot cast_vote route
+ * @param RequestType POST
+ * @param Request The request being sent to the route
+ * @param Response The response being sent from the route
+ * @param Next The callback function
+ * @param voterId The current voter/user's ObjectId 
+ * @param noo The new Vote object
+ * @param _voted The flag that tells the system that the voter has voted
+ * @param ensureAuthenticated Verifies the voter
+ * @callback 'ballot/cast_vote'
+ */
+
 router.post('/cast_vote', ensureAuthticated, function(req, res, next){
-  //Mongoose creates a new Vote, based on the Vote Schema, then saves to the appropriate collection.
-  //The voter's _voted flag is set to true, and then if successful in both the save and the update
-  //to the database, the user is presented with a confirmation screen with only the option to log out.
-  //If either databse action is unsuccessful, the user will be presented with a simple error message.
   let voterId = req.user;
   let noo = new Vote({
-      _vote: req.body.vote
+      _vote: req.body.votingFor
   });
   noo.save(function(err, nu){
     if(err) return function(){
@@ -60,8 +89,19 @@ router.post('/cast_vote', ensureAuthticated, function(req, res, next){
   }); 
 });
 
+/**
+ * Determines to correct message to display based on the GET message query
+ * @name Ballot Vote Message route
+ * @param RequestType GET
+ * @param Request The request being sent to the route
+ * @param Response The response being sent from the route
+ * @param Next The callback function
+ * @param data The data to be sent to the response (ejs template)
+ * @param ensureAuthenticated Verifies the voter
+ * @callback 'ballot/vote_msg'
+ */
+
 router.get("/vote_msg", ensureAuthticated, function(req, res, next){
-  //Determines to correct message to display based on the GET message query
   var data = {
     msg: ""
   } 
