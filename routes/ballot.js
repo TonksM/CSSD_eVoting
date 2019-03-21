@@ -8,8 +8,9 @@ var Candidate = require('../models/candidate');
 var Voter = require('../models/voter');
 var Vote = require('../models/vote');
 const session = require('express-session');
-const {ensureAuthticated} = require("../config/auth"); //
-const {ensureNotVoted} = require("../config/voted"); //
+const {ensureAuthticated} = require("../config/auth"); 
+const {ensureNotVoted} = require("../config/voted"); 
+const {isNotAWP} = require("../config/proxy");
 const {isNotProxy} = require("../config/proxy"); 
 
 /**
@@ -27,11 +28,12 @@ const {isNotProxy} = require("../config/proxy");
  * @param data The data to be sent to the response (ejs template)
  * @param ensureAuthenticated Verifies the voter
  * @param ensureNotVoted Verifies that the voter has not voted
+ * @param isNotAWP AWP stands for "associated with proxt", and this checks if the voter has another account voting on their account, redirecting a message explaining this. 
  * @param isNotProxy Checks if the voter is a proxy for any other accounts, and redirects them to the proxy voter select screen
  * @callback 'ballot/'
  **/
 
-router.get('/', ensureAuthticated, isNotProxy, ensureNotVoted, function(req, res, next) {
+router.get('/', ensureAuthticated, isNotAWP, isNotProxy, ensureNotVoted, function(req, res, next) {
   //
   let voterId = req.user;                                                                  
   Voter.findOne({_id: voterId}).populate('_address').exec( function (err, voter){
@@ -109,17 +111,35 @@ router.get("/vote_msg", ensureAuthticated, function(req, res, next){
   switch(req.query.msg){
         case 'confirm':
           data.msg = "Thank you for voting!";
+            res.render('vote_msg', data);
           break;
         case 'error':
           data.msg = "There was an error!";
+            res.render('vote_msg', data);
           break;
         case 'voted':
-          data.msg = "You have already voted, please logout!"
-        break;
+          data.msg = "You have already voted, please logout!";
+            res.render('vote_msg', data);
+          break;
+        case 'prox':
+          var vid = req.user;
+          var query = getProxy(vid);
+          function getProxy(id){
+            var query = Voter.findOne({_proxyFor:id});
+            return query;
+          }
+          query.exec(function(err, proxy){
+            if(err) return console.error(err);
+            var pName = proxy._firstName +" "+ proxy._surname;
+            data.msg = pName + " is voting on your behalf";
+            console.log("query:" + data.msg);
+            res.render('vote_msg', data);
+          });
+          console.log("case:" + data.msg);
+          break;
   }
-
-  res.render('vote_msg', data);
 });
+
 
 module.exports = router;
 
