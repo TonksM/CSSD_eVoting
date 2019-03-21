@@ -9,5 +9,17 @@ module.exports = {
                 res.redirect("./proxy")
             }
         });
-	}
+    },
+    isNotAWP: (req, res, next)=>{ // AWP = Associated With Proxy
+        var Voter = require('../models/voter');
+        let voterId = req.user;
+        Voter.findOne({_proxyFor: voterId}, (err, voter)=>{
+            if(err) return(next());
+            if(voter == null){
+                return(next());
+            }else{
+                res.redirect("./ballot/vote_msg?msg=prox");
+            }
+        });
+    }
 }
