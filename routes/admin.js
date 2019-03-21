@@ -8,7 +8,6 @@ const {isAdmin} = require("../config/isAdmin"); // used to be passed as a parame
 const Election = require('../models/election');
 const Constituency = require('../models/constituency');
 const Candidate = require('../models/candidate');
-const Ballot = require('../models/ballot');
 const Party = require('../models/party');
 const Address = require('../models/address');
 const Voter = require('../models/voter');
@@ -560,7 +559,7 @@ router.get('/constituency/add', ensureAuthticated, isAdmin, function(req, res, n
  * @param Request The request being sent to the route.
  * @param Response The response being sent to the route.
  * @callback '/constituency/add'
- c
+ */
 router.post('/constituency/add', ensureAuthticated, isAdmin, function(req, res){
   // Express validator
   req.checkBody('name', 'Name is required').notEmpty();
